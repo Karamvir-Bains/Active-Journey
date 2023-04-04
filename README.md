@@ -36,3 +36,25 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+## ERD
+![ActiveJourney ERD](./docs/erd-activejourney.png)
+
+## Routes
+* /user                **Create**  (POST new account)
+* /user/:id            **Read**    (GET User Profile)
+* /user/:id/           **Update**  (POST widget order)
+
+* /                    **Read**    (Dashboard)
+* /user/day            **Create**  (POST new metric data)
+* /user/:id/day/:id    **Update**  (POST Change metric data)
+* /user/:id/day/:id    **Read**    (GET Update dash state)
+* /user/:id/metric/:id **Read**    (GET)
+
+
+### Sprint 2
+* /user/:id/metric     **Create**  (POST new widget)
+* /user/:id/metric/:id **Read**    (GET)
+* /user/:id            **Destroy** (POST)
+* /user/metric/:id     **Destroy** (POST)
