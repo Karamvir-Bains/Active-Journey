@@ -4,10 +4,10 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '../styles/Home.module.css'
 import { PrismaClient } from '@prisma/client'
-import Sidebar from './partials/_sidebar'
-import Header from './partials/_header'
-import Dashboard from './components/dashboard/_index'
-import Footer from './partials/_footer'
+import Sidebar from '../components/partials/_sidebar'
+import Header from '../components/partials/_header'
+import Dashboard from '../components/dashboard/_index'
+import Footer from '../components/partials/_footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
