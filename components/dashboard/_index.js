@@ -32,7 +32,9 @@ export default function Dashboard(props) {
           <Calendar />
         </div>
         <div key="dailyWater">
-          <DailyWater />
+          <DailyWater
+            dailyWaterVal="5"
+          />
         </div>
         <div key="activityGoal">
           <ActivityGoal />
