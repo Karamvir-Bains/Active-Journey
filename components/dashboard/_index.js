@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Responsive, WidthProvider } from  "react-grid-layout"
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import ActivityGoal from "../../widgets/_activity-goal";
-import Calendar from "../../widgets/_calendar";
-import DailyWater from "../../widgets/_daily-water";
-import Overview from "../../widgets/_overview";
-import Widget from "../../widgets/_widget";
+import ActivityGoal from "../widgets/_activity-goal";
+import Calendar from "../widgets/_calendar";
+import DailyWater from "../widgets/_daily-water";
+import Overview from "../widgets/_overview";
+import Widget from "../widgets/_widget";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
