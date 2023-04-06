@@ -38,7 +38,6 @@ const defaultLayout = {
 
 async function updateLayout(id, layout) {
   if (layout !== '' || layout !== NULL) {
-    console.log("Layout: ", layout);
     try {
       const userid = Number(id);
       await fetch(`/api/users/${userid}`, {
@@ -66,7 +65,6 @@ export default function Home(props) {
 
   const handleLayoutChange = async (data, f) => {
     if (data && f['sm']) {
-      console.log(f);
       const newLayout = {
         ...layout,
         lg: [
