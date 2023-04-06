@@ -1,8 +1,10 @@
 export default function Overview() {
   return(
-    <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10">
+    <div className="overflow-scroll rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10">
       <h3 className="font-bold mb-3 text-xl text-blue-900">Overview</h3>
-      This is a test. Replace with actual widget component
+      <div className="bg-blue-100 p-20 text-center">
+        <div className="">INSERT CHART HERE</div>
+      </div>
     </div>
   )
 }

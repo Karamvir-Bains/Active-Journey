@@ -1,0 +1,18 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import prisma from '../../../lib/prisma';
+
+export default async function handler(req, res) {
+    const id = Number(req.query.id);
+    await console.log("What? ", req.body);
+    const updateLayout = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        first_name: 'Jane',
+        layout: JSON.stringify(req.body.data),
+      },
+    });
+    return await res.json(updateLayout);
+}
+
