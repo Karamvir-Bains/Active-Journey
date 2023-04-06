@@ -8,7 +8,6 @@ export default async function handler(req, res) {
         id: id,
       },
       data: {
-        first_name: 'Jane',
         layout: JSON.stringify(req.body.data),
       },
     });

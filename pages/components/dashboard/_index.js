@@ -37,7 +37,6 @@ export default function Dashboard(props) {
         <div key="activityGoal">
           <ActivityGoal />
         </div>
-
         <div key="a">
           <Widget />
         </div>
