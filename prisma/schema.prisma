@@ -10,11 +10,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          Int     @id @default(autoincrement())
-  email       String  @unique
-  first_name  String?
-  last_name   String?
-  password    String?
-  layout      String?
+model Users {
+  id                 Int               @id @default(autoincrement())
+  first_name         String            @unique
+  last_name          String?
+  email              String            @unique
+  password           String
+  layout             String
+  user_metric_data User_metric_data[]
+}
+
+model User_metric_data {
+  id           Int       @id @default(autoincrement())
+  user_id    Int?
+  User       Users?  @relation(fields: [user_id], references: [id])
+  metric_id    Int?
+  Metric       Metrics?  @relation(fields: [metric_id], references: [id])
+  date         DateTime  @default(now())
+  metric_value Int
+}
+
+model Metrics {
+  id                 Int               @id @default(autoincrement())
+  property_id  Int?
+  Property    Properties? @relation(fields: [property_id], references: [id])
+  name String
+  unit String
+  user_metric_data User_metric_data[]
+}
+
+model Properties {
+  id        Int      @id @default(autoincrement())
+  property  String
+  metrics   Metrics[]
 }
