@@ -38,13 +38,23 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 
-## Database Set-up
+## Working with Prisma and the Database
 
-Seed your dev database:
+Create your dev database:
 `npx prisma generate`
+
+db push uses the same engine as Prisma Migrate to synchronize your Prisma schema with your database schema. The db push command:
+`npx prisma db push`
 
 Run Database migration:
 `npx prisma migrate dev`
+
+Seed Database: 
+`npx prisma seed`
+`prisma db seed`
+
+Reset Database:
+`prisma migrate reset`
 
 Start the Database Studio in the browser:
 `npx prisma studio`
