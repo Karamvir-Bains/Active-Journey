@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",
+    "chart.js": "^4.2.1",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
     "next": "13.2.4",
@@ -32,6 +33,6 @@
   },
   "proxy": "http://localhost:3000",
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": " node prisma/seed/User_metric_data.js  "
   }
 }
