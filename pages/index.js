@@ -149,7 +149,7 @@ export default function Home(props) {
 export async function getServerSideProps() {
   const prisma = new PrismaClient()
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.User.findUnique({
     where: {
       id: 1,
     }
