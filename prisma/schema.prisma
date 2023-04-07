@@ -7,35 +7,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id                 Int               @id @default(autoincrement())
-  first_name         String            @unique
-  last_name          String?
-  email              String            @unique
-  password           String
-  layout             String
-  user_metric_dataId Int?
-  User_metric_data   User_metric_data? @relation(fields: [user_metric_dataId], references: [id])
+model User {
+  id               Int                @id @default(autoincrement())
+  first_name       String             @unique
+  last_name        String?
+  email            String             @unique
+  password         String
+  layout           String
+  user_metric_data User_metric_data[]
 }
 
 model User_metric_data {
-  id           Int       @id @default(autoincrement())
-  date         DateTime  @default(now())
+  id           Int      @id @default(autoincrement())
+  date         DateTime @default(now())
   metric_value Int
-  metrics      Metrics[]
-  users        Users[]
+  user_id      Int
+  users        User     @relation(fields: [user_id], references: [id])
+  metric_id    Int
+  metrics      Metric   @relation(fields: [metric_id], references: [id])
 }
 
-model Metrics {
-  id                 Int               @id @default(autoincrement())
-  user_metric_dataId Int?
-  User_metric_data   User_metric_data? @relation(fields: [user_metric_dataId], references: [id])
-  properties         Properties[]
-}
-
-model Properties {
-  id        Int      @id @default(autoincrement())
-  property  Int
-  metricsId Int?
-  Metrics   Metrics? @relation(fields: [metricsId], references: [id])
+model Metric {
+  id               Int                @id @default(autoincrement())
+  name             String
+  unit             String
+  user_metric_data User_metric_data[]
 }
