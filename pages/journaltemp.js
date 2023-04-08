@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { faTimes, faCalendarAlt }from '@fortawesome/free-solid-svg-icons'
+import { faTimes }from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import InputComponent from '../components/journal/InputComponent'
 import ScaleComponent from '../components/journal/ScaleComponent';
+import CalendarIcon from '../components/journal/CalendarIcon';
 
 export default function Journaltemp({metrics}) {
   const [data, setData] = useState(metrics.data);
-  const [selectedDate, setSelectedDate] = useState(new Date(2023, 3, 5));
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   //Render a list of metrics
   const metricList = data.map(metric => {
@@ -74,12 +75,6 @@ export default function Journaltemp({metrics}) {
     }
   };
 
-  const CustomInput = ({ onClick }) => (
-    <button type="button" onClick={onClick}>
-      <FontAwesomeIcon icon={faCalendarAlt} />
-    </button>
-  );
-
   return (
     <div className="h-screen w-screen bg-gray-300 flex items-center justify-center">
       <section className="flex flex-col justify-center bg-white rounded-lg w-1/3 h-4/5 py-6 px-10 shadow-md">
@@ -91,7 +86,7 @@ export default function Journaltemp({metrics}) {
             onChange={date => setSelectedDate(date)}
             showMonthDropdown={true}
             showYearDropdown={true}
-            customInput={<CustomInput />}
+            customInput={<CalendarIcon />}
           />
           <div className="h-5 w-5 text-gray-500">
               <FontAwesomeIcon icon={faTimes} />
