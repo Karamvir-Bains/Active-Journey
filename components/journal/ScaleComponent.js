@@ -14,7 +14,7 @@ export default function ScaleComponent(props) {
           min={0}
           max={10}
           step={1}
-          value={props.value || 5}
+          value={props.value || 0}
           onChange={props.handleChange}
         />
         <div className="flex justify-between w-full">
