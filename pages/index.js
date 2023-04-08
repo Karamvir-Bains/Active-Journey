@@ -101,7 +101,15 @@ export default function Home(props) {
         <div className="flex-grow overflow-auto">
           <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
             <Sidebar />
-            <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
+            <main  
+              style={{
+                backgroundImage: `url(/theme/pexels-simon-berger-1323550.jpg)`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'bottom'
+              }}       
+              className="relative sm:mx-auto w-full h-full max-w-200 overflow-auto"
+            >
               <div className="flex h-full container flex-col p-8 mb-6">
                 <Header />
                 <Dashboard 
