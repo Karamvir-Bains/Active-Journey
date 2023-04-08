@@ -6,6 +6,7 @@ import ActivityGoal from "../widgets/_activity-goal";
 import Calendar from "../widgets/_calendar";
 import DailyWater from "../widgets/_daily-water";
 import Overview from "../widgets/_overview";
+import Nutrition from "../widgets/_nutrition";
 import Widget from "../widgets/_widget";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -38,19 +39,19 @@ export default function Dashboard(props) {
           <ActivityGoal />
         </div>
         <div key="a">
-          <Widget />
+          <Widget title="Weekly Stress" />
         </div>
         <div key="b">
-          <Widget />
+          <Widget title="Average Mood" />
         </div>
         <div key="c">
-          <Widget />
+          <Widget title="Widget Title" />
         </div>
         <div key="d">
-          <Widget />
+          <Widget title="Widget Title" />
         </div>
         <div key="e">
-          <Widget />
+          <Nutrition />
         </div>
       </ResponsiveGridLayout>
     </div>
