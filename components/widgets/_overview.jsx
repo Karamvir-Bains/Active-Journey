@@ -54,10 +54,8 @@ export default function Overview() {
   return (
     <>
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-1 mb-10">
-        <div className="bg-blue-100 text-center">
-          <div className="absolute top-3 right-3 bottom-3 left-3">
-            <canvas id='myChart'></canvas>
-          </div>
+        <div className="absolute top-3 right-3 bottom-3 left-3">
+          <canvas id='myChart'></canvas>
         </div>
       </div>
     </>
