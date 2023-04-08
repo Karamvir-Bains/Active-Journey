@@ -6,6 +6,7 @@ import ScaleComponent from '../components/journal/ScaleComponent';
 
 export default function Journaltemp({metrics}) {
   const [data, setData] = useState(metrics.data);
+  const [selectedDate, setSelectedDate] = useState(new Date(2023, 3, 5));
 
   //Render a list of metrics
   const metricList = data.map(metric => {
@@ -55,12 +56,29 @@ export default function Journaltemp({metrics}) {
     setData(updatedData);
   }
 
+  // This function takes a date as input and returns a string representing the date text to be displayed
+  const getDateText = date => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    if (date.toDateString() === today.toDateString()) {
+      return 'Today';
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return 'Yesterday';
+    } else {
+      const options = { month: 'short', day: 'numeric', year: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+  };
+
+  const headerText = getDateText(selectedDate);
+
   return (
     <div className="h-screen w-screen bg-gray-300 flex items-center justify-center">
       <section className="flex flex-col justify-center bg-white rounded-lg w-1/3 h-4/5 py-6 px-10 shadow-md">
         
         <div id="journal-header">
-          <h3>Today</h3>
+          <h3 className='font-bold'>{headerText}</h3>
           <div className="flex justify-end w-full mb-5">
             <div className="h-5 w-5 text-gray-500">
                 <FontAwesomeIcon icon={faTimes} />
