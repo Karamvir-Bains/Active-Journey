@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { faTimes }from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faCalendarAlt }from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import InputComponent from '../components/journal/InputComponent'
 import ScaleComponent from '../components/journal/ScaleComponent';
 
@@ -71,22 +74,32 @@ export default function Journaltemp({metrics}) {
     }
   };
 
-  const headerText = getDateText(selectedDate);
+  const CustomInput = ({ onClick }) => (
+    <button type="button" onClick={onClick}>
+      <FontAwesomeIcon icon={faCalendarAlt} />
+    </button>
+  );
 
   return (
     <div className="h-screen w-screen bg-gray-300 flex items-center justify-center">
       <section className="flex flex-col justify-center bg-white rounded-lg w-1/3 h-4/5 py-6 px-10 shadow-md">
         
-        <div id="journal-header">
-          <h3 className='font-bold'>{headerText}</h3>
-          <div className="flex justify-end w-full mb-5">
-            <div className="h-5 w-5 text-gray-500">
-                <FontAwesomeIcon icon={faTimes} />
-            </div>
+        <div id="journal-header" className='flex'>
+          <h3 className='font-bold mr-2 mb-5 whitespace-nowrap'>{getDateText(selectedDate)}</h3>
+          <DatePicker
+            selected={selectedDate}
+            onChange={date => setSelectedDate(date)}
+            showMonthDropdown={true}
+            showYearDropdown={true}
+            customInput={<CustomInput />}
+          />
+          <div className="h-5 w-5 text-gray-500">
+              <FontAwesomeIcon icon={faTimes} />
           </div>
         </div>
 
-        <div id="journal-entries" className="w-full overflow-y-scroll mb-4 pr-9">
+        {/* Remove pr-9 */}
+        <div id="journal-entries" className="w-full h-4/5 overflow-y-scroll mb-5 pr-9">
           {metricList}
         </div>
 
