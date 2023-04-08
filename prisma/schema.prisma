@@ -22,9 +22,9 @@ model User_metric_data {
   date         DateTime @default(now())
   metric_value Int
   user_id      Int
-  users        User     @relation(fields: [user_id], references: [id])
+  users        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   metric_id    Int
-  metrics      Metric   @relation(fields: [metric_id], references: [id])
+  metrics      Metric   @relation(fields: [metric_id], references: [id], onDelete: Cascade)
 }
 
 model Metric {

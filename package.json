@@ -33,6 +33,6 @@
   },
   "proxy": "http://localhost:3000",
   "prisma": {
-    "seed": " node prisma/seed/User_metric_data.js  "
+    "seed": "node prisma/seed/User_metric_data.js"
   }
 }
