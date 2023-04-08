@@ -37,78 +37,41 @@ const defaultLayout = {
 }
 
 async function updateLayout(id, layout) {
-  if (layout !== '' || layout !== NULL) {
-    try {
-      const userid = Number(id);
-      await fetch(`/api/users/${userid}`, {
+  let newLayout = layout;
+  if (layout === '' || layout === null) {
+    newLayout = defaultLayout;
+  }
+
+  try {
+    const userid = Number(id);
+    await fetch(`/api/users/${userid}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(layout),
-      });
-    } catch (err) {
-      console.log(err);
-    }
+        body: JSON.stringify(newLayout),
+    });
+  }
+  catch (err) {
+    console.log(err);
   }
 }
 
 export default function Home(props) {
-  const getDefaultLayout = defaultLayout;
-  const [layout, setLayout] = useState(getDefaultLayout);
+  const [layout, setLayout] = useState(defaultLayout);
+
   useEffect(() => {
-    const userLayout = JSON.parse(props.user.layout);
-    if (userLayout !== null) {
+    if (props.user.layout !== null) {
+      const userLayout = JSON.parse(props.user.layout);
       setLayout(prev => ({
         ...prev,
         'lg': userLayout['lg'],
         'sm': userLayout['sm']
       }));
     }
-  }, [])
+  }, [props.user.layout])
 
-  const handleLayoutChange = async (data, f) => {
-    const winWidth = window.innerWidth;
-    let newLayout = {};
-    if (data && f['sm'] && f['lg']) {
-      if (winWidth < 1024) {
-        newLayout = {
-          ...layout,
-          lg: [
-            ...f['lg']
-          ],
-          sm: [
-            ...f['sm']
-          ]
-        }
-        setLayout(prev => ({
-          ...prev,
-          lg: [
-            ...f['lg']
-          ],
-          sm: [
-            ...f['sm']
-          ]
-        }));
-      } else {
-        newLayout = {
-          ...layout,
-          lg: [
-            ...f['lg']
-          ],
-          sm: [
-            ...f['sm']
-          ]
-        }
-        setLayout(prev => ({
-          ...prev,
-          lg: [
-            ...f['lg']
-          ]
-        }));
-      }
-      await updateLayout(props.user.id, {"data": newLayout });
-    }
+  const handleLayoutChange = async (layoutsObj) => {
+    await updateLayout(props.user.id, {"layout": layoutsObj });
   }
-
 
   return (
     <>
@@ -144,18 +107,17 @@ export default function Home(props) {
   )
 }
 
-
-// Fetch all posts (in /pages/index.tsx)
+// Fetch data from the db
 export async function getServerSideProps() {
   const prisma = new PrismaClient()
 
-  const user = await prisma.User.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       id: 1,
     }
   })
 
   return {
-    props : { user }
+    props : { user}
   }
 }

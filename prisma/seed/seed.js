@@ -67,9 +67,6 @@ async function seed() {
 
   for (let i = 0; i < 365; i++) {
     const date = new Date(new Date().getFullYear(), 0, i + 1);
-    //const dayOfMonth = date.getDate();
-    //const metric_value = Math.floor(Math.random() * 1000) + 1;
-    //print out each date
     const metrics = [
       { metric_id: 1 },
       { metric_id: 2 },

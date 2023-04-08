@@ -23,7 +23,7 @@ export default function Dashboard(props) {
           lg: 12,
           sm: 6
         }}
-        onLayoutChange={(e, f) => props.onLayoutChange(e, f)}
+        onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
       >
         <div key="overview">
           <Overview />
