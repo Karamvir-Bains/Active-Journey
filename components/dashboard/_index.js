@@ -8,6 +8,7 @@ import DailyWater from "../widgets/_daily-water";
 import Overview from "../widgets/_overview";
 import Nutrition from "../widgets/_nutrition";
 import Widget from "../widgets/_widget";
+import AvgMood from "../widgets/_avg-mood";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
@@ -52,7 +53,7 @@ export default function Dashboard(props) {
           <Widget title="Weekly Stress" />
         </div>
         <div key="b">
-          <Widget title="Average Mood" />
+          <AvgMood mood={props.mood} />
         </div>
         <div key="c">
           <Widget title="Widget Title" />
