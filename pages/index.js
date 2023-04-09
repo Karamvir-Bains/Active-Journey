@@ -114,6 +114,7 @@ export default function Home(props) {
                 <Header />
                 <Dashboard 
                   user={props.user}
+                  entries={props.entries}
                   layout={layout}
                   onLayoutChange={handleLayoutChange}
                 />

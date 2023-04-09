@@ -1,12 +1,12 @@
 import { useEffect } from "react"
 import { Chart } from "chart.js/auto";
 
-export default function Nutrition() {
+export default function Nutrition(props) {
   useEffect(() => {
     var ctx = document.getElementById('nutritionChart').getContext('2d');
     
     const data = {
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      labels: props.entries.map(entry => entry.id),
       datasets: [
         {
           data: [1, 9, 8, 9, 4, 4, 7, 10],

@@ -11,7 +11,7 @@ import Widget from "../widgets/_widget";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
-  console.log('index props', props);
+  console.log('index entries', props.entries);
   return(
     <div className="relative bg-blue">
       <ResponsiveGridLayout
@@ -28,7 +28,7 @@ export default function Dashboard(props) {
         onLayoutChange={(e, f) => props.onLayoutChange(e, f)}
       >
         <div key="overview">
-          <Overview />
+          <Overview entries={props.entries} />
         </div>
         <div key="calendar">
           <Calendar />
@@ -52,7 +52,7 @@ export default function Dashboard(props) {
           <Widget title="Widget Title" />
         </div>
         <div key="e">
-          <Nutrition />
+          <Nutrition entries={props.entries} />
         </div>
       </ResponsiveGridLayout>
     </div>

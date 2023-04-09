@@ -1,9 +1,11 @@
 import { useEffect } from "react"
 import { Chart } from "chart.js/auto";
 
-export default function Overview() {
+export default function Overview(props) {
   useEffect(() => {
     var ctx = document.getElementById('myChart').getContext('2d');
+
+    // create datasets array of obj's from entries
 
     var myChart = new Chart(ctx, {
       type: 'line',
