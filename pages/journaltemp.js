@@ -7,15 +7,18 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import InputComponent from '../components/journal/InputComponent'
 import ScaleComponent from '../components/journal/ScaleComponent';
 import CalendarIcon from '../components/journal/CalendarIcon';
+import { PrismaClient } from '@prisma/client'
 
-export default function Journaltemp({metrics}) {
-  const [data, setData] = useState(metrics.data);
+export default function Journaltemp(props) {
+  const initialData = JSON.parse(props.data);
+
+  const [data, setData] = useState(initialData);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   //Render a list of metrics
   const metricList = data.map(metric => {
-    const { id, name, property, unit, journals } = metric;
-    const value = journals?.metric_value;
+    const { id, name, property, unit, user_metric_data } = metric;
+    const value = user_metric_data[0]?.metric_value;
 
     // Render InputComponent if property is 'input'
     if (property === "input") {
@@ -45,14 +48,15 @@ export default function Journaltemp({metrics}) {
 
   // Function to update the data when a metric value is changed
   function handleChange(metricId, newValue) {
+    const parsedValue = parseFloat(newValue)
     const updatedData = data.map(metric => {
       if (metric.id === metricId) {
         return {
           ...metric,
-          journals: {
-            ...metric.journals,
-            metric_value: newValue
-          }
+          user_metric_data: [{
+            ...metric.user_metric_data[0],
+            metric_value: parsedValue
+          }]
         };
       }
       return metric;
@@ -97,8 +101,7 @@ export default function Journaltemp({metrics}) {
           </div>
         </div>
 
-        {/* Remove pr-9 */}
-        <div id="journal-entries" className="w-full h-4/5 overflow-y-scroll mb-5 pr-9">
+        <div id="journal-entries" className="w-full h-4/5 overflow-y-scroll scrollbar-hidden mb-5 pr-9">
           {metricList}
         </div>
 
@@ -114,111 +117,24 @@ export default function Journaltemp({metrics}) {
 }
 
 export async function getServerSideProps() {
+  const prisma = new PrismaClient()
 
-  // // Fetch all metrics and their associated journals
-  // const metrics = await prisma.metric.findMany({
-  //   include: {
-  //     journals: true,
-  //   },
-  // });
+  // Fetch all metrics and their associated journals
+  const metrics = await prisma.metric.findMany({
+    include: {
+      user_metric_data: {
+        where: {
+          date: {
+            equals: '2023-04-09T06:00:00.000Z'
+          }
+        }
+      }
+    }
+  });
 
-  // Temporary example metric data
-  const metrics = {
-    data: [
-      {
-        id: 1,
-        name: "How much sleep did you get last night?",
-        unit: "hours",
-        property: "input",
-        journals: {
-          id: 1,
-          user_id: 1,
-          metric_id: 1,
-          date: '2022-03-30T15:23:00.000Z',
-          metric_value: 8,
-        },
-      },
-      {
-        id: 2,
-        name: "Rate your sleep last night:",
-        property: "scale",
-        journals: {},
-      },
-      {
-        id: 3,
-        name: "Log your exercise for today:",
-        unit: "minutes",
-        property: "input",
-        journals: {},
-      },
-      {
-        id: 4,
-        name: "Rate your energy levels for today:",
-        unit: "minutes",
-        property: "input",
-        journals: {
-          id: 1,
-          user_id: 1,
-          metric_id: 4,
-          date: '2022-03-30T15:23:00.000Z',
-          metric_value: 30,
-        },
-      },
-      {
-        id: 5,
-        name: "Rate your stress levels for today:",
-        unit: "steps",
-        property: "scale",
-        journals: {
-          id: 1,
-          user_id: 1,
-          metric_id: 5,
-          date: '2022-03-30T15:23:00.000Z',
-          metric_value: 3,
-        },
-      },
-      {
-        id: 6,
-        name: "How many cups of water did you drink today?",
-        unit: "cups",
-        property: "input",
-        journals: {
-          id: 1,
-          user_id: 1,
-          metric_id: 6,
-          date: '2022-03-31T15:23:00.000Z',
-          metric_value: 6,
-        },
-      },
-      {
-        id: 7,
-        name: "How many steps did you take today?",
-        unit: "steps",
-        property: "input",
-        journals: {
-          id: 1,
-          user_id: 1,
-          metric_id: 7,
-          date: '2022-03-30T15:23:00.000Z',
-          metric_value: 10000,
-        },
-      },
-      {
-        id: 8,
-        name: "Rate your mood today:",
-        property: "scale",
-        journals: {
-          id: 1,
-          user_id: 1,
-          metric_id: 8,
-          date: '2022-03-31T15:23:00.000Z',
-          metric_value: 8,
-        },
-      }, 
-    ]
-  };
+  const data = JSON.stringify(metrics);
 
   return {
-    props : { metrics }
+    props : { data }
   }
 }
