@@ -159,7 +159,17 @@ export default function Home(props) {
 
 // Fetch all posts (in /pages/index.tsx)
 export async function getServerSideProps() {
-  const prisma = new PrismaClient()
+  const prisma = new PrismaClient();
+
+  const currDate = new Date();
+  const today = await prisma.User_metric_data.findMany({
+    where: {
+      date: {
+        gte: currDate.toISOString()
+      }
+    }
+  });
+  console.log('Today: ', today);
 
   const user = await prisma.User.findUnique({
     where: {
