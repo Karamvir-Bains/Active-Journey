@@ -17,19 +17,19 @@ model User {
   user_metric_data User_metric_data[]
 }
 
-model User_metric_data {
-  id           Int      @id @default(autoincrement())
-  date         DateTime @default(now())
-  metric_value Int
-  user_id      Int
-  users        User     @relation(fields: [user_id], references: [id])
-  metric_id    Int
-  metrics      Metric   @relation(fields: [metric_id], references: [id])
-}
-
 model Metric {
   id               Int                @id @default(autoincrement())
   name             String
   unit             String
   user_metric_data User_metric_data[]
+}
+
+model User_metric_data {
+  id           Int      @id @default(autoincrement())
+  date         DateTime @default(now())
+  metric_value Int
+  user_id      Int
+  users        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  metric_id    Int
+  metrics      Metric   @relation(fields: [metric_id], references: [id], onDelete: Cascade)
 }
