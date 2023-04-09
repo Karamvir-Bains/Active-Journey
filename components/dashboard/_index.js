@@ -26,6 +26,7 @@ export default function Dashboard(props) {
           sm: 6
         }}
         onLayoutChange={(e, f) => props.onLayoutChange(e, f)}
+        isResizable={false}
       >
         <div key="overview">
           <Overview entries={props.entries} />
