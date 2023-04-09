@@ -1,4 +1,8 @@
-export default function DailyWater() {
+export default function DailyWater() { 
+  // convert props.today.water to percentage to fill animation of water glass/bottle
+  // https://codepen.io/qindazhu/pen/ZWNKoG
+  // https://github.com/coiger/fill-water-animation
+
   return(
     <div className="overflow-scroll rounded-lg bg-white shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
       <h3 className="text-center font-bold mb-3 text-xl text-blue-900">Daily Water Intake</h3>
