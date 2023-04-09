@@ -141,6 +141,8 @@ export default function Home(props) {
                   user={props.user}
                   entries={props.entries}
                   water={props.water}
+                  sleep={props.sleep}
+                  energy={props.energy}
                   layout={layout}
                   onLayoutChange={handleLayoutChange}
                 />
@@ -172,6 +174,20 @@ export async function getServerSideProps() {
   });
   water = JSON.parse(JSON.stringify(water));
 
+  let sleep = await prisma.User_metric_data.findMany({
+    where: {
+      metric_id: 2,
+    }
+  });
+  sleep = JSON.parse(JSON.stringify(sleep));
+
+  let energy = await prisma.User_metric_data.findMany({
+    where: {
+      metric_id: 4,
+    }
+  });
+  energy = JSON.parse(JSON.stringify(energy));
+
   let entries = await prisma.User_metric_data.findMany({
     where: {
       user_id: 1,
@@ -184,6 +200,12 @@ export async function getServerSideProps() {
   entries = JSON.parse(JSON.stringify(entries));
 
   return {
-    props : { user, entries, water }
+    props : {
+      user, 
+      entries, 
+      water, 
+      sleep, 
+      energy 
+    }
   }
 }

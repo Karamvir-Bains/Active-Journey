@@ -31,7 +31,12 @@ export default function Dashboard(props) {
         isResizable={false}
       >
         <div key="overview">
-          <Overview entries={props.entries} water={props.water} />
+          <Overview 
+            entries={props.entries}
+            water={props.water}
+            sleep={props.sleep} 
+            energy={props.energy}
+          />
         </div>
         <div key="calendar">
           <Calendar />

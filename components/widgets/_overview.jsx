@@ -10,6 +10,10 @@ export default function Overview(props) {
       return (entry.metric_value / 100) - 15
     }).slice(0,7);
 
+    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0,7);
+
+    const energyVals = props.energy.map(entry => entry.metric_value).slice(0,7);
+
     var myChart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -22,28 +26,27 @@ export default function Overview(props) {
           backgroundColor: "transparent",
           fill: false,
         }, {
-          data: [6, 8, 5, 8, 7, 6, 5],
-          label: "Sleep",
-          borderWidth: 0,
-          pointRadius: 0,
-          backgroundColor: "#71d1bd",
-          fill: true,
-        }, {
-          data: [3, 9, 7, 10, 8, 5, 8],
-          label: "Energy Level",
-          borderWidth: 0,
-          pointRadius: 0,
-          backgroundColor: "#ffc04d",
-          fill: true,
-        }, {
           data: [2, 3, 3, 3, 2, 2, 3],
           label: "Mood",
           borderColor: "#c45850",
           pointRadius: 0,
           backgroundColor: "transparent",
           fill: false,
-        }
-        ]
+        }, {
+          data: energyVals,
+          label: "Energy Level",
+          borderWidth: 0,
+          pointRadius: 0,
+          backgroundColor: "#ffc04d",
+          fill: true,
+        }, {
+          data: sleepVals,
+          label: "Sleep",
+          borderWidth: 0,
+          pointRadius: 0,
+          backgroundColor: "#71d1bd",
+          fill: true,
+        }]
       },
       options: {
         responsive: true,
