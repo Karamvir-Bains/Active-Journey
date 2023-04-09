@@ -1,8 +1,11 @@
 export default function DailyWater(props) {
-
-  const calcGlassHeight = () => {
+  let ml = 0;
+  if (props.dailyWater.length > 0) {
+    ml = props.dailyWater[0].metric_value;
+  }
+  let val = Math.ceil(ml / 250);
+  const calcGlassHeight = (val) => {
     let heightClass = 'bg-blue-900 w-full absolute z-10 bottom-0 rounded-b-lg ';
-    const val = Number(props.dailyWaterVal);
     if (val === 0) {
       heightClass += 'h-[0%]';
     } else if (val === 1) {
@@ -25,8 +28,7 @@ export default function DailyWater(props) {
     return heightClass;
   }
 
-  const getGlassClass = calcGlassHeight();
-
+  const getGlassClass = calcGlassHeight(val);
 
   return(
     <div className="overflow-scroll rounded-lg bg-white shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
@@ -37,7 +39,7 @@ export default function DailyWater(props) {
           className={getGlassClass}></div>
       </div>
       <div className="font-medium text-lg text-center my-3">
-        {props.dailyWaterVal} out of 8 cups
+        {val} out of 8 cups
       </div>
     </div>
   )

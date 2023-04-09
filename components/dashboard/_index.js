@@ -10,7 +10,7 @@ import Widget from "../widgets/_widget";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
-  return(
+  return (
     <div className="relative bg-blue">
       <ResponsiveGridLayout
         className="layout"
@@ -29,11 +29,14 @@ export default function Dashboard(props) {
           <Overview />
         </div>
         <div key="calendar">
-          <Calendar />
+          <Calendar
+            day={props.day}
+            setDay={props.setDay}
+          />
         </div>
         <div key="dailyWater">
           <DailyWater
-            dailyWaterVal="5"
+            dailyWater={props.dailyWater}
           />
         </div>
         <div key="activityGoal">

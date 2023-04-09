@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
@@ -10,6 +11,17 @@ import Footer from '../components/partials/_footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Settings(props) {
+  const entries = props.entries.map((entry, idx) => {
+    console.log(entry);
+    const formatDate = format(new Date(entry.date), 'MMMM d,  yyyy');
+    return (
+      <tr key={idx}>
+        <td className="p-2 border border-slate-200">{formatDate}</td>
+        <td className="p-2 border border-slate-200">{entry.metrics.name}</td>
+        <td className="p-2 border border-slate-200">{entry.metric_value} {entry.metrics.unit}</td>
+      </tr>
+    )
+  })
   return (
     <>
       <Head>
@@ -20,7 +32,7 @@ export default function Settings(props) {
       </Head>
       <div className="flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}">
         
-        <div className="flex-grow overflow-auto">
+        <div className="flex-grow">
           <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
             <Sidebar />
             <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
@@ -30,42 +42,16 @@ export default function Settings(props) {
                   userName={props.user.first_name}
                 />
                 <section className="mx-3 bg-white rounded-lg p-6 overflow-auto">
-                  <table className="table-auto border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base">
+                  <table className="table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base">
                     <thead>
                       <tr className='bg-blue-900 text-white'>
                         <th className="text-left p-2 border border-slate-200">Day</th>
-                        <th className="text-left p-2 border border-slate-200">Water Intake</th>
-                        <th className="text-left p-2 border border-slate-200">Mood</th>
-                        <th className="text-left p-2 border border-slate-200">Activity</th>
-                        <th className="text-left p-2 border border-slate-200">Sleep</th>
-                        <th className="text-left p-2 border border-slate-200">Sleep Quality</th>
+                        <th className="text-left p-2 border border-slate-200">Metric</th>
+                        <th className="text-left p-2 border border-slate-200">Value</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="">
-                        <td  className="p-2 border border-slate-200">March 31, 2023</td>
-                        <td  className="p-2 border border-slate-200">6 cups</td>
-                        <td  className="p-2 border border-slate-200">10</td>
-                        <td  className="p-2 border border-slate-200">30 min</td>
-                        <td  className="p-2 border border-slate-200">8 hours</td>
-                        <td  className="p-2 border border-slate-200">10</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2 border border-slate-200">March 30, 2023</td>
-                        <td className="p-2 border border-slate-200">5 cups</td>
-                        <td className="p-2 border border-slate-200">9</td>
-                        <td className="p-2 border border-slate-200">30 min</td>
-                        <td className="p-2 border border-slate-200">8 hours</td>
-                        <td  className="p-2 border border-slate-200">10</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2 border border-slate-200">March 29, 2023</td>
-                        <td className="p-2 border border-slate-200">9 cups</td>
-                        <td className="p-2 border border-slate-200">9</td>
-                        <td className="p-2 border border-slate-200">30 min</td>
-                        <td className="p-2 border border-slate-200">8 hours</td>
-                        <td  className="p-2 border border-slate-200">8/10</td>
-                      </tr>
+                      {entries}                      
                     </tbody>
                   </table> 
                 </section>
@@ -92,7 +78,27 @@ export async function getServerSideProps() {
     }
   })
 
+  const today = new Date();
+
+  let entries = await prisma.User_metric_data.findMany({
+    where: {
+      user_id: 1,
+      date: {
+        lte: new Date(),
+        gte: new Date(new Date().setDate(today.getDate() - 30))
+      },
+    },
+    include: {
+      metrics: true,
+    },
+    orderBy: {
+      date: "desc",
+    }
+  })
+
+  entries = JSON.parse(JSON.stringify(entries))
+
   return {
-    props : { user }
+    props : { user, entries }
   }
 }

@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.react-calendar__navigation__arrow {
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
+.react-calendar__tile:hover,
+button.react-calendar__tile--active,
+.react-calendar__navigation__arrow:hover {
+  background-color: rgb(30 64 175);
+  color: #fff;
+}
+
+button.react-calendar__tile--now {
+  background-color: green;
+  color: #fff;
+}
+
+react-calendar__tile--now:hover {
+  background-color: rgba(30 64 175, 0.7);
+}
+
+.react-calendar__navigation__label {
+  font-size: 1.1rem;
+  font-weight: 600;
+}

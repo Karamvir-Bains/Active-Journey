@@ -57,6 +57,7 @@ async function updateLayout(id, layout) {
 
 export default function Home(props) {
   const [layout, setLayout] = useState(defaultLayout);
+  const [day, setDay] = useState(Date.now());
 
   useEffect(() => {
     if (props.user.layout !== null) {
@@ -68,6 +69,10 @@ export default function Home(props) {
       }));
     }
   }, [props.user.layout])
+
+  const handleSetDay = async (date) => {
+    setDay(date);
+  }
 
   const handleLayoutChange = async (layoutsObj) => {
     await updateLayout(props.user.id, {"layout": layoutsObj });
@@ -94,7 +99,10 @@ export default function Home(props) {
                 />
                 <Dashboard 
                   user={props.user}
+                  day={day}
+                  setDay={handleSetDay}
                   layout={layout}
+                  dailyWater={props.dailyWater}
                   onLayoutChange={handleLayoutChange}
                 />
                 <Footer />
@@ -111,13 +119,32 @@ export default function Home(props) {
 export async function getServerSideProps() {
   const prisma = new PrismaClient()
 
+  const userid = 1;
+
   const user = await prisma.user.findUnique({
     where: {
-      id: 1,
+      id: userid,
     }
   })
 
+  const now = Date.now();
+  const today = new Date(now).toISOString();
+  let dailyWater = await prisma.User_metric_data.findMany({
+    where: {
+      user_id: userid,
+      metric_id: 1,
+      date: {
+        lte: today,
+      }
+    },
+    include: {
+      metrics: true,
+    }
+  })
+
+  dailyWater = JSON.parse(JSON.stringify(dailyWater))
+
   return {
-    props : { user}
+    props : { user, dailyWater }
   }
 }
