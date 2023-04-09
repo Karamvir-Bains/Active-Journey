@@ -138,7 +138,19 @@ export async function getServerSideProps() {
     }
   })
 
+  let entries = await prisma.User_metric_data.findMany({
+    where: {
+      user_id: 1,
+    },
+    include: {
+      metrics: true,
+    },
+    take: 30
+  })
+
+  entries = JSON.parse(JSON.stringify(entries))
+
   return {
-    props : { user }
+    props : { user, entries }
   }
 }

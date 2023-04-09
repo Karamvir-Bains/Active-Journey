@@ -11,6 +11,7 @@ import Widget from "../widgets/_widget";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
+  console.log('index props', props);
   return(
     <div className="relative bg-blue">
       <ResponsiveGridLayout
