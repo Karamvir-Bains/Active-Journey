@@ -26,6 +26,8 @@ export default function Dashboard(props) {
           sm: 6
         }}
         onLayoutChange={(e, f) => props.onLayoutChange(e, f)}
+        isDraggable={true}
+        isRearrangeable={true}
         isResizable={false}
       >
         <div key="overview">

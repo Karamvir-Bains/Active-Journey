@@ -52,37 +52,59 @@ async function updateLayout(id, layout) {
 }
 
 export default function Home(props) {
-  const [layout, setLayout] = useState({});
-
+  const getDefaultLayout = defaultLayout;
+  const [layout, setLayout] = useState(getDefaultLayout);
   useEffect(() => {
     const userLayout = JSON.parse(props.user.layout);
-    setLayout(prev => ({
-      ...prev,
-      'lg': userLayout['lg'],
-      'sm': userLayout['sm']
-    }));
-  }, [props.user.layout])
+    if (userLayout !== null) {
+      setLayout(prev => ({
+        ...prev,
+        'lg': userLayout['lg'],
+        'sm': userLayout['sm']
+      }));
+    }
+  }, [])
 
   const handleLayoutChange = async (data, f) => {
-    if (data && f['sm']) {
-      const newLayout = {
-        ...layout,
-        lg: [
-          ...f['lg']
-        ],
-        sm: [
-          ...f['sm']
-        ]
-      }
-      setLayout(prev => ({
-          ...prev,
-          'lg': [
+    const winWidth = window.innerWidth;
+    let newLayout = {};
+    if (data && f['sm'] && f['lg']) {
+      if (winWidth < 1024) {
+        newLayout = {
+          ...layout,
+          lg: [
             ...f['lg']
           ],
-          'sm': [
+          sm: [
+            ...f['sm']
+          ]
+        }
+        setLayout(prev => ({
+          ...prev,
+          lg: [
+            ...f['lg']
+          ],
+          sm: [
             ...f['sm']
           ]
         }));
+      } else {
+        newLayout = {
+          ...layout,
+          lg: [
+            ...f['lg']
+          ],
+          sm: [
+            ...f['sm']
+          ]
+        }
+        setLayout(prev => ({
+          ...prev,
+          lg: [
+            ...f['lg']
+          ]
+        }));
+      }
       await updateLayout(props.user.id, {"data": newLayout });
     }
   }
@@ -110,8 +132,11 @@ export default function Home(props) {
               }}       
               className="relative sm:mx-auto w-full h-full max-w-200 overflow-auto"
             >
-              <div className="flex h-full container flex-col p-8 mb-6">
-                <Header />
+              <div className="flex h-full flex-col p-8 mb-6">
+                <Header
+                  pageTitle="Dashboard"
+                  userName={props.user.first_name}
+                />
                 <Dashboard 
                   user={props.user}
                   entries={props.entries}
