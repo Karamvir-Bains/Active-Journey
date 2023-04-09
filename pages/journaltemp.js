@@ -79,15 +79,19 @@ export default function Journaltemp({metrics}) {
     <div className="h-screen w-screen bg-gray-300 flex items-center justify-center">
       <section className="flex flex-col justify-center bg-white rounded-lg w-1/3 h-4/5 py-6 px-10 shadow-md">
         
-        <div id="journal-header" className='flex'>
-          <h3 className='font-bold mr-2 mb-5 whitespace-nowrap'>{getDateText(selectedDate)}</h3>
-          <DatePicker
-            selected={selectedDate}
-            onChange={date => setSelectedDate(date)}
-            showMonthDropdown={true}
-            showYearDropdown={true}
-            customInput={<CalendarIcon />}
-          />
+        <div id="journal-header" className='flex justify-between'>
+          <div className='flex'>
+            <h3 className='font-bold mr-2 mb-5 whitespace-nowrap'>{getDateText(selectedDate)}</h3>
+            <DatePicker
+              selected={selectedDate}
+              onChange={date => setSelectedDate(date)}
+              showMonthDropdown={true}
+              showYearDropdown={true}
+              customInput={<CalendarIcon />}
+              withPortal={true}
+            />
+          </div>
+
           <div className="h-5 w-5 text-gray-500">
               <FontAwesomeIcon icon={faTimes} />
           </div>
