@@ -12,6 +12,7 @@ export default function Nutrition(props) {
         {
           data: [1, 9, 8, 9, 4, 4, 7, 10, 9, 8],
           backgroundColor: "#d97706",
+          borderRadius: 15
         }
       ]
     };
