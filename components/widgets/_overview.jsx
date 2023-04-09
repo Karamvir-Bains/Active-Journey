@@ -51,17 +51,7 @@ export default function Overview(props) {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            id: 'A',
-            type: 'linear',
-            position: 'right',
-          }, {
-            id: 'B',
-            type: 'linear',
-            position: 'right',
-          }]
-        }
+        scales: { y: { display: false } }
       }
     });
 
