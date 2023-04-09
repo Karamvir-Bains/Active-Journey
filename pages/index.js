@@ -140,6 +140,7 @@ export default function Home(props) {
                 <Dashboard 
                   user={props.user}
                   entries={props.entries}
+                  water={props.water}
                   layout={layout}
                   onLayoutChange={handleLayoutChange}
                 />
@@ -162,7 +163,14 @@ export async function getServerSideProps() {
     where: {
       email: 'jane@jane.com',
     }
-  })
+  });
+
+  let water = await prisma.User_metric_data.findMany({
+    where: {
+      metric_id: 1,
+    }
+  });
+  water = JSON.parse(JSON.stringify(water));
 
   let entries = await prisma.User_metric_data.findMany({
     where: {
@@ -173,10 +181,9 @@ export async function getServerSideProps() {
     },
     take: 30
   })
-
-  entries = JSON.parse(JSON.stringify(entries))
+  entries = JSON.parse(JSON.stringify(entries));
 
   return {
-    props : { user, entries }
+    props : { user, entries, water }
   }
 }

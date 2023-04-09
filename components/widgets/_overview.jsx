@@ -6,13 +6,16 @@ export default function Overview(props) {
     var ctx = document.getElementById('myChart').getContext('2d');
 
     // create datasets array of obj's from entries
+    const waterVals = props.water.map(entry => {
+      return (entry.metric_value / 100) - 15
+    }).slice(0,7);
 
     var myChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         datasets: [{
-          data: [3, 9, 8, 9, 4, 4, 7],
+          data: waterVals,
           label: "Water Intake",
           borderColor: "#3e95cd",
           pointRadius: 0,
@@ -43,8 +46,19 @@ export default function Overview(props) {
         ]
       },
       options: {
-          responsive: true,
-          maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            id: 'A',
+            type: 'linear',
+            position: 'right',
+          }, {
+            id: 'B',
+            type: 'linear',
+            position: 'right',
+          }]
+        }
       }
     });
 

@@ -31,7 +31,7 @@ export default function Dashboard(props) {
         isResizable={false}
       >
         <div key="overview">
-          <Overview entries={props.entries} />
+          <Overview entries={props.entries} water={props.water} />
         </div>
         <div key="calendar">
           <Calendar />
