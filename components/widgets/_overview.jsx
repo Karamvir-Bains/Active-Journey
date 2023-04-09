@@ -14,7 +14,7 @@ export default function Overview() {
           label: "Water Intake",
           borderColor: "#3e95cd",
           pointRadius: 0,
-          backgroundColor: "#7bb6dd",
+          backgroundColor: "transparent",
           fill: false,
         }, {
           data: [6, 8, 5, 8, 7, 6, 5],
@@ -35,7 +35,7 @@ export default function Overview() {
           label: "Mood",
           borderColor: "#c45850",
           pointRadius: 0,
-          backgroundColor: "#d78f89",
+          backgroundColor: "transparent",
           fill: false,
         }
         ]

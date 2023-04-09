@@ -8,11 +8,11 @@ export default function ActivityGoal() {
       datasets: [{
         label: 'My First Dataset',
         data: [50, 100],
+        borderWidth: 0,
         backgroundColor: [
           'rgb(211, 211, 211)',
           'rgb(76, 187, 23)'
         ],
-        hoverOffset: 4
       }]
     };
     var activityChart = new Chart(ctx, {
@@ -21,6 +21,7 @@ export default function ActivityGoal() {
       options: {
         legend: { display: false },
         plugins: { tooltip: { enabled: false } },
+        hover: {mode: null},
       }
     });
 
