@@ -51,6 +51,7 @@ Run Database migration:
 
 Seed Database: 
 `npx prisma seed`
+
 `prisma db seed`
 
 Reset Database:
