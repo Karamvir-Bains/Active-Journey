@@ -139,10 +139,12 @@ export default function Home(props) {
                 />
                 <Dashboard 
                   user={props.user}
+                  today={props.today}
                   entries={props.entries}
                   water={props.water}
                   sleep={props.sleep}
                   energy={props.energy}
+                  mood={props.mood}
                   layout={layout}
                   onLayoutChange={handleLayoutChange}
                 />
@@ -161,50 +163,40 @@ export default function Home(props) {
 export async function getServerSideProps() {
   const prisma = new PrismaClient();
 
-  const currDate = new Date();
-  const today = await prisma.User_metric_data.findMany({
-    where: {
-      date: {
-        gte: currDate.toISOString()
-      }
-    }
+  // const currDate = new Date();
+  const currDate = '2023-05-04T07:00:00.000Z';
+  let today = await prisma.User_metric_data.findMany({
+    where: { date: currDate }
   });
-  console.log('Today: ', today);
+  today = JSON.parse(JSON.stringify(today));
 
   const user = await prisma.User.findUnique({
-    where: {
-      email: 'jane@jane.com',
-    }
+    where: { email: 'jane@jane.com' }
   });
 
   let water = await prisma.User_metric_data.findMany({
-    where: {
-      metric_id: 1,
-    }
+    where: { metric_id: 1 }
   });
   water = JSON.parse(JSON.stringify(water));
 
   let sleep = await prisma.User_metric_data.findMany({
-    where: {
-      metric_id: 2,
-    }
+    where: { metric_id: 2 }
   });
   sleep = JSON.parse(JSON.stringify(sleep));
 
   let energy = await prisma.User_metric_data.findMany({
-    where: {
-      metric_id: 4,
-    }
+    where: { metric_id: 4 }
   });
   energy = JSON.parse(JSON.stringify(energy));
 
+  let mood = await prisma.User_metric_data.findMany({
+    where: { metric_id: 5 }
+  });
+  mood = JSON.parse(JSON.stringify(mood));
+
   let entries = await prisma.User_metric_data.findMany({
-    where: {
-      user_id: 1,
-    },
-    include: {
-      metrics: true,
-    },
+    where: { user_id: 1 },
+    include: { metrics: true },
     take: 30
   })
   entries = JSON.parse(JSON.stringify(entries));
@@ -212,10 +204,12 @@ export async function getServerSideProps() {
   return {
     props : {
       user, 
+      today,
       entries, 
       water, 
       sleep, 
-      energy 
+      energy,
+      mood 
     }
   }
 }

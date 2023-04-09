@@ -10,6 +10,9 @@ export default function Overview(props) {
     const waterVals = props.water.map(entry => {
       return (entry.metric_value / 100) - 15
     }).slice(0,30);
+    const moodVals = props.mood.map(entry => {
+      return (entry.metric_value * 3)
+    }).slice(0,30);
 
     const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0,30);
 
@@ -22,7 +25,7 @@ export default function Overview(props) {
         datasets: [{
           type: 'line',
           label: "Mood",
-          data: [2, 3, 3, 3, 2, 2, 3],
+          data: moodVals,
           borderColor: "#c45850",
           pointRadius: 0,
           // backgroundColor: "transparent",

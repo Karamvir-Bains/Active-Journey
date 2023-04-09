@@ -20,6 +20,10 @@ async function seed() {
     {
       name: "Energy",
       unit: "scale"
+    },
+    {
+      name: "Mood",
+      unit: "scale"
     }]
 
   for (let metric of metrics) {

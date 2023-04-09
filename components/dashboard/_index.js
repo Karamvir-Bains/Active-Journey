@@ -11,7 +11,7 @@ import Widget from "../widgets/_widget";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
-  console.log('index entries', props.entries);
+  // console.log('index entries', props.entries);
   return(
     <div className="relative bg-blue">
       <ResponsiveGridLayout
@@ -36,6 +36,7 @@ export default function Dashboard(props) {
             water={props.water}
             sleep={props.sleep} 
             energy={props.energy}
+            mood={props.mood}
           />
         </div>
         <div key="calendar">
