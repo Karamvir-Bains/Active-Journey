@@ -6,45 +6,50 @@ export default function Overview(props) {
     var ctx = document.getElementById('myChart').getContext('2d');
 
     // create datasets array of obj's from entries
+    const entryIds = props.entries.map(entry => entry.id).slice(0,30);
     const waterVals = props.water.map(entry => {
       return (entry.metric_value / 100) - 15
-    }).slice(0,7);
+    }).slice(0,30);
 
-    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0,7);
+    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0,30);
 
-    const energyVals = props.energy.map(entry => entry.metric_value).slice(0,7);
+    const energyVals = props.energy.map(entry => entry.metric_value).slice(0,30);
 
     var myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        labels: entryIds,
         datasets: [{
-          data: waterVals,
-          label: "Water Intake",
-          borderColor: "#3e95cd",
-          pointRadius: 0,
-          backgroundColor: "transparent",
-          fill: false,
-        }, {
-          data: [2, 3, 3, 3, 2, 2, 3],
+          type: 'line',
           label: "Mood",
+          data: [2, 3, 3, 3, 2, 2, 3],
           borderColor: "#c45850",
           pointRadius: 0,
-          backgroundColor: "transparent",
-          fill: false,
+          // backgroundColor: "transparent",
+          fill: true,
         }, {
-          data: energyVals,
+          type: 'bar',
+          label: "Water Intake",
+          data: waterVals,
+          borderColor: "#3e95cd",
+          // pointRadius: 0,
+          backgroundColor: "#3e95cd",
+          // fill: false,
+        }, {
+          type: 'bar',
+          label: "Sleep",
+          data: sleepVals,
+          // borderWidth: 0,
+          // pointRadius: 0,
+          backgroundColor: "#71d1bd",
+          // fill: true,
+        }, {
+          type: 'line',
           label: "Energy Level",
+          data: energyVals,
           borderWidth: 0,
           pointRadius: 0,
           backgroundColor: "#ffc04d",
-          fill: true,
-        }, {
-          data: sleepVals,
-          label: "Sleep",
-          borderWidth: 0,
-          pointRadius: 0,
-          backgroundColor: "#71d1bd",
           fill: true,
         }]
       },
