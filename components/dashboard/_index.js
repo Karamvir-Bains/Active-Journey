@@ -56,10 +56,10 @@ export default function Dashboard(props) {
           <AvgMood mood={props.mood} />
         </div>
         <div key="c">
-          <Widget title="Widget Title" />
+          <Widget title="Sleep Quality vs Hours" />
         </div>
         <div key="d">
-          <Widget title="Widget Title" />
+          <Widget title="Activity Log" />
         </div>
         <div key="e">
           <Nutrition entries={props.entries} />

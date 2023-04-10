@@ -158,41 +158,29 @@ export default function Home(props) {
   )
 }
 
+// Fetch all entries by metric
+async function fetchSingleMetric(condition) {
+  const prisma = new PrismaClient();
+  let metric = await prisma.User_metric_data.findMany({ where: condition });
+  metric = JSON.parse(JSON.stringify(metric));
+  return metric;
+}
 
 // Fetch all posts (in /pages/index.tsx)
 export async function getServerSideProps() {
   const prisma = new PrismaClient();
 
-  // const currDate = new Date();
-  const currDate = '2023-05-04T07:00:00.000Z';
-  let today = await prisma.User_metric_data.findMany({
-    where: { date: currDate }
-  });
-  today = JSON.parse(JSON.stringify(today));
-
   const user = await prisma.User.findUnique({
     where: { email: 'jane@jane.com' }
   });
 
-  let water = await prisma.User_metric_data.findMany({
-    where: { metric_id: 1 }
-  });
-  water = JSON.parse(JSON.stringify(water));
-
-  let sleep = await prisma.User_metric_data.findMany({
-    where: { metric_id: 2 }
-  });
-  sleep = JSON.parse(JSON.stringify(sleep));
-
-  let energy = await prisma.User_metric_data.findMany({
-    where: { metric_id: 4 }
-  });
-  energy = JSON.parse(JSON.stringify(energy));
-
-  let mood = await prisma.User_metric_data.findMany({
-    where: { metric_id: 5 }
-  });
-  mood = JSON.parse(JSON.stringify(mood));
+  // const currDate = new Date();
+  const mockCurrDate = '2023-05-04T07:00:00.000Z';
+  let today = await fetchSingleMetric({ date: mockCurrDate });
+  let water = await fetchSingleMetric({ metric_id: 1 });
+  let sleep = await fetchSingleMetric({ metric_id: 2 });
+  let energy = await fetchSingleMetric({ metric_id: 4 });
+  let mood = await fetchSingleMetric({ metric_id: 5 });
 
   let entries = await prisma.User_metric_data.findMany({
     where: { user_id: 1 },
