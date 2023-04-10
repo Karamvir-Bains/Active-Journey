@@ -158,9 +158,11 @@ export default function Home(props) {
   )
 }
 
+/* Data Fetching */
+const prisma = new PrismaClient();
+
 // Fetch all entries by metric
 async function fetchSingleMetric(condition) {
-  const prisma = new PrismaClient();
   let metric = await prisma.User_metric_data.findMany({ where: condition });
   metric = JSON.parse(JSON.stringify(metric));
   return metric;
@@ -168,7 +170,6 @@ async function fetchSingleMetric(condition) {
 
 // Fetch all posts (in /pages/index.tsx)
 export async function getServerSideProps() {
-  const prisma = new PrismaClient();
 
   const user = await prisma.User.findUnique({
     where: { email: 'jane@jane.com' }
