@@ -14,7 +14,8 @@ async function seed() {
       { metric_id: 2 },
       { metric_id: 3 },
       { metric_id: 4 },
-      { metric_id: 5 }
+      { metric_id: 5 },
+      { metric_id: 6 }
     ];
 
     for (let metric of metrics) {
@@ -76,6 +77,18 @@ async function seed() {
             metric_value: mood_value,
             user_id: 1,
             metric_id: 5
+          },
+        });
+      }
+
+      if (metric.metric_id === 6) {
+        const stress_value = Math.floor(Math.random() * (10)) + 1;
+        await prisma.User_metric_data.create({
+          data: {
+            date,
+            metric_value: stress_value,
+            user_id: 1,
+            metric_id: 6
           },
         });
       }
