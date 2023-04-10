@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { faTimes }from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker';
@@ -7,13 +7,19 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import InputComponent from '../components/journal/InputComponent'
 import ScaleComponent from '../components/journal/ScaleComponent';
 import CalendarIcon from '../components/journal/CalendarIcon';
-import { PrismaClient } from '@prisma/client'
 
-export default function Journaltemp(props) {
-  const initialData = JSON.parse(props.data);
-
-  const [data, setData] = useState(initialData);
+export default function Journaltemp() {
+  const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(`/api/userMetricData?date=${selectedDate.toISOString()}`);
+      const { metrics } = await res.json();
+      setData(metrics);
+    }
+    fetchData();
+  }, [selectedDate]);
 
   //Render a list of metrics
   const metricList = data.map(metric => {
@@ -79,6 +85,22 @@ export default function Journaltemp(props) {
     }
   };
 
+  const handleSave = async () => {
+    try {
+      const res = await fetch('/api/userMetricData', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = await res.json();
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="h-screen w-screen bg-gray-300 flex items-center justify-center">
       <section className="flex flex-col justify-center bg-white rounded-lg w-1/3 h-4/5 py-6 px-10 shadow-md">
@@ -106,7 +128,10 @@ export default function Journaltemp(props) {
         </div>
 
         <div id="journal-footer" className='flex justify-end'>
-          <button className="shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+          <button
+            className="shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            type="button"
+            onClick={handleSave}>
             Save Journal
           </button>
         </div>
@@ -114,27 +139,4 @@ export default function Journaltemp(props) {
       </section>
     </div>
   )
-}
-
-export async function getServerSideProps() {
-  const prisma = new PrismaClient()
-
-  // Fetch all metrics and their associated journals
-  const metrics = await prisma.metric.findMany({
-    include: {
-      user_metric_data: {
-        where: {
-          date: {
-            equals: '2023-04-09T06:00:00.000Z'
-          }
-        }
-      }
-    }
-  });
-
-  const data = JSON.stringify(metrics);
-
-  return {
-    props : { data }
-  }
 }
