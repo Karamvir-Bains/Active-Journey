@@ -8,7 +8,7 @@ import InputComponent from './InputComponent'
 import ScaleComponent from './ScaleComponent';
 import CalendarIcon from './CalendarIcon';
 
-export default function Journal() {
+export default function Journal(props) {
   const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -101,40 +101,42 @@ export default function Journal() {
     }
   };
 
+  const handleClose = () => {
+    props.onClose();
+  };
+
   return(
     <section className="flex flex-col justify-center bg-white rounded-lg w-1/3 h-4/5 py-6 px-10 shadow-md">
-        
-    <div id="journal-header" className='flex justify-between'>
-      <div className='flex'>
-        <h3 className='font-bold mr-2 mb-5 whitespace-nowrap'>{getDateText(selectedDate)}</h3>
-        <DatePicker
-          selected={selectedDate}
-          onChange={date => setSelectedDate(date)}
-          showMonthDropdown={true}
-          showYearDropdown={true}
-          customInput={<CalendarIcon />}
-          withPortal={true}
-        />
+      <div id="journal-header" className='flex justify-between'>
+        <div className='flex'>
+          <h3 className='font-bold mr-2 mb-5 whitespace-nowrap'>{getDateText(selectedDate)}</h3>
+          <DatePicker
+            selected={selectedDate}
+            onChange={date => setSelectedDate(date)}
+            showMonthDropdown={true}
+            showYearDropdown={true}
+            customInput={<CalendarIcon />}
+            withPortal={true}
+          />
+        </div>
+
+        <div className="text-gray-500 cursor-pointer" onClick={handleClose}>
+          <FontAwesomeIcon icon={faTimes} className="fa-lg" />
+        </div>
       </div>
 
-      <div className="h-5 w-5 text-gray-500">
-          <FontAwesomeIcon icon={faTimes} />
+      <div id="journal-entries" className="w-full h-4/5 overflow-y-scroll scrollbar-hidden mb-5 pr-9">
+        {metricList}
       </div>
-    </div>
 
-    <div id="journal-entries" className="w-full h-4/5 overflow-y-scroll scrollbar-hidden mb-5 pr-9">
-      {metricList}
-    </div>
-
-    <div id="journal-footer" className='flex justify-end'>
-      <button
-        className="shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-        type="button"
-        onClick={handleSave}>
-        Save Journal
-      </button>
-    </div>
-
-  </section>
+      <div id="journal-footer" className='flex justify-end'>
+        <button
+          className="shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+          type="button"
+          onClick={handleSave}>
+          Save Journal
+        </button>
+      </div>
+    </section>
   );
 }
