@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '../styles/Home.module.css'
-import { PrismaClient } from '@prisma/client'
-import Sidebar from '../components/partials/_sidebar'
-import Header from '../components/partials/_header'
-import Dashboard from '../components/dashboard/_index'
-import Footer from '../components/partials/_footer'
+import { useState, useEffect } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import styles from '../styles/Home.module.css';
+import { PrismaClient } from '@prisma/client';
+import Sidebar from '../components/partials/_sidebar';
+import Header from '../components/partials/_header';
+import Dashboard from '../components/dashboard/_index';
+import Footer from '../components/partials/_footer';
+import Journal from "../components/journal";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -58,7 +59,12 @@ async function updateLayout(id, layout) {
 export default function Home(props) {
   const userLayout = JSON.parse(props.user.layout);
   const [layout, setLayout] = useState(userLayout || defaultLayout);
-  const [day, setDay] = useState(Date.now());  
+  const [day, setDay] = useState(Date.now());
+  const [journalOpen, setJournalOpen] = useState(false);
+
+  const toggleJournal = () => {
+    setJournalOpen(!journalOpen);
+  };
 
   const handleSetDay = async (date) => {
     setDay(date);
@@ -78,19 +84,10 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}">
-        
         <div className="flex-grow overflow-auto">
           <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
-            <Sidebar />
-            <main  
-              style={{
-                backgroundImage: `url(/theme/pexels-simon-berger-1323550.jpg)`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                backgroundPosition: 'bottom'
-              }}       
-              className="relative sm:mx-auto w-full h-full max-w-200 overflow-auto"
-            >
+            <Sidebar toggleJournal={toggleJournal} />
+            <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
               <div className="flex h-full flex-col p-8 mb-6">
                 <Header
                   pageTitle="Dashboard"
@@ -109,11 +106,19 @@ export default function Home(props) {
                   layout={layout}
                   dailyWater={props.dailyWater}
                   onLayoutChange={handleLayoutChange}
+                  toggleJournal={toggleJournal}
                 />
                 <Footer />
               </div>
             </main>
           </div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/3">
+          {journalOpen && (
+            <div className="relative">
+              <Journal onClose={toggleJournal} />
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -2,14 +2,20 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import { PrismaClient } from '@prisma/client'
-import Sidebar from '../components/partials/_sidebar'
-import Header from '../components/partials/_header'
-import Footer from '../components/partials/_footer'
+import { PrismaClient } from '@prisma/client';
+import Sidebar from '../components/partials/_sidebar';
+import Header from '../components/partials/_header';
+import Footer from '../components/partials/_footer';
+import Journal from "../components/journal";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Settings(props) {
+  const [journalOpen, setJournalOpen] = useState(false);
+
+  const toggleJournal = () => {
+    setJournalOpen(!journalOpen);
+  };
   return (
     <>
       <Head>
@@ -22,7 +28,7 @@ export default function Settings(props) {
         
         <div className="flex-grow overflow-auto">
           <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
-            <Sidebar />
+            <Sidebar toggleJournal={toggleJournal} />
             <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
               <div className="flex h-full flex-col p-8 mb-6">
                 <Header
@@ -38,6 +44,13 @@ export default function Settings(props) {
               </div>
             </main>
           </div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/3">
+          {journalOpen && (
+            <div className="relative">
+              <Journal onClose={toggleJournal} />
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -22,7 +22,7 @@ export default function Calendar (props) {
         <div className='w-[50%] flex flex-col justify-self-center justify-center content-center text-blue-950 font-bold text-lg'>
           {formatDate(props.day)}
         </div>
-        <button className='flex flex-col justify-center content-center rounded-full bg-blue-800 hover:bg-blue-700 py-1 px-3 text-white ml-auto'>
+        <button onClick={props.toggleJournal} className='flex flex-col justify-center content-center rounded-full bg-blue-800 hover:bg-blue-700 py-1 px-3 text-white ml-auto'>
           <div className='w-3 h-3'>
             <FontAwesomeIcon icon={faPlus} />
           </div>
