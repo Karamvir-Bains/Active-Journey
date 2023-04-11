@@ -31,6 +31,7 @@ export default function Calendar (props) {
       <div className='bg-white rounded-lg mt-3 p-2'>
         <CalendarWidget 
           value={new Date(props.day)}
+          activeStartDate={new Date(props.day)}
           onChange={e => props.setDay(e)}
           maxDate={today}
         />
