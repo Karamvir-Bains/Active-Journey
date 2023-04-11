@@ -2,8 +2,9 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-async function createMetric(id, rangeVals, date) {
-  const value = Math.floor(Math.random() * (rangeVals[0] + rangeVals[1] - rangeVals[2])) + 1500;
+async function createMetric(id, min, max, date) {
+  // account for (max, min insetad of rangeVals)
+  const value = Math.floor(Math.random() * (max + min - 1)) + min;
   await prisma.User_metric_data.create({
     data: {
       date,
@@ -34,27 +35,27 @@ async function seed() {
       //print out fake data for each metric  
 
       if (metric.metric_id === 1) {
-        await createMetric(1, [2500, 1500, 1], date);
+        await createMetric(1, 2500, 1500, date);
       }
 
       if (metric.metric_id === 2) {
-        await createMetric(2, [10, 6, 1], date);
+        await createMetric(2, 10, 6, date);
       }
 
       if (metric.metric_id === 3) {
-        await createMetric(3, [60, 15, 1], date);
+        await createMetric(3, 60, 15, date);
       }
 
       if (metric.metric_id === 4) {
-        await createMetric(4, [10, 1, 1], date);
+        await createMetric(4, 10, 1, date);
       }
 
       if (metric.metric_id === 5) {
-        await createMetric(5, [3, 1, 1], date);
+        await createMetric(5, 3, 1, date);
       }
 
       if (metric.metric_id === 6) {
-        await createMetric(6, [10, 1, 1], date);
+        await createMetric(6, 10, 1, date);
       }
 
     }
