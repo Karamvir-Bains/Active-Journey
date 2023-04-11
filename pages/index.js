@@ -57,7 +57,7 @@ async function updateLayout(id, layout) {
 
 export default function Home(props) {
   const userLayout = JSON.parse(props.user.layout);
-  const [layout, setLayout] = useState(userLayout);
+  const [layout, setLayout] = useState(userLayout || defaultLayout);
   const [day, setDay] = useState(Date.now());  
 
   const handleSetDay = async (date) => {
