@@ -17,6 +17,13 @@ model User {
   user_metric_data User_metric_data[]
 }
 
+model Metric {
+  id               Int                @id @default(autoincrement())
+  name             String
+  unit             String
+  user_metric_data User_metric_data[]
+}
+
 model User_metric_data {
   id           Int      @id @default(autoincrement())
   date         DateTime @default(now())
@@ -25,11 +32,4 @@ model User_metric_data {
   users        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   metric_id    Int
   metrics      Metric   @relation(fields: [metric_id], references: [id], onDelete: Cascade)
-}
-
-model Metric {
-  id               Int                @id @default(autoincrement())
-  name             String
-  unit             String
-  user_metric_data User_metric_data[]
 }
