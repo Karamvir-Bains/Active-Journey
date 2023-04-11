@@ -3,7 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function createMockEntry(id, max, min, date) {
-  // assign random value to entry
+  // generate random value within range of metric
   const value = Math.floor(Math.random() * (max - min + 1)) + min;
   await prisma.User_metric_data.create({
     data: {
