@@ -36,6 +36,7 @@ export default function Dashboard(props) {
         </div>
         <div key="dailyWater">
           <DailyWater
+            day={props.day}
             dailyWater={props.dailyWater}
           />
         </div>
