@@ -35,10 +35,3 @@ model User_metric_data {
   metric_id    Int
   metrics      Metric   @relation(fields: [metric_id], references: [id], onDelete: Cascade)
 }
-
-model Metric {
-  id               Int                @id @default(autoincrement())
-  name             String
-  unit             String
-  user_metric_data User_metric_data[]
-}
