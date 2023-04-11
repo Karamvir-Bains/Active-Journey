@@ -12,7 +12,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Settings(props) {
   const entries = props.entries.map((entry, idx) => {
-    console.log(entry);
     const formatDate = format(new Date(entry.date), 'MMMM d,  yyyy');
     return (
       <tr key={idx}>
