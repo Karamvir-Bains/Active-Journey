@@ -164,7 +164,7 @@ const prisma = new PrismaClient();
 // Fetch all entries by metric
 async function fetchSingleMetric(condition) {
   let result = await prisma.User_metric_data.findMany({ where: condition });
-  result = JSON.parse(JSON.stringify(metric));
+  result = JSON.parse(JSON.stringify(result));
   return result;
 }
 
