@@ -134,7 +134,6 @@ async function fetchSingleMetric(condition) {
 export async function getServerSideProps() {
 
   const userid = 1;
-
   const user = await prisma.user.findUnique({
     where: {
       id: userid,
@@ -142,21 +141,22 @@ export async function getServerSideProps() {
   })
 
   const now = Date.now();
-  const lte = new Date(now).toISOString();
+  const lteVal = new Date(now);
   let dailyWater = await prisma.User_metric_data.findMany({
     where: { user_id: userid,
       metric_id: 1,
       date: {
-        lte
+        lte: lteVal
       }
     },
     include: {
       metrics: true }
   });
+  dailyWater = JSON.parse(JSON.stringify(dailyWater));
 
   // const currDate = new Date();
   const mockCurrDate = '2023-05-04T07:00:00.000Z';
-  let today  = await fetchSingleMetric({ date: mockCurrDate });
+  let today  = await fetchSingleMetric({ date: mockCurrDate }); // Try using lteVal
   let water  = await fetchSingleMetric({ metric_id: 1 });
   let sleep  = await fetchSingleMetric({ metric_id: 2 });
   let energy = await fetchSingleMetric({ metric_id: 4 });
@@ -166,7 +166,8 @@ export async function getServerSideProps() {
     where: { user_id: 1 },
     include: { metrics: true },
     take: 30
-  })
+  });
+  entries = JSON.parse(JSON.stringify(entries));
 
   return {
     props : {
@@ -176,7 +177,8 @@ export async function getServerSideProps() {
       water, 
       sleep, 
       energy,
-      mood 
-   , dailyWater }
+      mood,
+      dailyWater
+    }
   }
 }
