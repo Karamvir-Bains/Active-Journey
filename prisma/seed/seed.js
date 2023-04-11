@@ -9,15 +9,49 @@ async function reset() {
 }
 
 reset().catch(e => {
-
   console.log(e);
   process.exit(1);
-
 }).finally(() => {
-
   prisma.$disconnect;
-
 });
+
+const layoutConfig = {
+  "lg":[
+    {"w":8,"h":2,"x":0,"y":0,"i":"overview","moved":false,"static":true},
+    {"w":4,"h":2,"x":8,"y":0,"i":"calendar","moved":false,"static":true},
+    {"w":3,"h":2,"x":3,"y":2,"i":"dailyWater","moved":false,"static":false},
+    {"w":3,"h":2,"x":0,"y":2,"i":"activityGoal","moved":false,"static":false},
+    {"w":3,"h":2,"x":6,"y":4,"i":"a","moved":false,"static":false},
+    {"w":3,"h":2,"x":3,"y":4,"i":"b","moved":false,"static":false},
+    {"w":3,"h":2,"x":0,"y":4,"i":"c","moved":false,"static":false},
+    {"w":3,"h":2,"x":9,"y":4,"i":"d","moved":false,"static":false},
+    {"w":6,"h":2,"x":6,"y":2,"i":"e","moved":false,"static":false}
+  ],
+  "sm":[
+    {"w":6,"h":2,"x":0,"y":0,"i":"overview","moved":false,"static":false},
+    {"w":6,"h":2,"x":0,"y":2,"i":"calendar","moved":false,"static":true},
+    {"w":3,"h":2,"x":0,"y":4,"i":"dailyWater","moved":false,"static":false},
+    {"w":3,"h":2,"x":3,"y":4,"i":"activityGoal","moved":false,"static":false},
+    {"w":3,"h":2,"x":0,"y":6,"i":"a","moved":false,"static":false},
+    {"w":3,"h":2,"x":3,"y":6,"i":"b","moved":false,"static":false},
+    {"w":6,"h":2,"x":0,"y":8,"i":"c","moved":false,"static":false},
+    {"w":6,"h":2,"x":0,"y":10,"i":"d","moved":false,"static":false},
+    {"w":6,"h":2,"x":0,"y":12,"i":"e","moved":false,"static":false}
+  ]};
+
+async function createMockEntry(id, max, min, date) {
+  // generate random value within range of metric
+  const value = Math.floor(Math.random() * (max - min + 1)) + min;
+  await prisma.User_metric_data.create({
+    data: {
+      date,
+      metric_value: value,
+      goal_value: 9,
+      user_id: 1,
+      metric_id: id
+    },
+  });
+}
 
 async function seed() {
   const users = [
@@ -26,9 +60,8 @@ async function seed() {
       last_name: 'Doe',
       email: 'jane@jane.com',
       password: '12345',
-      layout: '{"lg":[{"w":8,"h":2,"x":0,"y":0,"i":"overview","moved":false,"static":true},{"w":4,"h":2,"x":8,"y":0,"i":"calendar","moved":false,"static":true},{"w":3,"h":2,"x":3,"y":2,"i":"dailyWater","moved":false,"static":false},{"w":3,"h":2,"x":0,"y":2,"i":"activityGoal","moved":false,"static":false},{"w":3,"h":2,"x":6,"y":4,"i":"a","moved":false,"static":false},{"w":3,"h":2,"x":3,"y":4,"i":"b","moved":false,"static":false},{"w":3,"h":2,"x":0,"y":4,"i":"c","moved":false,"static":false},{"w":3,"h":2,"x":9,"y":4,"i":"d","moved":false,"static":false},{"w":6,"h":2,"x":6,"y":2,"i":"e","moved":false,"static":false}],"sm":[{"w":6,"h":2,"x":0,"y":0,"i":"overview","moved":false,"static":false},{"w":6,"h":2,"x":0,"y":2,"i":"calendar","moved":false,"static":true},{"w":3,"h":2,"x":0,"y":4,"i":"dailyWater","moved":false,"static":false},{"w":3,"h":2,"x":3,"y":4,"i":"activityGoal","moved":false,"static":false},{"w":3,"h":2,"x":0,"y":6,"i":"a","moved":false,"static":false},{"w":3,"h":2,"x":3,"y":6,"i":"b","moved":false,"static":false},{"w":6,"h":2,"x":0,"y":8,"i":"c","moved":false,"static":false},{"w":6,"h":2,"x":0,"y":10,"i":"d","moved":false,"static":false},{"w":6,"h":2,"x":0,"y":12,"i":"e","moved":false,"static":false}]}'
-    }, 
-    {
+      layout: JSON.stringify(layoutConfig)
+    },{
       first_name: 'Bluey',
       last_name: 'Heeler',
       email: 'bluey@heeler.aus',
@@ -36,7 +69,7 @@ async function seed() {
       layout: '{"lg":[{"w":8,"h":2,"x":0,"y":0,"i":"overview","moved":false,"static":true},{"w":4,"h":2,"x":8,"y":0,"i":"calendar","moved":false,"static":true},{"w":3,"h":2,"x":3,"y":2,"i":"dailyWater","moved":false,"static":false},{"w":3,"h":2,"x":0,"y":2,"i":"activityGoal","moved":false,"static":false},{"w":3,"h":2,"x":6,"y":4,"i":"a","moved":false,"static":false},{"w":3,"h":2,"x":3,"y":4,"i":"b","moved":false,"static":false},{"w":3,"h":2,"x":0,"y":4,"i":"c","moved":false,"static":false},{"w":3,"h":2,"x":9,"y":4,"i":"d","moved":false,"static":false},{"w":6,"h":2,"x":6,"y":2,"i":"e","moved":false,"static":false}],"sm":[{"w":6,"h":2,"x":0,"y":0,"i":"overview","moved":false,"static":false},{"w":6,"h":2,"x":0,"y":2,"i":"calendar","moved":false,"static":true},{"w":3,"h":2,"x":0,"y":4,"i":"dailyWater","moved":false,"static":false},{"w":3,"h":2,"x":3,"y":4,"i":"activityGoal","moved":false,"static":false},{"w":3,"h":2,"x":0,"y":6,"i":"a","moved":false,"static":false},{"w":3,"h":2,"x":3,"y":6,"i":"b","moved":false,"static":false},{"w":6,"h":2,"x":0,"y":8,"i":"c","moved":false,"static":false},{"w":6,"h":2,"x":0,"y":10,"i":"d","moved":false,"static":false},{"w":6,"h":2,"x":0,"y":12,"i":"e","moved":false,"static":false}]}'
     }
   ];
-  
+
   for (let user of users) {
     await prisma.User.create({
       data: {
@@ -49,34 +82,42 @@ async function seed() {
     });
   }
 
-
-/**
- * MEtrics
- */
+  /**
+   * MEtrics
+   */
 
   const metrics = [
     {
       name: "Water",
       property: "input",
       unit: "mL",
-    },
-    {
+    },{
       name: "Sleep",
       property: "input",
       unit: "hr",
-    },
-    {
+    },{
       name: "Exercise",
       property: "input",
       unit: "mins",
-    },
-    {
+    },{
       name: "Energy",
-      property: "scale",
-    }]
+      property: "input",
+      unit: "scale"
+    },{
+      name: "Mood",
+      property: "input",
+      unit: "scale"
+    },{
+      name: "Stress",
+      property: "input",
+      unit: "scale"
+    },{
+      name: "Sleep Quality",
+      property: "input",
+      unit: "scale"
+    }];
 
   for (let metric of metrics) {
-
     await prisma.Metric.create({
       data: {
         name: metric.name,
@@ -90,64 +131,45 @@ async function seed() {
 
   for (let i = 0; i < 365; i++) {
     const date = new Date(new Date().getFullYear(), 0, i + 1);
+
     const metrics = [
       { metric_id: 1 },
       { metric_id: 2 },
       { metric_id: 3 },
-      { metric_id: 4 }
+      { metric_id: 4 },
+      { metric_id: 5 },
+      { metric_id: 6 },
+      { metric_id: 7 }
     ];
 
     for (let metric of metrics) {
-      //print out fake data for each metric  
-
       if (metric.metric_id === 1) {
-        const water_value = Math.floor(Math.random() * (2500 - 1500 + 1)) + 1500;
-        await prisma.User_metric_data.create({
-          data: {
-            date,
-            metric_value: water_value,
-            user_id: 1,
-            metric_id: 1
-          },
-        });
+        await createMockEntry(1, 2000, 1500, date);
       }
 
       if (metric.metric_id === 2) {
-        const sleep_value = Math.floor(Math.random() * (10 - 6 + 1)) + 6;
-        await prisma.User_metric_data.create({
-          data: {
-            date,
-            metric_value: sleep_value,
-            user_id: 1,
-            metric_id: 2
-          },
-        });
+        await createMockEntry(2, 9, 7, date);
       }
 
       if (metric.metric_id === 3) {
-        const exercise_value = Math.floor(Math.random() * (60 - 15 + 1)) + 15;
-        await prisma.User_metric_data.create({
-          data: {
-            date,
-            metric_value: exercise_value,
-            user_id: 1,
-            metric_id: 3
-          },
-        });
+        await createMockEntry(3, 60, 30, date);
       }
 
       if (metric.metric_id === 4) {
-        const energy_value = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-        await prisma.User_metric_data.create({
-          data: {
-            date,
-            metric_value: energy_value,
-            user_id: 1,
-            metric_id: 4
-          },
-        });
+        await createMockEntry(4, 10, 5, date);
       }
 
+      if (metric.metric_id === 5) {
+        await createMockEntry(5, 10, 5, date);
+      }
+
+      if (metric.metric_id === 6) {
+        await createMockEntry(6, 7, 3, date);
+      }
+
+      if (metric.metric_id === 7) {
+        await createMockEntry(7, 10, 5, date);
+      }
     }
   }
 }
@@ -158,5 +180,3 @@ seed().catch(e => {
 }).finally(() => {
   prisma.$disconnect
 })
-
-

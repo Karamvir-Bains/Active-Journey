@@ -95,6 +95,12 @@ export default function Home(props) {
                 />
                 <Dashboard 
                   user={props.user}
+                  today={props.today}
+                  entries={props.entries}
+                  water={props.water}
+                  sleep={props.sleep}
+                  energy={props.energy}
+                  mood={props.mood}
                   day={day}
                   setDay={handleSetDay}
                   layout={layout}
@@ -119,12 +125,20 @@ export default function Home(props) {
   )
 }
 
-// Fetch data from the db
+/* Data Fetching */
+const prisma = new PrismaClient();
+
+// Fetch all entries by metric
+async function fetchSingleMetric(condition) {
+  let result = await prisma.User_metric_data.findMany({ where: condition });
+  result = JSON.parse(JSON.stringify(result));
+  return result;
+}
+
+// Fetch all posts (in /pages/index.tsx)
 export async function getServerSideProps() {
-  const prisma = new PrismaClient()
 
   const userid = 1;
-
   const user = await prisma.user.findUnique({
     where: {
       id: userid,
@@ -132,23 +146,44 @@ export async function getServerSideProps() {
   })
 
   const now = Date.now();
-  const today = new Date(now).toISOString();
+  const lteVal = new Date(now);
   let dailyWater = await prisma.User_metric_data.findMany({
-    where: {
-      user_id: userid,
+    where: { user_id: userid,
       metric_id: 1,
       date: {
-        lte: today,
+        lte: lteVal
       }
     },
     include: {
-      metrics: true,
-    }
-  })
+      metrics: true }
+  });
+  dailyWater = JSON.parse(JSON.stringify(dailyWater));
 
-  dailyWater = JSON.parse(JSON.stringify(dailyWater))
+  // const currDate = new Date();
+  const mockCurrDate = '2023-05-04T07:00:00.000Z';
+  let today  = await fetchSingleMetric({ date: mockCurrDate }); // Try using lteVal
+  let water  = await fetchSingleMetric({ metric_id: 1 });
+  let sleep  = await fetchSingleMetric({ metric_id: 2 });
+  let energy = await fetchSingleMetric({ metric_id: 4 });
+  let mood   = await fetchSingleMetric({ metric_id: 5 });
+
+  let entries = await prisma.User_metric_data.findMany({
+    where: { user_id: 1 },
+    include: { metrics: true },
+    take: 30
+  });
+  entries = JSON.parse(JSON.stringify(entries));
 
   return {
-    props : { user, dailyWater }
+    props : {
+      user, 
+      today,
+      entries, 
+      water, 
+      sleep, 
+      energy,
+      mood,
+      dailyWater
+    }
   }
 }

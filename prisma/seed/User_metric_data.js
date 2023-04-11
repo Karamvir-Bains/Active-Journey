@@ -2,71 +2,62 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-async function seed() {
+async function createMockEntry(id, max, min, date) {
+  // generate random value within range of metric
+  const value = Math.floor(Math.random() * (max - min + 1)) + min;
+  await prisma.User_metric_data.create({
+    data: {
+      date,
+      metric_value: value,
+      goal_value: 9,
+      user_id: 1,
+      metric_id: id
+    },
+  });
+}
 
+async function seed() {
   for (let i = 0; i < 365; i++) {
     const date = new Date(new Date().getFullYear(), 0, i + 1);
-    //const dayOfMonth = date.getDate();
-    //const metric_value = Math.floor(Math.random() * 1000) + 1;
-    //print out each date
+
     const metrics = [
       { metric_id: 1 },
       { metric_id: 2 },
       { metric_id: 3 },
-      { metric_id: 4 }
+      { metric_id: 4 },
+      { metric_id: 5 },
+      { metric_id: 6 },
+      { metric_id: 7 }
     ];
 
     for (let metric of metrics) {
-      //print out fake data for each metric  
-
       if (metric.metric_id === 1) {
-        const water_value = Math.floor(Math.random() * (2500 - 1500 + 1)) + 1500;
-        await prisma.User_metric_data.create({
-          data: {
-            date,
-            metric_value: water_value,
-            user_id: 1,
-            metric_id: 1
-          },
-        });
+        await createMockEntry(1, 2000, 1500, date);
       }
 
       if (metric.metric_id === 2) {
-        const sleep_value = Math.floor(Math.random() * (10 - 6 + 1)) + 6;
-        await prisma.User_metric_data.create({
-          data: {
-            date,
-            metric_value: sleep_value,
-            user_id: 1,
-            metric_id: 2
-          },
-        });
+        await createMockEntry(2, 9, 7, date);
       }
 
       if (metric.metric_id === 3) {
-        const exercise_value = Math.floor(Math.random() * (60 - 15 + 1)) + 15;
-        await prisma.User_metric_data.create({
-          data: {
-            date,
-            metric_value: exercise_value,
-            user_id: 1,
-            metric_id: 3
-          },
-        });
+        await createMockEntry(3, 60, 30, date);
       }
 
       if (metric.metric_id === 4) {
-        const energy_value = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-        await prisma.User_metric_data.create({
-          data: {
-            date,
-            metric_value: energy_value,
-            user_id: 1,
-            metric_id: 4
-          },
-        });
+        await createMockEntry(4, 10, 5, date);
       }
 
+      if (metric.metric_id === 5) {
+        await createMockEntry(5, 10, 5, date);
+      }
+
+      if (metric.metric_id === 6) {
+        await createMockEntry(6, 7, 3, date);
+      }
+
+      if (metric.metric_id === 7) {
+        await createMockEntry(7, 10, 5, date);
+      }
     }
   }
 };

@@ -2,7 +2,11 @@ const convertMlToCups = (val) => {
   return Math.ceil(val / 250);
 }
 
-export default function DailyWater(props) {
+export default function DailyWater(props) { 
+  // convert props.today.water to percentage to fill animation of water glass/bottle
+  // https://codepen.io/qindazhu/pen/ZWNKoG
+  // https://github.com/coiger/fill-water-animation
+
   let ml = 0;
   if (props.dailyWater.length > 0) {
     ml = props.dailyWater[0].metric_value;

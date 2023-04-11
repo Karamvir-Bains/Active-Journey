@@ -6,7 +6,9 @@ import ActivityGoal from "../widgets/_activity-goal";
 import Calendar from "../widgets/_calendar";
 import DailyWater from "../widgets/_daily-water";
 import Overview from "../widgets/_overview";
+import Nutrition from "../widgets/_nutrition";
 import Widget from "../widgets/_widget";
+import AvgMood from "../widgets/_avg-mood";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
@@ -24,9 +26,18 @@ export default function Dashboard(props) {
           sm: 6
         }}
         onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
+        isDraggable={true}
+        isRearrangeable={true}
+        isResizable={false}
       >
         <div key="overview">
-          <Overview />
+          <Overview 
+            entries={props.entries}
+            water={props.water}
+            sleep={props.sleep} 
+            energy={props.energy}
+            mood={props.mood}
+          />
         </div>
         <div key="calendar">
           <Calendar
@@ -45,19 +56,22 @@ export default function Dashboard(props) {
           <ActivityGoal />
         </div>
         <div key="a">
-          <Widget />
+          <Widget title="Stress" desc="Past 7 days" />
         </div>
         <div key="b">
-          <Widget />
+          <AvgMood mood={props.mood} />
         </div>
         <div key="c">
-          <Widget />
+          <Widget title="Sleep Quality vs Hours" desc="Past 7 days" />
         </div>
         <div key="d">
-          <Widget />
+          <Widget title="Quality of Social Interactions" desc="Past 30 days" />
+        </div>
+        <div key="d">
+          <Widget title="Alcohol Intake" desc="Past 7 days" />
         </div>
         <div key="e">
-          <Widget />
+          <Nutrition entries={props.entries} />
         </div>
       </ResponsiveGridLayout>
     </div>
