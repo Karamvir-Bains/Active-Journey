@@ -96,6 +96,7 @@ export default function Journal(props) {
       });
       const result = await res.json();
       console.log(result);
+      handleClose();
     } catch (error) {
       console.error(error);
     }
