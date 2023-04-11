@@ -107,7 +107,7 @@ export default function Journal(props) {
   };
 
   return(
-    <section className="flex flex-col justify-center bg-white rounded-lg w-1/3 h-4/5 py-6 px-10 shadow-md">
+    <section className="flex flex-col justify-center bg-white rounded-lg py-6 px-10 shadow-md">
       <div id="journal-header" className='flex justify-between'>
         <div className='flex'>
           <h3 className='font-bold mr-2 mb-5 whitespace-nowrap'>{getDateText(selectedDate)}</h3>
