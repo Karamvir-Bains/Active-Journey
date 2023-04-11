@@ -2,7 +2,8 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-async function createMetric(id, max, min, date) {
+async function createMockEntry(id, max, min, date) {
+  // assign random value to entry
   const value = Math.floor(Math.random() * (max - min + 1)) + min;
   await prisma.User_metric_data.create({
     data: {
@@ -15,12 +16,9 @@ async function createMetric(id, max, min, date) {
 }
 
 async function seed() {
-
   for (let i = 0; i < 365; i++) {
     const date = new Date(new Date().getFullYear(), 0, i + 1);
-    //const dayOfMonth = date.getDate();
-    //const metric_value = Math.floor(Math.random() * 1000) + 1;
-    //print out each date
+
     const metrics = [
       { metric_id: 1 },
       { metric_id: 2 },
@@ -31,32 +29,29 @@ async function seed() {
     ];
 
     for (let metric of metrics) {
-      //print out fake data for each metric  
-
       if (metric.metric_id === 1) {
-        await createMetric(1, 2500, 1500, date);
+        await createMockEntry(1, 2500, 1500, date);
       }
 
       if (metric.metric_id === 2) {
-        await createMetric(2, 10, 6, date);
+        await createMockEntry(2, 10, 6, date);
       }
 
       if (metric.metric_id === 3) {
-        await createMetric(3, 60, 15, date);
+        await createMockEntry(3, 60, 15, date);
       }
 
       if (metric.metric_id === 4) {
-        await createMetric(4, 10, 1, date);
+        await createMockEntry(4, 10, 1, date);
       }
 
       if (metric.metric_id === 5) {
-        await createMetric(5, 3, 1, date);
+        await createMockEntry(5, 3, 1, date);
       }
 
       if (metric.metric_id === 6) {
-        await createMetric(6, 10, 1, date);
+        await createMockEntry(6, 10, 1, date);
       }
-
     }
   }
 };
