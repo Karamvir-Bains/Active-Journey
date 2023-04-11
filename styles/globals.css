@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* React Calendar */
 .react-calendar__navigation {
   display: flex;
   justify-content: space-between;
@@ -23,6 +24,11 @@ button.react-calendar__tile--active,
 button.react-calendar__tile--now {
   background-color: green;
   color: #fff;
+}
+
+button.react-calendar__tile:disabled,
+button.react-calendar__navigation__arrow:disabled {
+  color: #ccc;
 }
 
 react-calendar__tile--now:hover {
