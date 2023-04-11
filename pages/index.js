@@ -37,56 +37,37 @@ const defaultLayout = {
 }
 
 async function updateLayout(id, layout) {
-  if (layout !== '' || layout !== NULL) {
-    try {
-      const userid = Number(id);
-      await fetch(`/api/users/${userid}`, {
+  let newLayout = layout;
+  if (layout === '' || layout === null) {
+    newLayout = defaultLayout;
+  }
+
+  try {
+    const userid = Number(id);
+    await fetch(`/api/users/${userid}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(layout),
-      });
-    } catch (err) {
-      console.log(err);
-    }
+        body: JSON.stringify(newLayout),
+    });
+  }
+  catch (err) {
+    console.log(err);
   }
 }
 
 export default function Home(props) {
-  const [layout, setLayout] = useState({});
+  const userLayout = JSON.parse(props.user.layout);
+  const [layout, setLayout] = useState(userLayout || defaultLayout);
+  const [day, setDay] = useState(Date.now());  
 
-  useEffect(() => {
-    const userLayout = JSON.parse(props.user.layout);
-    setLayout(prev => ({
-      ...prev,
-      'lg': userLayout['lg'],
-      'sm': userLayout['sm']
-    }));
-  }, [props.user.layout])
-
-  const handleLayoutChange = async (data, f) => {
-    if (data && f['sm']) {
-      const newLayout = {
-        ...layout,
-        lg: [
-          ...f['lg']
-        ],
-        sm: [
-          ...f['sm']
-        ]
-      }
-      setLayout(prev => ({
-          ...prev,
-          'lg': [
-            ...f['lg']
-          ],
-          'sm': [
-            ...f['sm']
-          ]
-        }));
-      await updateLayout(props.user.id, {"data": newLayout });
-    }
+  const handleSetDay = async (date) => {
+    setDay(date);
   }
 
+  const handleLayoutChange = async (layoutsObj) => {
+    setLayout(layoutsObj);
+    await updateLayout(props.user.id, {"layout": layoutsObj });
+  }
 
   return (
     <>
@@ -102,11 +83,17 @@ export default function Home(props) {
           <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
             <Sidebar />
             <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
-              <div className="flex h-full container flex-col p-8 mb-6">
-                <Header />
+              <div className="flex h-full flex-col p-8 mb-6">
+                <Header
+                  pageTitle="Dashboard"
+                  userName={props.user.first_name}
+                />
                 <Dashboard 
                   user={props.user}
+                  day={day}
+                  setDay={handleSetDay}
                   layout={layout}
+                  dailyWater={props.dailyWater}
                   onLayoutChange={handleLayoutChange}
                 />
                 <Footer />
@@ -119,18 +106,36 @@ export default function Home(props) {
   )
 }
 
-
-// Fetch all posts (in /pages/index.tsx)
+// Fetch data from the db
 export async function getServerSideProps() {
   const prisma = new PrismaClient()
 
-  const user = await prisma.User.findUnique({
+  const userid = 1;
+
+  const user = await prisma.user.findUnique({
     where: {
-      email: 'jane@jane.com',
+      id: userid,
     }
   })
 
+  const now = Date.now();
+  const today = new Date(now).toISOString();
+  let dailyWater = await prisma.User_metric_data.findMany({
+    where: {
+      user_id: userid,
+      metric_id: 1,
+      date: {
+        lte: today,
+      }
+    },
+    include: {
+      metrics: true,
+    }
+  })
+
+  dailyWater = JSON.parse(JSON.stringify(dailyWater))
+
   return {
-    props : { user }
+    props : { user, dailyWater }
   }
 }
