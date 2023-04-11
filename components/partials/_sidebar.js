@@ -2,7 +2,7 @@ import { faPersonRunning, faPlus, faGear, faUser, faBell, faList, faChartLine, f
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link';
 
-export default function Sidebar() {
+export default function Sidebar(props) {
   return(
     <aside id="section-sidebar" className="flex-shrink-0 sm:py-3 flex w-full sm:w-auto h-auto fixed bottom-0 z-10 sm:relative sm:z-0 bg-white">
       <div className="flex h-full w-full flex-row sm:flex-col">
@@ -38,12 +38,12 @@ export default function Sidebar() {
             </div>
             <span className="sr-only">Settings</span>
           </Link>
-          <Link href="/" title="Open Wellness Journal" className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 p-4 text-blue-900">
+          <div title="Open Wellness Journal" onClick={props.toggleJournal} className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 p-4 text-blue-900">
             <div className="h-4 w-4">
               <FontAwesomeIcon icon={faPlus} /> 
             </div>
             <span className="sr-only">Add Journal Entry</span>
-          </Link>
+          </div>
           <a className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 p-4 text-blue-900">
             <div className="h-4 w-4">
               <FontAwesomeIcon icon={faRightFromBracket} /> 
