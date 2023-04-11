@@ -8,24 +8,19 @@ async function seed() {
     {
       name: "Water",
       unit: "mL"
-    },
-    {
+    },{
       name: "Sleep",
       unit: "hr"
-    },
-    {
+    },{
       name: "Exercise",
       unit: "mins"
-    },
-    {
+    },{
       name: "Energy",
       unit: "scale"
-    },
-    {
+    },{
       name: "Mood",
       unit: "scale"
-    },
-    {
+    },{
       name: "Stress",
       unit: "scale"
     }]
