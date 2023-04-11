@@ -2,9 +2,8 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-async function createMetric(id, min, max, date) {
-  // account for (max, min insetad of rangeVals)
-  const value = Math.floor(Math.random() * (max + min - 1)) + min;
+async function createMetric(id, max, min, date) {
+  const value = Math.floor(Math.random() * (max - min + 1)) + min;
   await prisma.User_metric_data.create({
     data: {
       date,
