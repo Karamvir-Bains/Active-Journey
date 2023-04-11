@@ -34,8 +34,7 @@ async function seed() {
       email: 'jane@jane.com',
       password: '12345',
       layout: JSON.stringify(layoutConfig)
-    }, 
-    {
+    },{
       first_name: 'Bluey',
       last_name: 'Heeler',
       email: 'bluey@heeler.aus',
@@ -63,5 +62,3 @@ seed().catch(e => {
 }).finally(() => {
   prisma.$disconnect
 })
-
-

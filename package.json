@@ -37,6 +37,6 @@
   },
   "proxy": "http://localhost:3000",
   "prisma": {
-    "seed": "node prisma/seed/Reset.js"
+    "seed": "node prisma/seed/seed.js"
   }
 }
