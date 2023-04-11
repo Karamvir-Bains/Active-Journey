@@ -44,19 +44,22 @@ async function seed() {
   const metrics = [
     {
       name: "Water",
-      unit: "mL"
+      property: "input",
+      unit: "mL",
     },
     {
       name: "Sleep",
-      unit: "hr"
+      property: "input",
+      unit: "hr",
     },
     {
       name: "Exercise",
-      unit: "mins"
+      property: "input",
+      unit: "mins",
     },
     {
       name: "Energy",
-      unit: "scale"
+      property: "scale",
     }]
 
   for (let metric of metrics) {
@@ -64,7 +67,8 @@ async function seed() {
     await prisma.Metric.create({
       data: {
         name: metric.name,
-        unit: metric.unit
+        property: metric.property,
+        unit: metric.unit || "",
       },
     });
   }
