@@ -101,17 +101,21 @@ async function seed() {
       unit: "mins",
     },{
       name: "Energy",
-      property: "scale",
+      property: "input",
+      unit: "scale"
     },{
       name: "Mood",
+      property: "input",
       unit: "scale"
     },{
       name: "Stress",
+      property: "input",
       unit: "scale"
     },{
       name: "Sleep Quality",
+      property: "input",
       unit: "scale"
-    }]
+    }];
 
   for (let metric of metrics) {
     await prisma.Metric.create({
