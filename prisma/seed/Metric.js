@@ -22,6 +22,9 @@ async function seed() {
     },{
       name: "Stress",
       unit: "scale"
+    },{
+      name: "Sleep Quality",
+      unit: "scale"
     }]
 
   for (let metric of metrics) {

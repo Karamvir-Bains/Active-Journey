@@ -9,6 +9,7 @@ async function createMockEntry(id, max, min, date) {
     data: {
       date,
       metric_value: value,
+      goal_value: 9,
       user_id: 1,
       metric_id: id
     },
@@ -25,32 +26,37 @@ async function seed() {
       { metric_id: 3 },
       { metric_id: 4 },
       { metric_id: 5 },
-      { metric_id: 6 }
+      { metric_id: 6 },
+      { metric_id: 7 }
     ];
 
     for (let metric of metrics) {
       if (metric.metric_id === 1) {
-        await createMockEntry(1, 2500, 1500, date);
+        await createMockEntry(1, 2000, 1500, date);
       }
 
       if (metric.metric_id === 2) {
-        await createMockEntry(2, 10, 6, date);
+        await createMockEntry(2, 9, 7, date);
       }
 
       if (metric.metric_id === 3) {
-        await createMockEntry(3, 60, 15, date);
+        await createMockEntry(3, 60, 30, date);
       }
 
       if (metric.metric_id === 4) {
-        await createMockEntry(4, 10, 1, date);
+        await createMockEntry(4, 10, 5, date);
       }
 
       if (metric.metric_id === 5) {
-        await createMockEntry(5, 3, 1, date);
+        await createMockEntry(5, 10, 5, date);
       }
 
       if (metric.metric_id === 6) {
-        await createMockEntry(6, 10, 1, date);
+        await createMockEntry(6, 7, 3, date);
+      }
+
+      if (metric.metric_id === 7) {
+        await createMockEntry(7, 10, 5, date);
       }
     }
   }
