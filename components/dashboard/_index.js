@@ -12,8 +12,7 @@ import AvgMood from "../widgets/_avg-mood";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
-  // console.log('index entries', props.entries);
-  return(
+  return (
     <div className="relative bg-blue">
       <ResponsiveGridLayout
         className="layout"
@@ -26,7 +25,7 @@ export default function Dashboard(props) {
           lg: 12,
           sm: 6
         }}
-        onLayoutChange={(e, f) => props.onLayoutChange(e, f)}
+        onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
         isDraggable={true}
         isRearrangeable={true}
         isResizable={false}
@@ -41,10 +40,16 @@ export default function Dashboard(props) {
           />
         </div>
         <div key="calendar">
-          <Calendar />
+          <Calendar
+            day={props.day}
+            setDay={props.setDay}
+          />
         </div>
         <div key="dailyWater">
-          <DailyWater />
+          <DailyWater
+            day={props.day}
+            dailyWater={props.dailyWater}
+          />
         </div>
         <div key="activityGoal">
           <ActivityGoal />

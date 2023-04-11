@@ -17,6 +17,14 @@ model User {
   user_metric_data User_metric_data[]
 }
 
+model Metric {
+  id               Int                @id @default(autoincrement())
+  name             String
+  property         String
+  unit             String
+  user_metric_data User_metric_data[]
+}
+
 model User_metric_data {
   id           Int      @id @default(autoincrement())
   date         DateTime @default(now())

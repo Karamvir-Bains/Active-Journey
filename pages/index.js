@@ -37,78 +37,37 @@ const defaultLayout = {
 }
 
 async function updateLayout(id, layout) {
-  if (layout !== '' || layout !== NULL) {
-    try {
-      const userid = Number(id);
-      await fetch(`/api/users/${userid}`, {
+  let newLayout = layout;
+  if (layout === '' || layout === null) {
+    newLayout = defaultLayout;
+  }
+
+  try {
+    const userid = Number(id);
+    await fetch(`/api/users/${userid}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(layout),
-      });
-    } catch (err) {
-      console.log(err);
-    }
+        body: JSON.stringify(newLayout),
+    });
+  }
+  catch (err) {
+    console.log(err);
   }
 }
 
 export default function Home(props) {
-  const getDefaultLayout = defaultLayout;
-  const [layout, setLayout] = useState(getDefaultLayout);
-  useEffect(() => {
-    const userLayout = JSON.parse(props.user.layout);
-    if (userLayout !== null) {
-      setLayout(prev => ({
-        ...prev,
-        'lg': userLayout['lg'],
-        'sm': userLayout['sm']
-      }));
-    }
-  }, [])
+  const userLayout = JSON.parse(props.user.layout);
+  const [layout, setLayout] = useState(userLayout || defaultLayout);
+  const [day, setDay] = useState(Date.now());  
 
-  const handleLayoutChange = async (data, f) => {
-    const winWidth = window.innerWidth;
-    let newLayout = {};
-    if (data && f['sm'] && f['lg']) {
-      if (winWidth < 1024) {
-        newLayout = {
-          ...layout,
-          lg: [
-            ...f['lg']
-          ],
-          sm: [
-            ...f['sm']
-          ]
-        }
-        setLayout(prev => ({
-          ...prev,
-          lg: [
-            ...f['lg']
-          ],
-          sm: [
-            ...f['sm']
-          ]
-        }));
-      } else {
-        newLayout = {
-          ...layout,
-          lg: [
-            ...f['lg']
-          ],
-          sm: [
-            ...f['sm']
-          ]
-        }
-        setLayout(prev => ({
-          ...prev,
-          lg: [
-            ...f['lg']
-          ]
-        }));
-      }
-      await updateLayout(props.user.id, {"data": newLayout });
-    }
+  const handleSetDay = async (date) => {
+    setDay(date);
   }
 
+  const handleLayoutChange = async (layoutsObj) => {
+    setLayout(layoutsObj);
+    await updateLayout(props.user.id, {"layout": layoutsObj });
+  }
 
   return (
     <>
@@ -145,7 +104,10 @@ export default function Home(props) {
                   sleep={props.sleep}
                   energy={props.energy}
                   mood={props.mood}
+                  day={day}
+                  setDay={handleSetDay}
                   layout={layout}
+                  dailyWater={props.dailyWater}
                   onLayoutChange={handleLayoutChange}
                 />
                 <Footer />
@@ -171,8 +133,25 @@ async function fetchSingleMetric(condition) {
 // Fetch all posts (in /pages/index.tsx)
 export async function getServerSideProps() {
 
-  const user = await prisma.User.findUnique({
-    where: { email: 'jane@jane.com' }
+  const userid = 1;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userid,
+    }
+  })
+
+  const now = Date.now();
+  const lte = new Date(now).toISOString();
+  let dailyWater = await prisma.User_metric_data.findMany({
+    where: { user_id: userid,
+      metric_id: 1,
+      date: {
+        lte
+      }
+    },
+    include: {
+      metrics: true }
   });
 
   // const currDate = new Date();
@@ -188,7 +167,6 @@ export async function getServerSideProps() {
     include: { metrics: true },
     take: 30
   })
-  entries = JSON.parse(JSON.stringify(entries));
 
   return {
     props : {
@@ -199,6 +177,6 @@ export async function getServerSideProps() {
       sleep, 
       energy,
       mood 
-    }
+   , dailyWater }
   }
 }
