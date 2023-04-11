@@ -56,25 +56,16 @@ async function updateLayout(id, layout) {
 }
 
 export default function Home(props) {
-  const [layout, setLayout] = useState(defaultLayout);
-  const [day, setDay] = useState(Date.now());
-
-  useEffect(() => {
-    if (props.user.layout !== null) {
-      const userLayout = JSON.parse(props.user.layout);
-      setLayout(prev => ({
-        ...prev,
-        'lg': userLayout['lg'],
-        'sm': userLayout['sm']
-      }));
-    }
-  }, [props.user.layout])
+  const userLayout = JSON.parse(props.user.layout);
+  const [layout, setLayout] = useState(userLayout);
+  const [day, setDay] = useState(Date.now());  
 
   const handleSetDay = async (date) => {
     setDay(date);
   }
 
   const handleLayoutChange = async (layoutsObj) => {
+    setLayout(layoutsObj);
     await updateLayout(props.user.id, {"layout": layoutsObj });
   }
 
