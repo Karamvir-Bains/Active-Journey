@@ -1,9 +1,14 @@
+const convertMlToCups = (val) => {
+  return Math.ceil(val / 250);
+}
+
 export default function DailyWater(props) {
   let ml = 0;
   if (props.dailyWater.length > 0) {
     ml = props.dailyWater[0].metric_value;
   }
-  let val = Math.ceil(ml / 250);
+  let val = convertMlToCups(ml);
+
   const calcGlassHeight = (val) => {
     let heightClass = 'bg-blue-900 w-full absolute z-10 bottom-0 rounded-b-lg ';
     if (val === 0) {
