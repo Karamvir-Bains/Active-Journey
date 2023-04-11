@@ -163,9 +163,9 @@ const prisma = new PrismaClient();
 
 // Fetch all entries by metric
 async function fetchSingleMetric(condition) {
-  let metric = await prisma.User_metric_data.findMany({ where: condition });
-  metric = JSON.parse(JSON.stringify(metric));
-  return metric;
+  let result = await prisma.User_metric_data.findMany({ where: condition });
+  result = JSON.parse(JSON.stringify(metric));
+  return result;
 }
 
 // Fetch all posts (in /pages/index.tsx)
@@ -177,11 +177,11 @@ export async function getServerSideProps() {
 
   // const currDate = new Date();
   const mockCurrDate = '2023-05-04T07:00:00.000Z';
-  let today = await fetchSingleMetric({ date: mockCurrDate });
-  let water = await fetchSingleMetric({ metric_id: 1 });
-  let sleep = await fetchSingleMetric({ metric_id: 2 });
+  let today  = await fetchSingleMetric({ date: mockCurrDate });
+  let water  = await fetchSingleMetric({ metric_id: 1 });
+  let sleep  = await fetchSingleMetric({ metric_id: 2 });
   let energy = await fetchSingleMetric({ metric_id: 4 });
-  let mood = await fetchSingleMetric({ metric_id: 5 });
+  let mood   = await fetchSingleMetric({ metric_id: 5 });
 
   let entries = await prisma.User_metric_data.findMany({
     where: { user_id: 1 },
