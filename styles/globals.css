@@ -22,7 +22,7 @@ button.react-calendar__tile--active,
 }
 
 button.react-calendar__tile--now {
-  background-color: green;
+  background-color: #348575;
   color: #fff;
 }
 
