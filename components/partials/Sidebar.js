@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Sidebar(props) {
   return(
-    <aside id="section-sidebar" className="flex-shrink-0 sm:py-3 flex w-full sm:w-auto h-auto fixed bottom-0 z-10 sm:relative sm:z-0 bg-white">
+    <aside id="section-sidebar" className="flex-shrink-0 sm:py-3 flex w-full sm:w-auto h-auto fixed bottom-0 z-10 sm:relative sm:z-0 bg-white shadow-md">
       <div className="flex h-full w-full flex-row sm:flex-col">
         <div id="menu" className="w-full py-2 px-3 flex sm:flex-col justify-between">
           <Link href="/" className="focus:outline-none group flex justify-center w-full cursor-pointer items-center rounded-xl mx-0 sm:mb-3 font-medium bg-blue-200 hover:bg-blue-400 p-4 text-blue-900 hover:text-white-900">
