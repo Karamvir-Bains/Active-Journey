@@ -17,25 +17,25 @@ const defaultLayout = {
     { i: "overview", x: 0, y: 0, w: 8, h: 2, static: true},
     { i: "calendar", x: 9, y: 0, w: 4, h: 2, static: true},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2},
+    { i: "stress", x: 6, y: 7, w: 3, h: 2},
+    { i: "nutrition", x: 3, y: 8.5, w: 3, h: 2},
+    { i: "sleep", x: 6, y: 8.5, w: 6, h: 2},
     { i: "activityGoal", x: 3, y: 7, w: 3, h: 2},
-    { i: "a", x: 6, y: 7, w: 3, h: 2},
-    { i: "b", x: 9, y: 7, w: 3, h: 2},
-    { i: "c", x: 0, y: 8.5, w: 3, h: 2},
-    { i: "d", x: 3, y: 8.5, w: 3, h: 2},
-    { i: "e", x: 6, y: 8.5, w: 6, h: 2},
-    { i: "f", x: 3, y: 8.5, w: 6, h: 2}
+    { i: "mood", x: 9, y: 7, w: 3, h: 2},
+    { i: "alcohol", x: 0, y: 8.5, w: 3, h: 2},
+    { i: "social", x: 3, y: 8.5, w: 6, h: 2}
   ],
   sm: [
     { i: "overview", x: 3, y: 0, w: 6, h: 2, static: true},
     { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2},
+    { i: "stress", x: 0, y: 0, w: 3, h: 2},
+    { i: "nutrition", x: 3, y: 0, w: 6, h: 2},
+    { i: "sleep", x: 0, y: 0, w: 6, h: 2},
     { i: "activityGoal", x: 4, y: 0, w: 3, h: 2},
-    { i: "a", x: 0, y: 0, w: 3, h: 2},
-    { i: "b", x: 3, y: 0, w: 3, h: 2},
-    { i: "c", x: 0, y: 0, w: 6, h: 2},
-    { i: "d", x: 3, y: 0, w: 6, h: 2},
-    { i: "e", x: 0, y: 0, w: 6, h: 2},
-    { i: "f", x: 3, y: 0, w: 6, h: 2}
+    { i: "mood", x: 3, y: 0, w: 3, h: 2},
+    { i: "alcohol", x: 0, y: 0, w: 6, h: 2},
+    { i: "social", x: 3, y: 0, w: 6, h: 2}
   ]
 }
 

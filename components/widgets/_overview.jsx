@@ -6,17 +6,17 @@ export default function Overview(props) {
     var ctx = document.getElementById('myChart').getContext('2d');
 
     // create datasets array of obj's from entries
-    const entryIds = props.entries.map(entry => entry.id).slice(0,30);
+    const entryIds = props.entries.map(entry => entry.id).slice(0,14);
     const waterVals = props.water.map(entry => {
       // Translate vals to match 1-10 scale visually on y-axis
       // TO DO: look into logarithmic axes for this
       return (entry.metric_value / 100) - 15
-    }).slice(0,30);
-    const moodVals = props.mood.map(entry => entry.metric_value).slice(0,30);
+    }).slice(0,14);
+    const moodVals = props.mood.map(entry => entry.metric_value).slice(0,14);
 
-    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0,30);
+    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0,14);
 
-    const energyVals = props.energy.map(entry => entry.metric_value).slice(0,30);
+    const energyVals = props.energy.map(entry => entry.metric_value).slice(0,14);
 
     var myChart = new Chart(ctx, {
       type: 'line',

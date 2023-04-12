@@ -55,23 +55,23 @@ export default function Dashboard(props) {
         <div key="activityGoal">
           <ActivityGoal />
         </div>
-        <div key="a">
+        <div key="stress">
           <Widget title="Stress" desc="Past 7 days" />
         </div>
-        <div key="b">
+        <div key="mood">
           <AvgMood mood={props.mood} />
         </div>
-        <div key="c">
+        <div key="sleep">
           <Widget title="Sleep Quality vs Hours" desc="Past 7 days" />
         </div>
-        <div key="d">
-          <Widget title="Quality of Social Interactions" desc="Past 30 days" />
+        <div key="nutrition">
+          <Nutrition entries={props.entries} />
         </div>
-        <div key="d">
+        <div key="alcohol">
           <Widget title="Alcohol Intake" desc="Past 7 days" />
         </div>
-        <div key="e">
-          <Nutrition entries={props.entries} />
+        <div key="social">
+          <Widget title="Quality of Social Interactions" desc="Past 30 days" />
         </div>
       </ResponsiveGridLayout>
     </div>
