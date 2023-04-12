@@ -81,8 +81,10 @@ export default function Settings(props) {
         {journalOpen && (
           <Journal 
             day={day}
+            today={today}
             setDay={handleSetDay}
             onClose={toggleJournal}
+            handleCalNav={handleCalNav}
           />
         )}
       </div>

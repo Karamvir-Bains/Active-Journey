@@ -3,9 +3,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import { PrismaClient } from '@prisma/client';
-import Sidebar from '../components/partials/_sidebar';
-import Header from '../components/partials/_header';
-import Footer from '../components/partials/_footer';
+import Sidebar from '../components/partials/Sidebar';
+import Header from '../components/partials/Header';
+import Footer from '../components/partials/Footer';
 import Journal from "../components/journal";
 
 const inter = Inter({ subsets: ['latin'] })
@@ -46,13 +46,15 @@ export default function Profile(props) {
             </main>
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/3">
-          {journalOpen && (
-            <div className="relative">
-              <Journal onClose={toggleJournal} />
-            </div>
-          )}
-        </div>
+        {journalOpen && (
+          <Journal 
+            day={day}
+            today={today}
+            setDay={handleSetDay}
+            onClose={toggleJournal}
+            handleCalNav={handleCalNav}
+          />
+        )}
       </div>
     </>
   )
@@ -66,7 +68,14 @@ export async function getServerSideProps() {
   const user = await prisma.user.findUnique({
     where: {
       id: 1,
-    }
+    },
+    select: {
+      id: true,
+      first_name: true,
+      last_name: true,
+      email: true,
+      layout: true,
+    },
   })
 
   return {

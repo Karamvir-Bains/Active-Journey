@@ -78,19 +78,15 @@ export default function Home(props) {
             </main>
           </div>
         </div>
-        <div className="absolute top-0 left-0 right-0 w-full">
-          {/* transform -translate-x-1/2 -translate-y-1/2  */}
-          {journalOpen && (
-            <div className="relative">
-              <Journal 
-                day={day}
-                today={today}
-                setDay={handleSetDay}
-                onClose={toggleJournal}
-                handleCalNav={handleCalNav} />
-            </div>
-          )}
-        </div>
+        {journalOpen && (
+          <Journal 
+            day={day}
+            today={today}
+            setDay={handleSetDay}
+            onClose={toggleJournal}
+            handleCalNav={handleCalNav}
+          />
+        )}
       </div>
     </>
   )
