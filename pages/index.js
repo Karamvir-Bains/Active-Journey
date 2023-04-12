@@ -4,76 +4,40 @@ import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import styles from '../styles/Home.module.css';
 import { PrismaClient } from '@prisma/client';
-import Sidebar from '../components/partials/_sidebar';
-import Header from '../components/partials/_header';
-import Dashboard from '../components/dashboard/_index';
-import Footer from '../components/partials/_footer';
+import Sidebar from '../components/partials/Sidebar';
+import Header from '../components/partials/Header';
+import Dashboard from '../components/dashboard';
+import Footer from '../components/partials/Footer';
 import Journal from "../components/journal";
+import { defaultLayout } from '../helpers/data';
+import { updateLayout, parseLayout } from '../helpers/selectors';
+import { useApplicationData } from "../hooks/useApplicationData";
 
 const inter = Inter({ subsets: ['latin'] })
 
-const defaultLayout = {
-  lg: [
-    { i: "overview", x: 0, y: 0, w: 8, h: 2, static: true},
-    { i: "calendar", x: 9, y: 0, w: 4, h: 2, static: true},
-    { i: "dailyWater", x: 0, y: 0, w: 3, h: 2},
-    { i: "activityGoal", x: 3, y: 7, w: 3, h: 2},
-    { i: "a", x: 6, y: 7, w: 3, h: 2},
-    { i: "b", x: 9, y: 7, w: 3, h: 2},
-    { i: "c", x: 0, y: 8.5, w: 3, h: 2},
-    { i: "d", x: 3, y: 8.5, w: 3, h: 2},
-    { i: "e", x: 6, y: 8.5, w: 6, h: 2}
-  ],
-  sm: [
-    { i: "overview", x: 3, y: 0, w: 6, h: 2},
-    { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
-    { i: "dailyWater", x: 0, y: 0, w: 3, h: 2},
-    { i: "activityGoal", x: 4, y: 0, w: 3, h: 2},
-    { i: "a", x: 0, y: 0, w: 3, h: 2},
-    { i: "b", x: 3, y: 0, w: 3, h: 2},
-    { i: "c", x: 0, y: 0, w: 6, h: 2},
-    { i: "d", x: 3, y: 0, w: 6, h: 2},
-    { i: "e", x: 0, y: 0, w: 6, h: 2}
-  ]
-}
-
-async function updateLayout(id, layout) {
-  let newLayout = layout;
-  if (layout === '' || layout === null) {
-    newLayout = defaultLayout;
-  }
-
-  try {
-    const userid = Number(id);
-    await fetch(`/api/users/${userid}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newLayout),
-    });
-  }
-  catch (err) {
-    console.log(err);
-  }
-}
-
 export default function Home(props) {
-  const userLayout = JSON.parse(props.user.layout);
-  const [layout, setLayout] = useState(userLayout || defaultLayout);
-  const [day, setDay] = useState(Date.now());
-  const [journalOpen, setJournalOpen] = useState(false);
+  const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, setJournalOpen, toggleJournal, handleCalNav } =
+    useApplicationData();
 
-  const toggleJournal = () => {
-    setJournalOpen(!journalOpen);
-  };
-
-  const handleSetDay = async (date) => {
-    setDay(date);
-  }
+  // This is only used on the Dashboard
+  const [layout, setLayout] = useState(parseLayout(user.layout) || defaultLayout);
 
   const handleLayoutChange = async (layoutsObj) => {
     setLayout(layoutsObj);
-    await updateLayout(props.user.id, {"layout": layoutsObj });
+    await updateLayout(user.id, {"layout": layoutsObj });
   }
+
+  // Moved to custom hook: 
+    // const [day, setDay] = useState(Date.now());
+    // const [journalOpen, setJournalOpen] = useState(false);
+
+    // const toggleJournal = () => {
+    //   setJournalOpen(!journalOpen);
+    // };
+
+    // const handleSetDay = async (date) => {
+    //   setDay(new Date(date));
+    // }
 
   return (
     <>
@@ -91,11 +55,11 @@ export default function Home(props) {
               <div className="flex h-full flex-col p-8 mb-6">
                 <Header
                   pageTitle="Dashboard"
-                  userName={props.user.first_name}
+                  userName={user.first_name}
                 />
                 <Dashboard 
-                  user={props.user}
-                  today={props.today}
+                  user={user}
+                  today={today}
                   entries={props.entries}
                   water={props.water}
                   sleep={props.sleep}
@@ -107,16 +71,23 @@ export default function Home(props) {
                   dailyWater={props.dailyWater}
                   onLayoutChange={handleLayoutChange}
                   toggleJournal={toggleJournal}
+                  handleCalNav={handleCalNav}
                 />
                 <Footer />
               </div>
             </main>
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/3">
+        <div className="absolute top-0 left-0 right-0 w-full">
+          {/* transform -translate-x-1/2 -translate-y-1/2  */}
           {journalOpen && (
             <div className="relative">
-              <Journal onClose={toggleJournal} />
+              <Journal 
+                day={day}
+                today={today}
+                setDay={handleSetDay}
+                onClose={toggleJournal}
+                handleCalNav={handleCalNav} />
             </div>
           )}
         </div>
@@ -142,8 +113,15 @@ export async function getServerSideProps() {
   const user = await prisma.user.findUnique({
     where: {
       id: userid,
-    }
-  })
+    },
+    select: {
+      id: true,
+      first_name: true,
+      last_name: true,
+      email: true,
+      layout: true,
+    },
+  });
 
   const now = Date.now();
   const lteVal = new Date(now);
@@ -176,9 +154,8 @@ export async function getServerSideProps() {
 
   return {
     props : {
-      user, 
-      today,
-      entries, 
+      user,
+      entries,
       water, 
       sleep, 
       energy,
