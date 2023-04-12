@@ -4,27 +4,36 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import { PrismaClient } from '@prisma/client';
-import Sidebar from '../components/partials/_sidebar';
-import Header from '../components/partials/_header';
-import Footer from '../components/partials/_footer';
+import Sidebar from '../components/partials/Sidebar';
+import Header from '../components/partials/Header';
+import Footer from '../components/partials/Footer';
 import Journal from "../components/journal";
+import { convertDateToISO } from '../helpers/data'
+import { useApplicationData } from "../hooks/useApplicationData";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Settings(props) {
-  const [journalOpen, setJournalOpen] = useState(false);
+  const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, setJournalOpen, toggleJournal } =
+  useApplicationData();
 
-  const toggleJournal = () => {
-    setJournalOpen(!journalOpen);
-  };
+  // const toggleJournal = () => {
+  //   setJournalOpen(!journalOpen);
+  // };
+
+  console.log(data);
 
   const entries = props.entries.map((entry, idx) => {
     const formatDate = format(new Date(entry.date), 'MMMM d,  yyyy');
     return (
       <tr key={idx}>
         <td className="p-2 border border-slate-200">{formatDate}</td>
-        <td className="p-2 border border-slate-200">{entry.metrics.name}</td>
-        <td className="p-2 border border-slate-200">{entry.metric_value} {entry.metrics.unit}</td>
+        <td className="p-2 border border-slate-200">
+          { entry.metrics.name }</td>
+        <td className="p-2 border border-slate-200">
+          { entry.metric_value }&nbsp;
+          { entry.metrics.unit }
+        </td>
       </tr>
     )
   })
@@ -68,18 +77,18 @@ export default function Settings(props) {
             </main>
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/3">
-          {journalOpen && (
-            <div className="relative">
-              <Journal onClose={toggleJournal} />
-            </div>
-          )}
-        </div>
+        
+        {journalOpen && (
+          <Journal 
+            day={day}
+            setDay={handleSetDay}
+            onClose={toggleJournal}
+          />
+        )}
       </div>
     </>
   )
 }
-
 
 // Fetch all posts (in /pages/index.tsx)
 export async function getServerSideProps() {
@@ -88,7 +97,14 @@ export async function getServerSideProps() {
   const user = await prisma.user.findUnique({
     where: {
       id: 1,
-    }
+    },
+    select: {
+      id: true,
+      first_name: true,
+      last_name: true,
+      email: true,
+      layout: true,
+    },
   })
 
   const today = new Date();
@@ -107,9 +123,9 @@ export async function getServerSideProps() {
     orderBy: {
       date: "desc",
     }
-  })
+  });
 
-  entries = JSON.parse(JSON.stringify(entries))
+  entries = JSON.parse(JSON.stringify(entries));
 
   return {
     props : { user, entries }
