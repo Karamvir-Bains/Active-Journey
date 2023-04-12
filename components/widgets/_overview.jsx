@@ -12,9 +12,7 @@ export default function Overview(props) {
       // TO DO: look into logarithmic axes for this
       return (entry.metric_value / 100) - 15
     }).slice(0,30);
-    const moodVals = props.mood.map(entry => {
-      return (entry.metric_value * 3)
-    }).slice(0,30);
+    const moodVals = props.mood.map(entry => entry.metric_value).slice(0,30);
 
     const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0,30);
 
