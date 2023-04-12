@@ -22,10 +22,11 @@ const defaultLayout = {
     { i: "b", x: 9, y: 7, w: 3, h: 2},
     { i: "c", x: 0, y: 8.5, w: 3, h: 2},
     { i: "d", x: 3, y: 8.5, w: 3, h: 2},
-    { i: "e", x: 6, y: 8.5, w: 6, h: 2}
+    { i: "e", x: 6, y: 8.5, w: 6, h: 2},
+    { i: "f", x: 3, y: 8.5, w: 6, h: 2}
   ],
   sm: [
-    { i: "overview", x: 3, y: 0, w: 6, h: 2},
+    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: true},
     { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2},
     { i: "activityGoal", x: 4, y: 0, w: 3, h: 2},
@@ -33,15 +34,16 @@ const defaultLayout = {
     { i: "b", x: 3, y: 0, w: 3, h: 2},
     { i: "c", x: 0, y: 0, w: 6, h: 2},
     { i: "d", x: 3, y: 0, w: 6, h: 2},
-    { i: "e", x: 0, y: 0, w: 6, h: 2}
+    { i: "e", x: 0, y: 0, w: 6, h: 2},
+    { i: "f", x: 3, y: 0, w: 6, h: 2}
   ]
 }
 
 async function updateLayout(id, layout) {
   let newLayout = layout;
-  if (layout === '' || layout === null) {
+  // if (layout === '' || layout === null) {
     newLayout = defaultLayout;
-  }
+  // }
 
   try {
     const userid = Number(id);
@@ -87,7 +89,15 @@ export default function Home(props) {
         <div className="flex-grow overflow-auto">
           <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
             <Sidebar toggleJournal={toggleJournal} />
-            <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
+            <main  
+              style={{
+                backgroundImage: `url(/theme/pexels-simon-berger-1323550.jpg)`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'bottom'
+              }}       
+              className="relative sm:mx-auto w-full h-full max-w-200 overflow-auto"
+            >
               <div className="flex h-full flex-col p-8 mb-6">
                 <Header
                   pageTitle="Dashboard"
