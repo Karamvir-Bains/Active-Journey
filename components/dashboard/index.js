@@ -3,7 +3,7 @@ import { Responsive, WidthProvider } from  "react-grid-layout"
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import ActivityGoal from "../widgets/_activity-goal";
-import Calendar from "../widgets/_calendar";
+import Calendar from "../widgets/Calendar";
 import DailyWater from "../widgets/_daily-water";
 import Overview from "../widgets/_overview";
 import Nutrition from "../widgets/_nutrition";
@@ -28,7 +28,7 @@ export default function Dashboard(props) {
         onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
         isDraggable={true}
         isRearrangeable={true}
-        isResizable={false}
+        isResizable={true}
       >
         <div key="overview">
           <Overview 
@@ -42,8 +42,10 @@ export default function Dashboard(props) {
         <div key="calendar">
           <Calendar
             day={props.day}
+            today={props.today}
             setDay={props.setDay}
             toggleJournal={props.toggleJournal}
+            handleCalNav={props.handleCalNav}
           />
         </div>
         <div key="dailyWater">
@@ -55,22 +57,22 @@ export default function Dashboard(props) {
         <div key="activityGoal">
           <ActivityGoal />
         </div>
-        <div key="a">
+        <div key="stress">
           <Widget title="Stress" desc="Past 7 days" />
         </div>
-        <div key="b">
+        <div key="mood">
           <AvgMood mood={props.mood} />
         </div>
-        <div key="c">
+        <div key="sleep">
           <Widget title="Sleep Quality vs Hours" desc="Past 7 days" />
         </div>
-        <div key="d">
+        <div key="social">
           <Widget title="Quality of Social Interactions" desc="Past 30 days" />
         </div>
-        <div key="d">
+        <div key="alcohol">
           <Widget title="Alcohol Intake" desc="Past 7 days" />
         </div>
-        <div key="e">
+        <div key="nutrition">
           <Nutrition entries={props.entries} />
         </div>
       </ResponsiveGridLayout>
