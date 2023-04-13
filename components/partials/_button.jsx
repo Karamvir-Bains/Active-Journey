@@ -4,7 +4,7 @@ export default function Button(props) {
   const [isActive, setIsActive] = useState(props.initial);
 
   const handleClick = (event, range) => {
-    setIsActive(current => !current);
+    setIsActive(true);
     props.onClick(range);
   }
 

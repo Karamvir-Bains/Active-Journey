@@ -2,21 +2,21 @@ import { useState } from "react";
 import Button from "./_button";
 
 export default function ButtonGroup(props) {
-  const textColorClass = 'text-blue-700';
   function setSelected(range) {
-    // set all other buttons to inactive
+    // TO DO set all other buttons to inactive
     props.onClick(range);
   }
 
   return (
-    <div class="inline-flex rounded-md shadow-sm">
+    <div className="inline-flex rounded-md shadow-sm">
       <Button 
         onClick={() => setSelected(props.ranges[0])} 
+        // onClick={() => props.onClick(props.ranges[0])} 
         range={props.ranges[0]} 
         initial={true} 
       />
       <Button 
-        onClick={() => props.onClick(props.ranges[0])} 
+        onClick={() => props.onClick(props.ranges[1])} 
         range={props.ranges[1]} 
         initial={false} 
       />

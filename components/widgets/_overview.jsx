@@ -1,36 +1,52 @@
-import { useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
 import ButtonGroup from "../partials/_button-group";
 
 export default function Overview(props) {
-  function changeRange(range) {
-    console.log('new range: ', range);
+  const [range, setRange] = useState(7);
+  function changeRange(newRange) {
+    setRange(newRange);
   }
 
-  useEffect(() => {
-    var ctx = document.getElementById('myChart').getContext('2d');
-
-    // create datasets array of obj's from entries
-    const entryIds = props.entries.map(entry => entry.id);
+  const createData = useCallback(() => {
+    const entryIds = props.entries.map(entry => entry.id).slice(0, range);
     const waterVals = props.water.map(entry => {
       // Translate vals to match 1-10 scale visually on y-axis
       // TO DO: look into logarithmic axes for this
       return (entry.metric_value / 100) - 15
-    });
-    const moodVals = props.mood.map(entry => entry.metric_value);
-    const sleepVals = props.sleep.map(entry => entry.metric_value);
-    const energyVals = props.energy.map(entry => entry.metric_value);
+    }).slice(0, range);
+    const moodVals = props.mood.map(entry => entry.metric_value).slice(0, range);
+    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0, range);
+    const energyVals = props.energy.map(entry => entry.metric_value).slice(0, range);
 
-    const values = [
+    return {
       entryIds,
       waterVals,
       moodVals,
       sleepVals,
       energyVals 
-    ];
-    let range = 7;
-    const valuesObj = values.map(val => val.slice(range));
-    console.log('valuesObj: ', values);
+    };
+  }, [props.energy, props.entries, props.mood, props.sleep, props.water, range]);
+
+  useEffect(() => {
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    const entryIds = props.entries.map(entry => entry.id).slice(0, range);
+    const waterVals = props.water.map(entry => {
+      // Translate vals to match 1-10 scale visually on y-axis
+      // TO DO: look into logarithmic axes for this
+      return (entry.metric_value / 100) - 15
+    }).slice(0, range);
+    const moodVals = props.mood.map(entry => entry.metric_value).slice(0, range);
+    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0, range);
+    const energyVals = props.energy.map(entry => entry.metric_value).slice(0, range);
+
+    // const {    
+    //   entryIds,
+    //   waterVals,
+    //   moodVals,
+    //   sleepVals,
+    //   energyVals } = createData();
 
     var myChart = new Chart(ctx, {
       type: 'line',
@@ -80,7 +96,8 @@ export default function Overview(props) {
     return () => {
       myChart.destroy()
     }
-  }, []);
+  // }, [range, createData]);
+}, [range, createData, props.entries, props.water, props.mood, props.sleep, props.energy]);
 
   return (
     <>
