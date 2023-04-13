@@ -3,24 +3,22 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
 import Journal from '../journal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useApplicationData } from '../../hooks/useApplicationData';
 
 export default function Layout({ children, title }) {
   const { toggleJournal, day, today, journalOpen, handleSetDay, handleCalNav } = useApplicationData();
 
   const [darkMode, setDarkMode] = useState(false);
+  const [bodyClass, setBodyClass] = useState('light');
 
-  const bodyClass = () => {
-    if (darkMode) {
-      return 'dark';
-    } else {
-      return 'light';
-    }
-  }
+  useEffect(() => {
+    setBodyClass(darkMode == true ? 'light' : 'dark');
+  }, [darkMode]);
+
 
   const handleDarkMode = () => {
-    setDarkMode(darkMode ? false : true);
+    setDarkMode(darkMode === true ? false : true);
   }
 
   return(<>
@@ -35,12 +33,13 @@ export default function Layout({ children, title }) {
           <div className='flex-grow overflow-auto'>
             <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
               <Sidebar 
+                darkMode={darkMode}
                 setDarkMode={handleDarkMode}
                 toggleJournal={toggleJournal}
               />
               <main
                 id='section-main'
-                className='bg-slate-100 relative w-full h-auto min-h-screen sm:ml-[75px]'
+                className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
               >
                 <div className='flex h-full flex-col p-8 mb-6'>
                   <Header pageTitle={title} />

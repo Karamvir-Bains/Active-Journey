@@ -40,8 +40,8 @@ export default function DailyWater(props) {
   const getGlassClass = calcGlassHeight(val);
 
   return(
-    <div className="overflow-scroll rounded-lg bg-white shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
-      <h3 className="text-center font-bold mb-3 text-xl text-blue-900">Daily Water Intake</h3>
+    <div className="overflow-scroll rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
+      <h3 className="text-center font-bold mb-3 text-xl text-blue-900 dark:text-blue-500">Daily Water Intake</h3>
       <div id="waterCup" className="mx-auto bg-blue-100 h-[65%] w-[50%] relative rounded-b-lg drop-shadow-sm">
         <div className="handle"></div>
         <div 

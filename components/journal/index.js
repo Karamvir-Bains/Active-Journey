@@ -5,7 +5,7 @@ import InputComponent from './InputComponent'
 import ScaleComponent from './ScaleComponent'
 import CalendarIcon from './CalendarIcon'
 import CalendarWidget from 'react-calendar'
-import { convertDateToISO, getDateText } from '../../helpers/data';
+import { convertDateToISO, getDateText, formatDate } from '../../helpers/data';
 
 export default function Journal (props) {
   const [data, setData] = useState([])
@@ -99,20 +99,20 @@ export default function Journal (props) {
     <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden md:p-4'>
       <div className='absolute left-0 right-0 mx-auto w-full h-full md:w-[75%] lg:w-[800px] overflow-scroll'>
         <div className='relative'>
-          <section className='flex flex-col justify-center bg-white rounded-lg py-6 px-10 shadow-md'>
+          <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>
             <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4'>
                 <div className="w-[33%] flex">
                   <button
                     onClick={() => props.setDay(props.today)}
-                    className='flex flex-col justify-center content-center rounded-full text-blue-900 bg-blue-100 hover:bg-blue-50 py-1 px-5 mr-auto'
+                    className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-blue-500 bg-blue-100 dark:bg-blue-800 hover:bg-blue-50 dark:hover:bg-blue-700 py-1 px-5 mr-auto'
                   >
                     Today
                   </button>
                 </div>
-                <h3 className='w-[33%] text-blue-950 text-lg text-center font-bold whitespace-nowrap self-center'>
-                  { getDateText(props.day) }
+                <h3 className='w-[33%] text-blue-950 dark:text-white text-lg text-center font-bold whitespace-nowrap self-center'>
+                  {formatDate(props.day)}
                 </h3>
-                <div className='w-[33%] text-gray-00 text-right flex justify-end content-center flex-wrap-reverse'>
+                <div className='w-[33%] text-right flex justify-end content-center flex-wrap-reverse'>
                   <CalendarIcon
                     showCal={showCal}
                     setShowCal={setShowCal}
@@ -135,10 +135,10 @@ export default function Journal (props) {
                 */}
                 {showCal && 
                   <CalendarWidget
-                    className="bg-white rounded-lg p-2"
+                    className="bg-white dark:bg-slate-800 dark:text-white  rounded-lg p-2"
                     value={new Date(props.day)}
                     activeStartDate={new Date(props.day)}
-                    onChange={(day) => props.setDay(day)}
+                    onChange={(newDay) => props.setDay(newDay)}
                     maxDate={props.today}
                     onActiveStartDateChange={(e) => {props.handleCalNav(e)}}
                   />
@@ -155,7 +155,7 @@ export default function Journal (props) {
 
             <div id='journal-footer' className='flex justify-start mb-16'>
               <button
-                className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'
+                className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white dark:text-slate-900 font-bold py-2 px-4 rounded'
                 type='button'
                 onClick={handleSave}
               >

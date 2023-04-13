@@ -72,7 +72,7 @@ export default function Overview(props) {
 
   return (
     <>
-      <div className="rounded-lg bg-white shadow-sm w-full h-full p-1 mb-10">
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-1 mb-10">
         <div className="absolute top-3 right-3 bottom-3 left-3">
           <canvas id='myChart'></canvas>
         </div>

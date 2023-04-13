@@ -63,17 +63,21 @@ export const formatDate = date => {
  */
 
 export const getDateText = date => {
-  const dateValue = new Date(date);
-  const today = new Date();
+  if (date) {
+    const dateValue = new Date(date);
+    const today = new Date();
 
-  let yesterday = new Date();
-  yesterday = yesterday.setDate(today.getDate() - 1)
+    let yesterday = new Date();
+    yesterday = yesterday.setDate(today.getDate() - 1)
 
-  if (formatDate(dateValue) === formatDate(today)) {
-    return 'Today'
-  } else if (formatDate(dateValue) == formatDate(yesterday) ) {
-    return 'Yesterday'
+    if (formatDate(dateValue) === formatDate(today)) {
+      return 'Today'
+    } else if (formatDate(dateValue) == formatDate(yesterday) ) {
+      return 'Yesterday'
+    } else {
+      return formatDate(dateValue)
+    }
   } else {
-    return formatDate(dateValue)
+    return date
   }
 }

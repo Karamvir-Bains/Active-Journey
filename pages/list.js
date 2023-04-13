@@ -20,7 +20,7 @@ export default function Settings (props) {
   });
   return (
     <Layout title="Journal List View">
-      <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto'>
+      <section className='mx-3 bg-white dark:bg-slate-800 dark:text-white  rounded-lg p-6 overflow-auto'>
         <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
           <thead>
             <tr className='bg-blue-900 text-white dark:text-slate-900'>

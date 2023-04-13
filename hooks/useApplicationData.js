@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { convertDateToISO } from '../helpers/data';
 import { format } from 'date-fns';
 
 /**
@@ -81,6 +80,6 @@ export function useApplicationData (initial) {
     journalOpen,
     setJournalOpen,
     toggleJournal,
-    handleCalNav
+    handleCalNav,
   }
 }

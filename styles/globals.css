@@ -39,3 +39,8 @@ react-calendar__tile--now:hover {
   font-size: 1.1rem;
   font-weight: 600;
 }
+
+.dark button.react-calendar__tile:disabled,
+.dark button.react-calendar__navigation__arrow:disabled {
+  color: #666;
+}

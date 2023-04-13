@@ -13,7 +13,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
   return (
-    <div className="relative bg-blue">
+    <div className="relative">
       <ResponsiveGridLayout
         className="layout"
         layouts={props.layout}
@@ -28,7 +28,7 @@ export default function Dashboard(props) {
         onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
         isDraggable={true}
         isRearrangeable={true}
-        isResizable={true}
+        isResizable={false}
       >
         <div key="overview">
           <Overview 

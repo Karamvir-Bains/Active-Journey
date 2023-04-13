@@ -43,7 +43,7 @@ function Example() {
   return (
     <>
       {/* line chart */}
-      <div className="rounded-lg bg-white dark:bg-slate-900 dark:text-white  shadow-sm w-full h-full p-1 mb-10">
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-1 mb-10">
         <div className="bg-blue-100 text-center">
           <div className="absolute top-3 right-3 bottom-3 left-3">
             <canvas id='myChart'></canvas>
