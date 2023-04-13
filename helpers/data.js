@@ -56,3 +56,24 @@ export const convertDateToISO = (date) => {
 export const formatDate = date => {
   return format(date, 'MMMM d, yyyy')
 }
+
+/**
+ * Format Date for displaying
+ * Show Today or Yesterday text instead of actual date
+ */
+
+export const getDateText = date => {
+  const dateValue = new Date(date);
+  const today = new Date();
+
+  let yesterday = new Date();
+  yesterday = yesterday.setDate(today.getDate() - 1)
+
+  if (formatDate(dateValue) === formatDate(today)) {
+    return 'Today'
+  } else if (formatDate(dateValue) == formatDate(yesterday) ) {
+    return 'Yesterday'
+  } else {
+    return formatDate(dateValue)
+  }
+}

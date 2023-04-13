@@ -10,34 +10,25 @@ import Dashboard from '../components/dashboard';
 import Footer from '../components/partials/Footer';
 import Journal from "../components/journal";
 import { defaultLayout } from '../helpers/data';
-import { updateLayout, parseLayout } from '../helpers/selectors';
 import { useApplicationData } from "../hooks/useApplicationData";
+import { updateLayout, parseLayout } from "../helpers/selectors";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(props) {
-  const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, setJournalOpen, toggleJournal, handleCalNav } =
+  const { today, day, handleSetDay, data, setData, user, journalOpen, setJournalOpen, toggleJournal, handleCalNav } =
     useApplicationData();
 
-  // This is only used on the Dashboard
-  const [layout, setLayout] = useState(parseLayout(user.layout) || defaultLayout);
+  /**
+   * Customize the Dashboard Layout
+   */
+
+  const [layout, setLayout] = useState(parseLayout(props.user.layout) || defaultLayout);
 
   const handleLayoutChange = async (layoutsObj) => {
     setLayout(layoutsObj);
     await updateLayout(user.id, {"layout": layoutsObj });
   }
-
-  // Moved to custom hook: 
-    // const [day, setDay] = useState(Date.now());
-    // const [journalOpen, setJournalOpen] = useState(false);
-
-    // const toggleJournal = () => {
-    //   setJournalOpen(!journalOpen);
-    // };
-
-    // const handleSetDay = async (date) => {
-    //   setDay(new Date(date));
-    // }
 
   return (
     <>

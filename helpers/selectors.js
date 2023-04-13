@@ -1,8 +1,8 @@
+import { defaultLayout } from './data';
 import { format } from 'date-fns';
 
 export async function updateLayout(id, layout) {
   let newLayout = layout;
-
   if (layout === '' || layout === null) {
     newLayout = defaultLayout;
   }

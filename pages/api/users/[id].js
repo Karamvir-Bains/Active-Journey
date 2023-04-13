@@ -14,6 +14,7 @@ export default async function handler(req, res) {
         last_name: true,
         email: true,
         layout: true,
+        password: false,
       },
     });
     return await res.status(200).json(user);

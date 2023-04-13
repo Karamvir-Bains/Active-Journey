@@ -1,12 +1,9 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import CalendarWidget from 'react-calendar'
-import { formatDate } from '../../helpers/data';
+import { formatDate, getDateText } from '../../helpers/data';
 
 export default function Calendar (props) {
-  const todayText = 'Today';
-
   return (
     <div className='overflow-scroll rounded-lg bg-blue-200 shadow-sm w-full h-full p-6'>
       <div className='flex justify-evenly content-center w-full'>
@@ -19,8 +16,7 @@ export default function Calendar (props) {
           </button>
         </div>
         <div className='w-[33%] flex flex-col justify-self-center justify-center content-center text-blue-950 font-bold text-lg text-center'>
-          { formatDate(props.today) == formatDate(props.day) &&  todayText }
-          { formatDate(props.today) != formatDate(props.day) && formatDate(props.day) }
+          { getDateText(props.day) }
         </div>
         <div className="w-[33%] align-stretch">
           <button onClick={props.toggleJournal} className='flex flex-col justify-center content-center rounded-full bg-blue-800 hover:bg-blue-700 py-2 px-3 text-white ml-auto'>

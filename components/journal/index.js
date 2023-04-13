@@ -7,14 +7,11 @@ import InputComponent from './InputComponent'
 import ScaleComponent from './ScaleComponent'
 import CalendarIcon from './CalendarIcon'
 import CalendarWidget from 'react-calendar'
-import { formatDate, convertDateToISO } from '../../helpers/data';
+import { formatDate, convertDateToISO, getDateText } from '../../helpers/data';
 
 export default function Journal (props) {
   const [data, setData] = useState([])
   const [showCal, setShowCal] = useState(false);
-  // Replacing this with shared [day, setDay] 
-  // // const [selectedDate, setSelectedDate] = useState(new Date())
-  // const today = new Date(); //Removing - now defined once and passed via custom hook
 
   useEffect(() => {
     async function fetchData () {
@@ -28,7 +25,7 @@ export default function Journal (props) {
     fetchData();
   }, [props.day])
 
-  //Render a list of metrics
+  // Render a list of metrics
   const metricList = data.map(metric => {
     const { id, name, property, unit, user_metric_data } = metric
     const value = user_metric_data[0]?.metric_value
@@ -79,22 +76,6 @@ export default function Journal (props) {
     setData(updatedData)
   }
 
-  // This function takes a date as input and returns a string representing the date text to be displayed
-  // I think this is replaced by date.fns plugin
-  // const getDateText = date => {
-  //   const today = new Date()
-  //   let yesterday = new Date(props.today)
-  //   yesterday.setDate(today.getDate() - 1)
-  //   if (date.toDateString() === today.toDateString()) {
-  //     return 'Today'
-  //   } else if (date.toDateString() === yesterday.toDateString()) {
-  //     return 'Yesterday'
-  //   } else {
-  //     const options = { month: 'short', day: 'numeric', year: 'numeric' }
-  //     return date.toLocaleDateString('en-US', options)
-  //   }
-  // }
-
   const handleSave = async () => {
     try {
       const res = await fetch('/api/userMetricData', {
@@ -105,7 +86,7 @@ export default function Journal (props) {
         }
       })
       const result = await res.json()
-      console.log(result)
+      console.log(result);
       handleClose()
     } catch (error) {
       console.error(error)
@@ -115,6 +96,8 @@ export default function Journal (props) {
   const handleClose = () => {
     props.onClose()
   }
+
+  const todayText = 'Today';
 
   return (
     <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden md:p-4'>
@@ -131,9 +114,7 @@ export default function Journal (props) {
                   </button>
                 </div>
                 <h3 className='w-[33%] text-blue-950 text-lg text-center font-bold whitespace-nowrap self-center'>
-                  { formatDate(props.day) }
-                  
-                  {/* {getDateText(selectedDate)} */}
+                  { getDateText(props.day) }
                 </h3>
                 <div className='w-[33%] text-gray-00 text-right flex justify-end content-center flex-wrap-reverse'>
                   <CalendarIcon

@@ -14,14 +14,8 @@ import { useApplicationData } from "../hooks/useApplicationData";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Settings(props) {
-  const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, setJournalOpen, toggleJournal } =
+  const { today, day, handleSetDay, data, setData, user, journalOpen, toggleJournal, handleCalNav } =
   useApplicationData();
-
-  // const toggleJournal = () => {
-  //   setJournalOpen(!journalOpen);
-  // };
-
-  console.log(data);
 
   const entries = props.entries.map((entry, idx) => {
     const formatDate = format(new Date(entry.date), 'MMMM d,  yyyy');

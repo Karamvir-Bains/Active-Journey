@@ -7,15 +7,14 @@ import Sidebar from '../components/partials/Sidebar';
 import Header from '../components/partials/Header';
 import Footer from '../components/partials/Footer';
 import Journal from "../components/journal";
+import { useApplicationData } from "../hooks/useApplicationData";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Settings(props) {
-  const [journalOpen, setJournalOpen] = useState(false);
+  const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, toggleJournal, handleCalNav } =
+  useApplicationData();
 
-  const toggleJournal = () => {
-    setJournalOpen(!journalOpen);
-  };
   return (
     <>
       <Head>
