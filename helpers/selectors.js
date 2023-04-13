@@ -28,6 +28,18 @@ export const parseLayout = (layout) => {
   }
 }
 
+/**
+ * 
+ * createMetricsObject
+ * Reformat User metrics data into an object
+ * where all metrics are grouped by day
+ * 
+ * @param {*} id - User id 
+ * @param {*} days Array of days (30)
+ * @param {*} entries list of entries query with metrics User_metric_data
+ * @returns Object with nested metrics for each day
+ */
+
 export const createMetricsObject = (id, days,entries) => {
   const newObj = {};
 
