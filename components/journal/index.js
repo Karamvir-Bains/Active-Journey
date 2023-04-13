@@ -104,7 +104,7 @@ export default function Journal (props) {
                 <div className="w-[33%] flex">
                   <button
                     onClick={() => props.setDay(props.today)}
-                    className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-blue-500 bg-blue-100 dark:bg-blue-800 hover:bg-blue-50 dark:hover:bg-blue-700 py-1 px-5 mr-auto'
+                    className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-white bg-blue-100 dark:bg-blue-800 hover:bg-blue-50 dark:hover:bg-blue-700 py-1 px-5 mr-auto'
                   >
                     Today
                   </button>
@@ -135,7 +135,7 @@ export default function Journal (props) {
                 */}
                 {showCal && 
                   <CalendarWidget
-                    className="bg-white dark:bg-slate-800 dark:text-white  rounded-lg p-2"
+                    className="bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-2"
                     value={new Date(props.day)}
                     activeStartDate={new Date(props.day)}
                     onChange={(newDay) => props.setDay(newDay)}

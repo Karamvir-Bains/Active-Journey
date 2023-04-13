@@ -5,7 +5,7 @@ export default function Settings (props) {
   return (
     <Layout title="Settings">
       <section className='mx-3 bg-white dark:bg-slate-800 dark:text-white  rounded-lg p-4'>
-        <h2 className='text-xl text-blue-800 font-semibold mb-3'>
+        <h2 className='text-xl text-blue-500 font-semibold mb-3'>
           {props.user.first_name} {props.user.last_name}
         </h2>
       </section>
