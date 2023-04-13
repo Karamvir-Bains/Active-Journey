@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
+import Layout from '../components/Layout'
 import Image from 'next/image'
 import { PrismaClient } from '@prisma/client'
-import Header from '../components/partials/Header';
 
 export default function Settings (props) {
   const entries = props.entries.map((entry, idx) => {
@@ -19,12 +19,11 @@ export default function Settings (props) {
     )
   });
   return (
-    <>
-      <Header pageTitle='Journal Listing' userName={props.user.first_name} />
-      <section className='mx-3 bg-white rounded-lg p-6 overflow-auto'>
+    <Layout title="Journal List View">
+      <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto'>
         <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
           <thead>
-            <tr className='bg-blue-900 text-white'>
+            <tr className='bg-blue-900 text-white dark:text-slate-900'>
               <th className='text-left p-2 border border-slate-200'>Day</th>
               <th className='text-left p-2 border border-slate-200'>Metric</th>
               <th className='text-left p-2 border border-slate-200'>Value</th>
@@ -33,7 +32,7 @@ export default function Settings (props) {
           <tbody>{entries}</tbody>
         </table>
       </section>
-    </>
+    </Layout>
   )
 }
 

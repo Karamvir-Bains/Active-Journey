@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { PrismaClient } from '@prisma/client'
-import Header from '../components/partials/Header'
+import Layout from '../components/Layout'
 import Dashboard from '../components/dashboard'
-import Footer from '../components/partials/Footer'
 import { defaultLayout } from '../helpers/data'
 import { useApplicationData } from '../hooks/useApplicationData'
 import { updateLayout, parseLayout } from '../helpers/selectors'
@@ -14,11 +13,9 @@ export default function Home (props) {
     today,
     day,
     handleSetDay,
-    data,
-    setData,
     user,
-    toggleJournal,
-    handleCalNav
+    handleCalNav,
+    toggleJournal
   } = useApplicationData()
 
   /**
@@ -35,8 +32,7 @@ export default function Home (props) {
   }
 
   return (
-    <>
-        <Header pageTitle='Dashboard' userName={props.user.first_name} />
+    <Layout title="Dashboard">
         <Dashboard
           user={user}
           today={today}
@@ -53,7 +49,7 @@ export default function Home (props) {
           toggleJournal={toggleJournal}
           handleCalNav={handleCalNav}
         />
-    </>
+    </Layout>
   )
 }
 

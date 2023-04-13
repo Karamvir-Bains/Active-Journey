@@ -1,32 +1,20 @@
-import { useState, useEffect } from 'react'
-import Head from 'next/head'
+import Layout from '../components/Layout'
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import { PrismaClient } from '@prisma/client'
-import Sidebar from '../components/partials/Sidebar'
-import Header from '../components/partials/Header'
-import Footer from '../components/partials/Footer'
-import Journal from '../components/journal'
 import { useApplicationData } from '../hooks/useApplicationData'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Settings (props) {
   const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, toggleJournal, handleCalNav } =
   useApplicationData();
 
   return (
-    <>
-      <Header
-        pageTitle='Notification'
-        userName={props.user.first_name}
-      />
-      <section className='mx-3 bg-white rounded-lg p-4'>
+    <Layout title="Notifications">
+      <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-4'>
         <h2 className='text-xl text-blue-800 font-semibold mb-3'>
           {props.user.first_name} {props.user.last_name}
         </h2>
       </section>
-    </>
+    </Layout>
   )
 }
 

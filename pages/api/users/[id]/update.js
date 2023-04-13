@@ -20,12 +20,13 @@ export default async function handler(req, res) {
     return await res.status(200).json(user);
   } else if (req.method === 'PUT') {
     const updateLayout = await prisma.user.update({
-      where: {
-        id: id,
-      },
       data: {
         layout: JSON.stringify(req.body.layout),
       },
+      where: {
+        id: id,
+      },
+      
     });
     return await res.status(200).json(updateLayout);
   } else {

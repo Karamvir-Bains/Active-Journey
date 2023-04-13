@@ -1,25 +1,14 @@
+import { useState } from 'react'
 import '../styles/globals.css'
 import '../styles/tailwind.css'
 import { Inter } from 'next/font/google'
 import Head from 'next/head'
 import Sidebar from '../components/partials/Sidebar'
 import Journal from '../components/journal'
-import { useApplicationData } from '../hooks/useApplicationData'
 import Footer from '../components/partials/Footer'
+import { useApplicationData } from '../hooks/useApplicationData'
 
-export default function App ({ Component, pageProps }) {
-  const {
-    today,
-    day,
-    handleSetDay,
-    data,
-    setData,
-    user,
-    journalOpen,
-    toggleJournal,
-    handleCalNav
-  } = useApplicationData()
-
+export default function App ({ Component, pageProps }) {  
   return (
     <>
       <Head>
@@ -28,31 +17,7 @@ export default function App ({ Component, pageProps }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className='flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}'>
-        <div className='flex-grow overflow-auto'>
-          <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
-            <Sidebar toggleJournal={toggleJournal} />
-            <main
-              id='section-main'
-              className='bg-slate-100 relative w-full h-auto min-h-screen sm:ml-[75px]'
-            >
-              <div className='flex h-full flex-col p-8 mb-6'>
-                <Component {...pageProps} />
-                <Footer />
-              </div>
-            </main>
-          </div>
-        </div>
-        {journalOpen && (
-          <Journal
-            day={day}
-            today={today}
-            setDay={handleSetDay}
-            onClose={toggleJournal}
-            handleCalNav={handleCalNav}
-          />
-        )}
-      </div>
+      <Component {...pageProps} />
     </>
   )
 }
