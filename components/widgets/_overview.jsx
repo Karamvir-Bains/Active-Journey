@@ -97,7 +97,7 @@ export default function Overview(props) {
       myChart.destroy()
     }
   // }, [range, createData]);
-}, [range, createData, props.entries, props.water, props.mood, props.sleep, props.energy]);
+}, [range, props.entries, props.water, props.mood, props.sleep, props.energy]);
 
   return (
     <>
