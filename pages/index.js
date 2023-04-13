@@ -23,7 +23,7 @@ const defaultLayout = {
     { i: "sleep", x: 0, y: 9, w: 3, h: 2, static: false},
     { i: "social", x: 3, y: 9, w: 3, h: 2, static: false},
     { i: "alcohol", x: 6, y: 9, w: 6, h: 2, static: false},
-    { i: "nutrition", x: 0,  y: 11, w: 6, h: 3, static: false}
+    { i: "nutrition", x: 0, y: 11, w: 6, h: 3, static: false}
   ],
   sm: [
     { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
@@ -35,7 +35,7 @@ const defaultLayout = {
     { i: "sleep", x: 0, y: 0, w: 6, h: 2, static: false},
     { i: "social", x: 3, y: 0, w: 6, h: 2, static: false},
     { i: "alcohol", x: 0, y: 0, w: 6, h: 2, static: false},
-    { i: "nutrition", x: 0,  y: 0, w: 12, h: 3, static: false}
+    { i: "nutrition", x: 0, y: 0, w: 12, h: 3, static: false}
   ]
 }
 
