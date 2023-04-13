@@ -12,23 +12,13 @@ import { useApplicationData } from '../hooks/useApplicationData'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Settings (props) {
-  const {
-    today,
-    day,
-    handleSetDay,
-    data,
-    setData,
-    user,
-    setUser,
-    journalOpen,
-    toggleJournal,
-    handleCalNav
-  } = useApplicationData()
+  const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, toggleJournal, handleCalNav } =
+  useApplicationData();
 
   return (
     <>
-      <Header 
-        pageTitle='Settings'
+      <Header
+        pageTitle='Notification'
         userName={props.user.first_name}
       />
       <section className='mx-3 bg-white rounded-lg p-4'>
@@ -40,7 +30,6 @@ export default function Settings (props) {
   )
 }
 
-// Fetch all posts (in /pages/index.tsx)
 export async function getServerSideProps () {
   const prisma = new PrismaClient()
 

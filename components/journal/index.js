@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import 'react-datepicker/dist/react-datepicker.css'
-import 'react-datepicker/dist/react-datepicker-cssmodules.css'
 import InputComponent from './InputComponent'
 import ScaleComponent from './ScaleComponent'
 import CalendarIcon from './CalendarIcon'
 import CalendarWidget from 'react-calendar'
-import { formatDate, convertDateToISO, getDateText } from '../../helpers/data';
+import { convertDateToISO, getDateText } from '../../helpers/data';
 
 export default function Journal (props) {
   const [data, setData] = useState([])
@@ -96,8 +94,6 @@ export default function Journal (props) {
   const handleClose = () => {
     props.onClose()
   }
-
-  const todayText = 'Today';
 
   return (
     <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden md:p-4'>
