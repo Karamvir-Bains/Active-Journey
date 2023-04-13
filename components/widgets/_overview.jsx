@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { Chart } from "chart.js/auto";
+import ButtonGroup from "../partials/_button-group";
 
 export default function Overview(props) {
   useEffect(() => {
@@ -72,6 +73,7 @@ export default function Overview(props) {
     <>
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-1 mb-10">
         <div className="absolute top-3 right-3 bottom-3 left-3">
+          <ButtonGroup ranges={[7, 30, 90]}/>
           <canvas id='myChart'></canvas>
         </div>
       </div>
