@@ -13,8 +13,7 @@ export default function Overview(props) {
 
     const entryIds = props.entries.map(entry => entry.id).slice(0, range);
     const waterVals = props.water.map(entry => {
-      // Translate vals to match 1-10 scale visually on y-axis
-      // TO DO: look into logarithmic axes for this
+      // Translate quantity vals to match 1-10 scale visually on y-axis
       return (entry.metric_value / 100) - 15
     }).slice(0, range);
     const moodVals = props.mood.map(entry => entry.metric_value).slice(0, range);
@@ -40,6 +39,7 @@ export default function Overview(props) {
           pointRadius: 0,
           backgroundColor: "transparent",
           fill: true,
+          tension: 0.3
         }, {
           type: 'bar',
           label: "Water Intake",
@@ -60,7 +60,8 @@ export default function Overview(props) {
           borderWidth: 0,
           pointRadius: 0,
           backgroundColor: "#ffc04d",
-          fill: true
+          fill: true,
+          tension: 0.3
         }]
       },
       options: {
@@ -85,6 +86,7 @@ export default function Overview(props) {
             ranges={[7, 30, 90]} 
             onClick={changeRange}
           />
+          <span className="text-xs">&nbsp;days</span>
         </div>
         <div className="absolute top-4 right-3 bottom-2 left-3 z-0">
           <canvas id='myChart'></canvas>
