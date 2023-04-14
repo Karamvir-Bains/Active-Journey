@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
-import { useData } from "../DataContext";
+import { useData } from "../../store/DataContext";
 
 export default function ActivityGoal() {
   const { data } = useData();

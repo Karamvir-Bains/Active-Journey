@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import InputComponent from './InputComponent'
 import ScaleComponent from './ScaleComponent';
 import CalendarIcon from './CalendarIcon';
-import { useData } from "../DataContext";
+import { useData } from "../../store/DataContext";
 
 export default function Journal(props) {
   const { data, updateData, selectedDate, updateDate } = useData();
@@ -47,11 +47,8 @@ export default function Journal(props) {
   });
 
   function handleChange(metricId, userMetricDataId, newValue) {
-    // Sets the value to 0 if the input has no number
-    let value = newValue;
-    if (newValue === "") value = 0;
-  
-    const parsedValue = parseFloat(value);
+    // If newValue is not a number set to 0, else parseFloat the newValue
+    const parsedValue = isNaN(parseFloat(newValue)) ? 0 : parseFloat(newValue);
   
     const updatedData = data.map(metric => {
       if (metric.id === metricId) {

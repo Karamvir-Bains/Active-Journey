@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { format } from 'date-fns'
 import CalendarWidget from 'react-calendar'
 
-import { useData } from "../DataContext";
+import { useData } from "../../store/DataContext";
 
 
 export default function Calendar (props) {

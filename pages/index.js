@@ -9,7 +9,7 @@ import Header from '../components/partials/_header';
 import Dashboard from '../components/dashboard/_index';
 import Footer from '../components/partials/_footer';
 import Journal from "../components/journal";
-import { DataProvider } from "../components/DataContext";
+import { DataProvider } from "../store/DataContext";
 
 const inter = Inter({ subsets: ['latin'] })
 
