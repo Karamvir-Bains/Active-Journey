@@ -7,7 +7,7 @@ export default function Overview(props) {
   function changeRange(newRange) {
     setRange(newRange);
   }
-  
+
   useEffect(() => {
     const ctx = document.getElementById('myChart').getContext('2d');
 
@@ -38,24 +38,21 @@ export default function Overview(props) {
           data: moodVals,
           borderColor: "#c45850",
           pointRadius: 0,
-          // backgroundColor: "transparent",
+          backgroundColor: "transparent",
           fill: true,
         }, {
           type: 'bar',
           label: "Water Intake",
           data: waterVals,
           borderColor: "#3e95cd",
-          // pointRadius: 0,
-          backgroundColor: "#3e95cd",
-          // fill: false,
+          borderRadius: 4,
+          backgroundColor: "#3e95cd"
         }, {
           type: 'bar',
           label: "Sleep",
           data: sleepVals,
-          // borderWidth: 0,
-          // pointRadius: 0,
-          backgroundColor: "#71d1bd",
-          // fill: true,
+          borderRadius: 4,
+          backgroundColor: "#71d1bd"
         }, {
           type: 'line',
           label: "Energy Level",
@@ -63,7 +60,7 @@ export default function Overview(props) {
           borderWidth: 0,
           pointRadius: 0,
           backgroundColor: "#ffc04d",
-          fill: true,
+          fill: true
         }]
       },
       options: {
