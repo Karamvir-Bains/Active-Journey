@@ -11,7 +11,7 @@ export default function Button(props) {
   return (
     <span 
       onClick={() => handleClick(props.range)} 
-      className={`${isActive ? 'text-blue-700' : 'text-gray-900' } ${props.classes}`}
+      className={`${isActive ? 'text-blue-700' : 'text-gray-900' } ${props.classes} hover:cursor-pointer`}
     >
         {props.range}
     </span>
