@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 const defaultLayout = {
   lg: [
-    { i: "overview", x: 0, y: 0, w: 8, h: 2, static: false},
+    { i: "overview", x: 0, y: 0, w: 8, h: 2, static: true},
     { i: "calendar", x: 9, y: 0, w: 4, h: 2, static: true},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
     { i: "activityGoal", x: 3, y: 7, w: 3, h: 2, static: false},
@@ -27,7 +27,7 @@ const defaultLayout = {
   ],
   sm: [
     { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
-    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: false},
+    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: true},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
     { i: "activityGoal", x: 4, y: 0, w: 3, h: 2, static: false},
     { i: "stress", x: 0, y: 0, w: 3, h: 2, static: false},
