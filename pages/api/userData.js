@@ -32,19 +32,17 @@ export default async function handler(req, res) {
   }
   
   if (req.method === "POST") {
-    const metrics = req.body;
-    console.log(metrics);
+    const userMetricData = req.body;
+
+    const id = userMetricData.userMetricDataId;
+    const value = userMetricData.newValue;
   
     try {
-      for (const metric of metrics) {
-        const metricData = metric.user_metric_data[metric.user_metric_data.length - 1];
-        const id = metricData.id;
-        const value = metricData.metric_value;
-        await prisma.user_metric_data.update({
-          where: { id },
-          data: { metric_value: value }
-        });
-      }
+      await prisma.user_metric_data.update({
+        where: { id },
+        data: { metric_value: value }
+      });
+      
       res.status(201).json({ message: "Metrics updated successfully." });
     } catch (error) {
       console.error(error);
@@ -53,7 +51,4 @@ export default async function handler(req, res) {
       await prisma.$disconnect();
     }
   }
-  
-  
-  
 }

@@ -21,19 +21,6 @@ export function DataProvider({ children }) {
 
   async function updateData(data) {
     setData(data);
-    try {
-      const res = await fetch('/api/userData', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const result = await res.json();
-      console.log(result);
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   function updateDate(date) {

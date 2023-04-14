@@ -15,7 +15,9 @@ export default function Journal(props) {
   //Render a list of metrics
   const metricList = data.map((metric, index) => {
     const { id, name, property, unit, user_metric_data } = metric;
-    // Selecting current day data from user_metric_data 
+
+    // user_metric_data id and value
+    const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1].id;
     const value = user_metric_data[data[index].user_metric_data.length - 1].metric_value;
 
     // Render InputComponent if property is 'input'
@@ -25,7 +27,7 @@ export default function Journal(props) {
           key={id}
           name={name}
           value={value}
-          handleChange={event => handleChange(metric.id, event.target.value)}
+          handleChange={event => handleChange(id, userMetricDataId, event.target.value)}
           unit={unit}
         />
       );
@@ -36,7 +38,7 @@ export default function Journal(props) {
           key={id}
           name={name}
           value={value}
-          handleChange={event => handleChange(id, event.target.value)}
+          handleChange={event => handleChange(id, userMetricDataId, event.target.value)}
         />
       );
     }
@@ -44,7 +46,7 @@ export default function Journal(props) {
     return null;
   });
 
-  function handleChange(metricId, newValue) {
+  function handleChange(metricId, userMetricDataId, newValue) {
     // Sets the value to 0 if the input has no number
     let value = newValue;
     if (newValue === "") value = 0;
@@ -75,6 +77,24 @@ export default function Journal(props) {
       return metric;
     });
     updateData(updatedData);
+    handleSave(userMetricDataId, parsedValue);
+  }
+
+  async function handleSave(userMetricDataId, newValue) {
+    const data = { userMetricDataId, newValue };
+    try {
+      const res = await fetch('/api/userData', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = await res.json();
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
   }
   
   
