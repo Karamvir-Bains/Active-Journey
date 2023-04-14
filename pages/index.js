@@ -23,7 +23,7 @@ export default function Home (props) {
    */
 
   const [layout, setLayout] = useState(
-    parseLayout(props.user.layout) || defaultLayout
+    parseLayout(props.user.layout) ? parseLayout(props.user.layout) : defaultLayout
   )
 
   const handleLayoutChange = async layoutsObj => {
@@ -32,7 +32,7 @@ export default function Home (props) {
   }
 
   return (
-    <Layout title="Dashboard">
+    <Layout title="Dashboard | Active Journey">
         <Dashboard
           user={user}
           today={today}
@@ -63,7 +63,6 @@ async function fetchSingleMetric (condition) {
   return result
 }
 
-// Fetch all posts (in /pages/index.tsx)
 export async function getServerSideProps () {
   const userid = 1
   const user = await prisma.user.findUnique({

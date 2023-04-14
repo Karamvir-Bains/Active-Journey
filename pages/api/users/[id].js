@@ -15,6 +15,7 @@ export default async function handler(req, res) {
         email: true,
         layout: true,
         password: false,
+        dark_mode: true
       },
     });
     return await res.status(200).json(user);

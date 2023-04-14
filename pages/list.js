@@ -20,10 +20,10 @@ export default function Settings (props) {
   });
   return (
     <Layout title="Journal List View">
-      <section className='mx-3 bg-white dark:bg-slate-800 dark:text-white  rounded-lg p-6 overflow-auto'>
+      <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto'>
         <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
           <thead>
-            <tr className='bg-blue-900 text-white dark:text-slate-900'>
+            <tr className='bg-blue-900 text-white'>
               <th className='text-left p-2 border border-slate-200'>Day</th>
               <th className='text-left p-2 border border-slate-200'>Metric</th>
               <th className='text-left p-2 border border-slate-200'>Value</th>
@@ -36,7 +36,7 @@ export default function Settings (props) {
   )
 }
 
-// Fetch all posts (in /pages/index.tsx)
+
 export async function getServerSideProps () {
   const prisma = new PrismaClient()
 
