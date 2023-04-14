@@ -103,11 +103,10 @@ export default function Overview(props) {
   return (
     <>
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-3 mb-10">
-        <div className="relative z-10">
+        <div className="inline-block relative z-10">
           <ButtonGroup
             ranges={[7, 30, 90]} 
             onClick={changeRange}
-            className="relative z-10"
           />
         </div>
         <div className="absolute top-4 right-3 bottom-2 left-3 z-0">
