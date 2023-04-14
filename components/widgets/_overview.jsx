@@ -7,27 +7,7 @@ export default function Overview(props) {
   function changeRange(newRange) {
     setRange(newRange);
   }
-  // TO DO use useCallback to do this the React way
-  // const createData = useCallback(() => {
-  //   const entryIds = props.entries.map(entry => entry.id).slice(0, range);
-  //   const waterVals = props.water.map(entry => {
-  //     // Translate vals to match 1-10 scale visually on y-axis
-  //     // TO DO: look into logarithmic axes for this
-  //     return (entry.metric_value / 100) - 15
-  //   }).slice(0, range);
-  //   const moodVals = props.mood.map(entry => entry.metric_value).slice(0, range);
-  //   const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0, range);
-  //   const energyVals = props.energy.map(entry => entry.metric_value).slice(0, range);
-
-  //   return {
-  //     entryIds,
-  //     waterVals,
-  //     moodVals,
-  //     sleepVals,
-  //     energyVals 
-  //   };
-  // }, [props.energy, props.entries, props.mood, props.sleep, props.water, range]);
-
+  
   useEffect(() => {
     const ctx = document.getElementById('myChart').getContext('2d');
 
