@@ -9,7 +9,7 @@ export async function updateLayout(id, layout) {
 
   try {
     const userid = Number(id);
-    await fetch(`/api/users/${userid}/update`, {
+    await fetch(`/api/users/${userid}/updateLayout`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newLayout),
@@ -21,10 +21,10 @@ export async function updateLayout(id, layout) {
 }
 
 export const parseLayout = (layout) => {
-  if (layout) {
+  if (layout !== null) {
     return  JSON.parse(layout);
   } else {
-    return null;
+    return defaultLayout;
   }
 }
 
