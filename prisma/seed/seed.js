@@ -91,31 +91,34 @@ async function seed() {
       name: "Water",
       property: "input",
       unit: "mL",
-    },{
+    },
+    {
       name: "Sleep",
       property: "input",
       unit: "hr",
-    },{
+    },
+    {
       name: "Exercise",
       property: "input",
       unit: "mins",
-    },{
+    },
+    {
       name: "Energy",
-      property: "input",
-      unit: "scale"
-    },{
+      property: "scale"
+    },
+    {
       name: "Mood",
-      property: "input",
-      unit: "scale"
-    },{
+      property: "scale"
+    },
+    {
       name: "Stress",
-      property: "input",
-      unit: "scale"
-    },{
+      property: "scale"
+    },
+    {
       name: "Sleep Quality",
-      property: "input",
-      unit: "scale"
-    }];
+      property: "scale"
+    }
+  ];
 
   for (let metric of metrics) {
     await prisma.Metric.create({
@@ -129,18 +132,17 @@ async function seed() {
 
   // END SEEDS
 
-  for (let i = 0; i < 365; i++) {
-    const date = new Date(new Date().getFullYear(), 0, i + 1);
+  // Get the current date and time in the local timezone
+  const today = new Date();
 
-    const metrics = [
-      { metric_id: 1 },
-      { metric_id: 2 },
-      { metric_id: 3 },
-      { metric_id: 4 },
-      { metric_id: 5 },
-      { metric_id: 6 },
-      { metric_id: 7 }
-    ];
+  // Adjust the date to the UTC timezone
+  const utcTimestamp = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+
+  for (let i = 180; i >= 0; i--) {
+    // Add the number of days to the UTC timestamp
+    const date = new Date(utcTimestamp.getTime() - i * 24 * 60 * 60 * 1000);
+
+    const metrics = [      { metric_id: 1 },      { metric_id: 2 },      { metric_id: 3 },      { metric_id: 4 },      { metric_id: 5 },      { metric_id: 6 },      { metric_id: 7 }    ];
 
     for (let metric of metrics) {
       if (metric.metric_id === 1) {
@@ -179,4 +181,4 @@ seed().catch(e => {
   process.exit(1)
 }).finally(() => {
   prisma.$disconnect
-})
+});

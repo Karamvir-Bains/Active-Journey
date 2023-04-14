@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Responsive, WidthProvider } from  "react-grid-layout"
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -41,8 +41,6 @@ export default function Dashboard(props) {
         </div>
         <div key="calendar">
           <Calendar
-            day={props.day}
-            setDay={props.setDay}
             toggleJournal={props.toggleJournal}
           />
         </div>

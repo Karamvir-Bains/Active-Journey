@@ -9,6 +9,7 @@ import Header from '../components/partials/_header';
 import Dashboard from '../components/dashboard/_index';
 import Footer from '../components/partials/_footer';
 import Journal from "../components/journal";
+import { DataProvider } from "../components/DataContext";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -83,44 +84,46 @@ export default function Home(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}">
-        <div className="flex-grow overflow-auto">
-          <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
-            <Sidebar toggleJournal={toggleJournal} />
-            <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
-              <div className="flex h-full flex-col p-8 mb-6">
-                <Header
-                  pageTitle="Dashboard"
-                  userName={props.user.first_name}
-                />
-                <Dashboard 
-                  user={props.user}
-                  today={props.today}
-                  entries={props.entries}
-                  water={props.water}
-                  sleep={props.sleep}
-                  energy={props.energy}
-                  mood={props.mood}
-                  day={day}
-                  setDay={handleSetDay}
-                  layout={layout}
-                  dailyWater={props.dailyWater}
-                  onLayoutChange={handleLayoutChange}
-                  toggleJournal={toggleJournal}
-                />
-                <Footer />
+      <DataProvider>
+        <div className="flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}">
+          <div className="flex-grow overflow-auto">
+            <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
+              <Sidebar toggleJournal={toggleJournal} />
+              <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
+                <div className="flex h-full flex-col p-8 mb-6">
+                  <Header
+                    pageTitle="Dashboard"
+                    userName={props.user.first_name}
+                  />
+                  <Dashboard 
+                    user={props.user}
+                    today={props.today}
+                    entries={props.entries}
+                    water={props.water}
+                    sleep={props.sleep}
+                    energy={props.energy}
+                    mood={props.mood}
+                    day={day}
+                    setDay={handleSetDay}
+                    layout={layout}
+                    dailyWater={props.dailyWater}
+                    onLayoutChange={handleLayoutChange}
+                    toggleJournal={toggleJournal}
+                  />
+                  <Footer />
+                </div>
+              </main>
+            </div>
+          </div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/3">
+            {journalOpen && (
+              <div className="relative">
+                <Journal onClose={toggleJournal} />
               </div>
-            </main>
+            )}
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/3">
-          {journalOpen && (
-            <div className="relative">
-              <Journal onClose={toggleJournal} />
-            </div>
-          )}
-        </div>
-      </div>
+      </DataProvider>
     </>
   )
 }
