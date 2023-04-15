@@ -34,7 +34,7 @@ export default function ActivityGoal() {
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10">
         <h3 className="font-bold mb-1 text-xl text-blue-900">Activity Goal</h3>
         <p className="text-center">Congrats you hit your goal!</p>
-        <div className="px-12">
+        <div className="px-6">
           <canvas id='activityChart'></canvas>
         </div>
       </div>

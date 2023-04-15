@@ -1,24 +1,32 @@
-import { useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
+import ButtonGroup from "../partials/_button-group";
 
 export default function Overview(props) {
+  const rangeValues = [7, 30, 90];
+  const [range, setRange] = useState(7);
+  function changeRange(newRange) {
+    setRange(newRange);
+  }
+
   useEffect(() => {
-    var ctx = document.getElementById('myChart').getContext('2d');
+    const ctx = document.getElementById('myChart').getContext('2d');
 
-    // create datasets array of obj's from entries
-    const entryIds = props.entries.map(entry => entry.id).slice(0,30);
+    const entryIds = props.entries.map(entry => entry.id).slice(0, range);
     const waterVals = props.water.map(entry => {
-      // Translate vals to match 1-10 scale visually on y-axis
-      // TO DO: look into logarithmic axes for this
+      // Translate quantity vals to match 1-10 scale visually on y-axis
       return (entry.metric_value / 100) - 15
-    }).slice(0,30);
-    const moodVals = props.mood.map(entry => {
-      return (entry.metric_value * 3)
-    }).slice(0,30);
+    }).slice(0, range);
+    const moodVals = props.mood.map(entry => entry.metric_value).slice(0, range);
+    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0, range);
+    const energyVals = props.energy.map(entry => entry.metric_value).slice(0, range);
 
-    const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0,30);
-
-    const energyVals = props.energy.map(entry => entry.metric_value).slice(0,30);
+    // const {    
+    //   entryIds,
+    //   waterVals,
+    //   moodVals,
+    //   sleepVals,
+    //   energyVals } = createData();
 
     var myChart = new Chart(ctx, {
       type: 'line',
@@ -30,24 +38,22 @@ export default function Overview(props) {
           data: moodVals,
           borderColor: "#c45850",
           pointRadius: 0,
-          // backgroundColor: "transparent",
+          backgroundColor: "transparent",
           fill: true,
+          tension: 0.3
         }, {
           type: 'bar',
           label: "Water Intake",
           data: waterVals,
           borderColor: "#3e95cd",
-          // pointRadius: 0,
-          backgroundColor: "#3e95cd",
-          // fill: false,
+          borderRadius: 4,
+          backgroundColor: "#3e95cd"
         }, {
           type: 'bar',
           label: "Sleep",
           data: sleepVals,
-          // borderWidth: 0,
-          // pointRadius: 0,
-          backgroundColor: "#71d1bd",
-          // fill: true,
+          borderRadius: 4,
+          backgroundColor: "#71d1bd"
         }, {
           type: 'line',
           label: "Energy Level",
@@ -56,24 +62,35 @@ export default function Overview(props) {
           pointRadius: 0,
           backgroundColor: "#ffc04d",
           fill: true,
+          tension: 0.3
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { y: { display: false } }
+        scales: { y: { display: false } },
+        plugins: { legend: { align: 'end' } }
       }
     });
 
     return () => {
       myChart.destroy()
     }
-  }, []);
+  // }, [range, createData]);
+}, [range, props.entries, props.water, props.mood, props.sleep, props.energy]);
 
   return (
     <>
-      <div className="rounded-lg bg-white shadow-sm w-full h-full p-1 mb-10">
-        <div className="absolute top-3 right-3 bottom-3 left-3">
+      <div className="rounded-lg bg-white shadow-sm w-full h-full p-3 mb-10">
+        <div className="inline-block relative z-10">
+          <ButtonGroup
+            ranges={rangeValues} 
+            rangeState={range}
+            onClick={changeRange}
+          />
+          <span className="text-xs">&nbsp;days</span>
+        </div>
+        <div className="absolute top-4 right-3 bottom-2 left-3 z-0">
           <canvas id='myChart'></canvas>
         </div>
       </div>
