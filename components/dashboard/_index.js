@@ -11,6 +11,7 @@ import AvgMood from "../widgets/_avg-mood";
 import Sleep from "../widgets/_sleep";
 import Alcohol from "../widgets/_alcohol";
 import Social from "../widgets/_social";
+import WeeklyStress from "../widgets/WeeklyStress";
 import RadialChart from "../widgets/_activity-goal";
 import CircleChart from "../widgets/_weekly-stress"
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -61,11 +62,15 @@ export default function Dashboard(props) {
           <RadialChart />
         </div>
         <div key="stress">
-          <CircleChart 
+          <WeeklyStress 
+            day={props.day}
+            stress={props.stress}
+          />
+          {/* <CircleChart 
             stress={props.stress} 
             entries={props.entries} 
             title="Stress" 
-            desc="Past 7 days" />
+            desc="Past 7 days" /> */}
         </div>
         <div key="mood">
           <AvgMood 
