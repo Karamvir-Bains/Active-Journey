@@ -1,10 +1,13 @@
 import { useEffect } from "react"
 import { Chart } from "chart.js/auto";
 
-export default function WeeklyStress() {
+export default function WeeklyStress(props) {
   useEffect(() => {
-    // var ctx = document.getElementById('activityChart').getContext('2d');
-    var ctx = document.getElementById('activityChart');
+    const stressVals = props.stress.map(entry => entry).slice(0, 7);
+    let avgStress = stressVals.reduce((total, val) => total + val.metric_value, 0) / stressVals.length;
+    avgStress = Math.floor(avgStress) * 10;
+    
+    var ctx = document.getElementById('activityChart').getContext('2d');
     const data = {
       datasets: [{
         label: 'Average Stress for Past Week',
@@ -18,7 +21,7 @@ export default function WeeklyStress() {
           'rgb(255, 195, 0)',
           'rgb(76, 187, 23)'
         ],
-        needleValue: 50
+        needleValue: avgStress
       }]
     };
 
@@ -26,17 +29,16 @@ export default function WeeklyStress() {
     const gaugeNeedle = {
       id: 'gaugeNeedle',
       afterDatasetsDraw(chart, args, pluginOptions) {
-        console.log('fired!');
         const { ctx, data, config, chartArea: { 
             top, bottom, left, right, width, height 
           } } = chart;
         ctx.save();
-        console.log(data);
+        
         const needleValue = data.datasets[0].needleValue;
         const dataTotal = data.datasets[0].data.reduce((a, b) => a + b, 0);
         
         const angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
-        console.log('angle: ', chart._metasets[0].data[0].y);
+        // console.log('angle: ', chart._metasets[0].data[0].y);
         const cx = width / 2;
         const cy = chart._metasets[0].data[0].y;
         const offsetTop = ctx.canvas.offsetTop;
