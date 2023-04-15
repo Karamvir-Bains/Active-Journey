@@ -7,13 +7,14 @@ export default function WeeklyStress() {
     const data = {
       datasets: [{
         label: 'Average Stress for Past Week',
-        data: [20, 80],
+        data: [25, 50, 25],
         borderWidth: 2,
-        cutout: '75%',
+        cutout: '60%',
         circumference: 180,
-        rotation:270,
+        rotation: 270,
         backgroundColor: [
-          'rgb(211, 211, 211)',
+          'rgb(144, 12, 63)',
+          'rgb(255, 195, 0)',
           'rgb(76, 187, 23)'
         ],
       }]
@@ -37,7 +38,7 @@ export default function WeeklyStress() {
     <>
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10">
         <h3 className="font-bold mb-1 text-xl text-blue-900">Weekly Stress</h3>
-        <div className="px-6">
+        <div className="py-3">
           <canvas id='activityChart'></canvas>
         </div>
       </div>
