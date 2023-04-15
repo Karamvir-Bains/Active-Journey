@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 const defaultLayout = {
   lg: [
-    { i: "overview", x: 0, y: 0, w: 8, h: 2, static: true},
+    { i: "overview", x: 0, y: 0, w: 8, h: 2, static: false},
     { i: "calendar", x: 9, y: 0, w: 4, h: 2, static: true},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
     { i: "activityGoal", x: 3, y: 7, w: 3, h: 2, static: false},
@@ -126,6 +126,8 @@ export default function Home(props) {
                   dailyWater={props.dailyWater}
                   onLayoutChange={handleLayoutChange}
                   toggleJournal={toggleJournal}
+                  stress={props.stress}
+                  sleepQuality={props.sleepQuality}
                 />
                 <Footer />
               </div>
@@ -185,6 +187,8 @@ export async function getServerSideProps() {
   let sleep  = await fetchSingleMetric({ metric_id: 2 });
   let energy = await fetchSingleMetric({ metric_id: 4 });
   let mood   = await fetchSingleMetric({ metric_id: 5 });
+  let stress = await fetchSingleMetric({ metric_id: 6 });
+  let sleepQuality = await fetchSingleMetric({ metric_id: 7 });
 
   let entries = await prisma.User_metric_data.findMany({
     where: { user_id: 1 },
@@ -202,7 +206,9 @@ export async function getServerSideProps() {
       sleep, 
       energy,
       mood,
-      dailyWater
+      dailyWater,
+      stress,
+      sleepQuality
     }
   }
 }
