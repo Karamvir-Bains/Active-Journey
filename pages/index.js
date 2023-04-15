@@ -14,26 +14,28 @@ const inter = Inter({ subsets: ['latin'] })
 
 const defaultLayout = {
   lg: [
-    { i: "overview", x: 0, y: 0, w: 8, h: 2, static: true},
+    { i: "overview", x: 0, y: 0, w: 8, h: 2, static: false},
     { i: "calendar", x: 9, y: 0, w: 4, h: 2, static: true},
-    { i: "dailyWater", x: 0, y: 0, w: 3, h: 2},
-    { i: "activityGoal", x: 3, y: 7, w: 3, h: 2},
-    { i: "a", x: 6, y: 7, w: 3, h: 2},
-    { i: "b", x: 9, y: 7, w: 3, h: 2},
-    { i: "c", x: 0, y: 8.5, w: 3, h: 2},
-    { i: "d", x: 3, y: 8.5, w: 3, h: 2},
-    { i: "e", x: 6, y: 8.5, w: 6, h: 2}
+    { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
+    { i: "activityGoal", x: 3, y: 7, w: 3, h: 2, static: false},
+    { i: "stress", x: 6, y: 7, w: 3, h: 2, static: false},
+    { i: "mood", x: 9, y: 7, w: 3, h: 2, static: false},
+    { i: "sleep", x: 0, y: 9, w: 3, h: 2, static: false},
+    { i: "social", x: 3, y: 9, w: 3, h: 2, static: false},
+    { i: "alcohol", x: 6, y: 9, w: 6, h: 2, static: false},
+    { i: "nutrition", x: 0,  y: 11, w: 6, h: 3, static: false}
   ],
   sm: [
-    { i: "overview", x: 3, y: 0, w: 6, h: 2},
     { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
-    { i: "dailyWater", x: 0, y: 0, w: 3, h: 2},
-    { i: "activityGoal", x: 4, y: 0, w: 3, h: 2},
-    { i: "a", x: 0, y: 0, w: 3, h: 2},
-    { i: "b", x: 3, y: 0, w: 3, h: 2},
-    { i: "c", x: 0, y: 0, w: 6, h: 2},
-    { i: "d", x: 3, y: 0, w: 6, h: 2},
-    { i: "e", x: 0, y: 0, w: 6, h: 2}
+    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: false},
+    { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
+    { i: "activityGoal", x: 4, y: 0, w: 3, h: 2, static: false},
+    { i: "stress", x: 0, y: 0, w: 3, h: 2, static: false},
+    { i: "mood", x: 3, y: 0, w: 3, h: 2, static: false},
+    { i: "sleep", x: 0, y: 0, w: 6, h: 2, static: false},
+    { i: "social", x: 3, y: 0, w: 6, h: 2, static: false},
+    { i: "alcohol", x: 0, y: 0, w: 6, h: 2, static: false},
+    { i: "nutrition", x: 0,  y: 0, w: 12, h: 3, static: false}
   ]
 }
 
@@ -57,8 +59,14 @@ async function updateLayout(id, layout) {
 }
 
 export default function Home(props) {
-  const userLayout = JSON.parse(props.user.layout);
-  const [layout, setLayout] = useState(userLayout || defaultLayout);
+  const parseLayout = (layout) => {
+    if (layout) {
+      return  JSON.parse(layout);
+    } else {
+      return null;
+    }
+  }
+  const [layout, setLayout] = useState(parseLayout(props.user.layout) || defaultLayout);
   const [day, setDay] = useState(Date.now());
   const [journalOpen, setJournalOpen] = useState(false);
 
@@ -107,6 +115,8 @@ export default function Home(props) {
                   dailyWater={props.dailyWater}
                   onLayoutChange={handleLayoutChange}
                   toggleJournal={toggleJournal}
+                  stress={props.stress}
+                  sleepQuality={props.sleepQuality}
                 />
                 <Footer />
               </div>
@@ -166,6 +176,8 @@ export async function getServerSideProps() {
   let sleep  = await fetchSingleMetric({ metric_id: 2 });
   let energy = await fetchSingleMetric({ metric_id: 4 });
   let mood   = await fetchSingleMetric({ metric_id: 5 });
+  let stress = await fetchSingleMetric({ metric_id: 6 });
+  let sleepQuality = await fetchSingleMetric({ metric_id: 7 });
 
   let entries = await prisma.User_metric_data.findMany({
     where: { user_id: 1 },
@@ -183,7 +195,9 @@ export async function getServerSideProps() {
       sleep, 
       energy,
       mood,
-      dailyWater
+      dailyWater,
+      stress,
+      sleepQuality
     }
   }
 }
