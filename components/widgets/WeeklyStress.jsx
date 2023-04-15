@@ -77,7 +77,7 @@ export default function WeeklyStress(props) {
     return () => {
       activityChart.destroy()
     }
-  }, []);
+  }, [props.stress]);
 
   return(
     <>
