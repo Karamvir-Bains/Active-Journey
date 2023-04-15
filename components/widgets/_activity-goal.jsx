@@ -34,7 +34,8 @@ class RadialChart extends React.Component {
       <>
         <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 text-center">
           <h3 className="font-bold mb-1 text-xl text-blue-900">Activity Goal</h3>
-          <div className="px-12">
+          <p className="text-center">Congrats you hit your goal!</p>
+          <div className="px-6">
           <ApexCharts options={this.state.options} series={this.state.options.series} type="radialBar" height={260} />
           </div>
         </div>

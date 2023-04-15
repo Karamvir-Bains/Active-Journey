@@ -23,11 +23,11 @@ const defaultLayout = {
     { i: "sleep", x: 0, y: 9, w: 3, h: 2, static: false},
     { i: "social", x: 3, y: 9, w: 3, h: 2, static: false},
     { i: "alcohol", x: 6, y: 9, w: 6, h: 2, static: false},
-    { i: "nutrition", x: 0,  y: 11, w: 6, h: 3, static: false}
+    { i: "nutrition", x: 0, y: 11, w: 6, h: 3, static: false}
   ],
   sm: [
     { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
-    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: false},
+    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: true},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
     { i: "activityGoal", x: 4, y: 0, w: 3, h: 2, static: false},
     { i: "stress", x: 0, y: 0, w: 3, h: 2, static: false},
@@ -35,12 +35,20 @@ const defaultLayout = {
     { i: "sleep", x: 0, y: 0, w: 6, h: 2, static: false},
     { i: "social", x: 3, y: 0, w: 6, h: 2, static: false},
     { i: "alcohol", x: 0, y: 0, w: 6, h: 2, static: false},
-    { i: "nutrition", x: 0,  y: 0, w: 12, h: 3, static: false}
+    { i: "nutrition", x: 0, y: 0, w: 12, h: 3, static: false}
   ]
 }
 
+const parseLayout = (layout) => {
+  if (layout) {
+    return  JSON.parse(layout);
+  } else {
+    return null;
+  }
+}
+
 async function updateLayout(id, layout) {
-  let newLayout = layout;
+  let newLayout = defaultLayout;
   if (layout === '' || layout === null) {
     newLayout = defaultLayout;
   }
@@ -59,14 +67,9 @@ async function updateLayout(id, layout) {
 }
 
 export default function Home(props) {
-  const parseLayout = (layout) => {
-    if (layout) {
-      return  JSON.parse(layout);
-    } else {
-      return null;
-    }
-  }
-  const [layout, setLayout] = useState(parseLayout(props.user.layout) || defaultLayout);
+  const [layout, setLayout] = useState(
+    parseLayout(props.user.layout) || defaultLayout
+  )
   const [day, setDay] = useState(Date.now());
   const [journalOpen, setJournalOpen] = useState(false);
 
@@ -95,7 +98,15 @@ export default function Home(props) {
         <div className="flex-grow overflow-auto">
           <div className="flex flex-col order-2 sm:flex-row sm:order-1 h-full">
             <Sidebar toggleJournal={toggleJournal} />
-            <main id="section-main" className="bg-slate-100 relative sm:mx-auto w-full h-full max-w-200 overflow-auto">
+            <main  
+              style={{
+                backgroundImage: `url(/theme/pexels-simon-berger-1323550.jpg)`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'bottom'
+              }}       
+              className="relative sm:mx-auto w-full h-full max-w-200 overflow-auto"
+            >
               <div className="flex h-full flex-col p-8 mb-6">
                 <Header
                   pageTitle="Dashboard"
