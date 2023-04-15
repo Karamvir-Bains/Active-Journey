@@ -3,6 +3,7 @@ import { Chart } from "chart.js/auto";
 import ButtonGroup from "../partials/_button-group";
 
 export default function Overview(props) {
+  const rangeValues = [7, 30, 90];
   const [range, setRange] = useState(7);
   function changeRange(newRange) {
     setRange(newRange);
@@ -83,7 +84,8 @@ export default function Overview(props) {
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-3 mb-10">
         <div className="inline-block relative z-10">
           <ButtonGroup
-            ranges={[7, 30, 90]} 
+            ranges={rangeValues} 
+            rangeState={range}
             onClick={changeRange}
           />
           <span className="text-xs">&nbsp;days</span>
