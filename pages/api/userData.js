@@ -30,4 +30,26 @@ export default async function handler(req, res) {
       await prisma.$disconnect();
     }
   }
+
+  
+  if (req.method === "POST") {
+    const userMetricData = req.body;
+
+    const id = userMetricData.userMetricDataId;
+    const value = userMetricData.newValue;
+  
+    try {
+      await prisma.user_metric_data.update({
+        where: { id },
+        data: { metric_value: value }
+      });
+      
+      res.status(201).json({ message: "Metrics updated successfully." });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
 }
