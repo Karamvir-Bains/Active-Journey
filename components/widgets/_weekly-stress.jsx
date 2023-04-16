@@ -1,42 +1,77 @@
-import { useEffect } from "react"
-import { Chart } from "chart.js/auto";
+import React from "react";
+import dynamic from 'next/dynamic';
 
-export default function WeeklyStress() {
-  useEffect(() => {
-    var ctx = document.getElementById('activityChart').getContext('2d');
-    const data = {
-      datasets: [{
-        label: 'My First Dataset',
-        data: [20, 80],
-        borderWidth: 2,
-        backgroundColor: [
-          'rgb(211, 211, 211)',
-          'rgb(76, 187, 23)'
-        ],
-      }]
-    };
-    var activityChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: data,
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
+
+
+class CircleChart extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const stressVal = props.stress.map(entry => entry.metric_value * 10).slice(0, 7);
+    
+
+    this.state = {
       options: {
-        legend: { display: false },
-        plugins: { tooltip: { enabled: false } },
-        hover: {mode: null},
-      }
-    });
+        chart: {
+          height: 350,
+          type: "radialBar",
+        },
+        series: stressVal,
+        labels: ["04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"],
+        colors: ["#BFDBFE"],
+        plotOptions: {
+          radialBar: {
+            startAngle: -90,
+            endAngle: 90,
+            track: {
+              background: '#333',
+              startAngle: -90,
+              endAngle: 90,
+            },
+            dataLabels: {
+              name: {
+                show: true,
+              },
+              value: {
+                color: "#111",
+                fontSize: "30px",
+                show: true
+              },
+            }
+          }
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shade: "dark",
+            type: "horizontal",
+            gradientToColors: ["#87D4F9"],
+            stops: [0, 100]
+          }
+        },
+        stroke: {
+          lineCap: "butt"
+        },
+      },
+    };
+  }
 
-    return () => {
-      activityChart.destroy()
-    }
-  }, []);
-  return(
-    <>
-      <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10">
-        <h3 className="font-bold mb-1 text-xl text-blue-900">Weekly Stress</h3>
-        <div className="px-12">
-          <canvas id='activityChart'></canvas>
+  render() {
+    return(
+      <>
+        <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 text-center">
+          <h3 className="font-bold mb-1 text-xl text-blue-900">Weekly Stress</h3>
+          <div className="px-12">
+          <ApexCharts options={this.state.options} series={this.state.options.series} type="radialBar" height={400} />
+          </div>
         </div>
-      </div>
-    </>
-  )
-};
+      </>
+    )
+  }
+}
+
+export default CircleChart;
+
+
+  
