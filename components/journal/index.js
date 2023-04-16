@@ -6,88 +6,92 @@ import ScaleComponent from './ScaleComponent'
 import CalendarIcon from './CalendarIcon'
 import CalendarWidget from 'react-calendar'
 import { convertDateToISO, getDateText, formatDate } from '../../helpers/data';
+import { useData } from '../../store/DataContext'
 
 export default function Journal (props) {
-  const [data, setData] = useState([])
+  const { data, updateData, selectedDate, updateDate, today } = useData();
   const [showCal, setShowCal] = useState(false);
 
-  useEffect(() => {
-    async function fetchData () {
-      const date = new Date(props.day);
-      const res = await fetch(
-        `/api/userMetricData?date=${convertDateToISO(date)}`
-      )
-      const { metrics } = await res.json()
-      setData(metrics)
-    }
-    fetchData();
-  }, [props.day])
+  //Render a list of metrics
+  const metricList = data.map((metric, index) => {
+    const { id, name, property, unit, user_metric_data } = metric;
 
-  // Render a list of metrics
-  const metricList = data.map(metric => {
-    const { id, name, property, unit, user_metric_data } = metric
-    const value = user_metric_data[0]?.metric_value
+    // user_metric_data id and value
+    const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1].id;
+    const value = user_metric_data[data[index].user_metric_data.length - 1].metric_value;
 
     // Render InputComponent if property is 'input'
-    if (property === 'input') {
+    if (property === "input") {
       return (
         <InputComponent
           key={id}
           name={name}
           value={value}
-          handleChange={event => handleChange(metric.id, event.target.value)}
+          handleChange={event => handleChange(id, userMetricDataId, event.target.value)}
           unit={unit}
         />
-      )
-      // Render ScaleComponent if property is 'scale'
-    } else if (property === 'scale') {
+      );
+    // Render ScaleComponent if property is 'scale'
+    } else if (property === "scale") {
       return (
         <ScaleComponent
           key={id}
           name={name}
           value={value}
-          handleChange={event => handleChange(id, event.target.value)}
+          handleChange={event => handleChange(id, userMetricDataId, event.target.value)}
         />
-      )
+      );
     }
     // Render nothing if the property is not valid
-    return null
-  })
+    return null;
+  });
 
-  // Function to update the data when a metric value is changed
-  function handleChange (metricId, newValue) {
-    const parsedValue = parseFloat(newValue)
+  function handleChange(metricId, userMetricDataId, newValue) {
+    // If newValue is not a number set to 0, else parseFloat the newValue
+    const parsedValue = isNaN(parseFloat(newValue)) ? 0 : parseFloat(newValue);
+  
     const updatedData = data.map(metric => {
       if (metric.id === metricId) {
+        // lastMetricData is always the current selected day
+        const [lastMetricData] = metric.user_metric_data.slice(-1);
+
+        // Create a new object with the updated metric value
+        const updatedLastMetricValue = {
+          ...lastMetricData,
+          metric_value: parsedValue
+        };
+
+        // Replace the last object in the user_metric_data array with the updated object
+        const updatedUserMetricData = [
+          ...metric.user_metric_data.slice(0, -1),
+          updatedLastMetricValue
+        ];
         return {
           ...metric,
-          user_metric_data: [
-            {
-              ...metric.user_metric_data[0],
-              metric_value: parsedValue
-            }
-          ]
-        }
+          user_metric_data: updatedUserMetricData,
+        };
       }
-      return metric
-    })
-    setData(updatedData)
+      return metric;
+    });
+    updateData(updatedData);
+    handleSave(userMetricDataId, parsedValue);
   }
 
-  const handleSave = async () => {
+
+  async function handleSave(userMetricDataId, newValue) {
+    const data = { userMetricDataId, newValue };
     try {
-      const res = await fetch('/api/userMetricData', {
+      const res = await fetch('/api/userData', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json'
         }
-      })
-      const result = await res.json()
+      });
+      const result = await res.json();
       console.log(result);
-      handleClose()
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
@@ -103,14 +107,14 @@ export default function Journal (props) {
             <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4'>
                 <div className="w-[33%] flex">
                   <button
-                    onClick={() => props.setDay(props.today)}
+                    onClick={() => updateDate(today)}
                     className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-white bg-blue-100 dark:bg-blue-800 hover:bg-blue-50 dark:hover:bg-blue-700 py-1 px-5 mr-auto'
                   >
                     Today
                   </button>
                 </div>
                 <h3 className='w-[33%] text-blue-950 dark:text-white text-lg text-center font-bold whitespace-nowrap self-center'>
-                  {formatDate(props.day)}
+                  {formatDate(selectedDate)}
                 </h3>
                 <div className='w-[33%] text-right flex justify-end content-center flex-wrap-reverse'>
                   <CalendarIcon
@@ -123,23 +127,13 @@ export default function Journal (props) {
                 </div>
             </div>
             <div className="sm:w-[400px] mx-auto">
-                {/* Replacing this with the React Calendar
-                <DatePicker
-                  selected={props.day}
-                  onChange={(date) => props.setDay(date)}
-                  showMonthDropdown={true}
-                  showYearDropdown={true}
-                  customInput={<CalendarIcon />}
-                  withPortal={true}
-                />
-                */}
                 {showCal && 
                   <CalendarWidget
                     className="bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-2"
-                    value={new Date(props.day)}
-                    activeStartDate={new Date(props.day)}
-                    onChange={(newDay) => props.setDay(newDay)}
-                    maxDate={props.today}
+                    value={selectedDate}
+                    activeStartDate={today}
+                    onChange={(newDay) => updateDate(newDay)}
+                    maxDate={today}
                     onActiveStartDateChange={(e) => {props.handleCalNav(e)}}
                   />
                 }
