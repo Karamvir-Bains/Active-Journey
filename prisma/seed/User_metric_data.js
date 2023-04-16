@@ -1,5 +1,3 @@
-const { PrismaClient } = require('@prisma/client');
-
 const prisma = new PrismaClient();
 
 async function createMockEntry(id, max, min, date) {
@@ -16,9 +14,16 @@ async function createMockEntry(id, max, min, date) {
   });
 }
 
+// Get the current date and time in the local timezone
+const today = new Date();
+
+// Adjust the date to the UTC timezone
+const utcTimestamp = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+
 async function seed() {
-  for (let i = 0; i < 365; i++) {
-    const date = new Date(new Date().getFullYear(), 0, i + 1);
+  for (let i = 180; i >= 0; i--) {
+    // Add the number of days to the UTC timestamp
+    const date = new Date(utcTimestamp.getTime() - i * 24 * 60 * 60 * 1000);
 
     const metrics = [
       { metric_id: 1 },
