@@ -15,8 +15,6 @@ export default function Profile(props) {
   )
 }
 
-
-
 export async function getServerSideProps() {
   const prisma = new PrismaClient()
 

@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   const id = Number(req.query.id); 
   if (req.method === 'PUT') {
     
-    const updateDarkMode = await prisma.user.update({
+    const updateBackground = await prisma.user.update({
       data: {
         "background": JSON.stringify(req.body.background),
       },
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       },
       
     });
-    return await res.status(200).json(updateDarkMode);
+    return await res.status(200).json(updateBackground);
   } else {
     return await res.status(405).json({
       message: "access is restricted"
