@@ -5,6 +5,7 @@ import Footer from '../partials/Footer';
 import Journal from '../journal';
 import { useEffect, useState } from 'react';
 import { useApplicationData } from '../../hooks/useApplicationData';
+import { DataProvider } from '../../store/DataContext';
 
 export default function Layout({ children, title }) {
   const { toggleJournal, day, today, journalOpen, handleSetDay, handleCalNav } = useApplicationData();
@@ -21,38 +22,40 @@ export default function Layout({ children, title }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className={darkMode}>
-        <div className='flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}'>
-          <div className='flex-grow overflow-auto'>
-            <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
-              <Sidebar 
-                darkMode={darkMode}
-                toggleDarkMode={toggleDarkMode}
-                toggleJournal={toggleJournal}
-              />
-              <main
-                id='section-main'
-                className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
-              >
-                <div className='flex h-full flex-col p-8 mb-6'>
-                  <Header pageTitle={title} />
-                    {children}
-                  <Footer />
-                </div>
-              </main>
+      <DataProvider>
+        <div className={darkMode}>
+          <div className='flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}'>
+            <div className='flex-grow overflow-auto'>
+              <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
+                <Sidebar 
+                  darkMode={darkMode}
+                  toggleDarkMode={toggleDarkMode}
+                  toggleJournal={toggleJournal}
+                />
+                <main
+                  id='section-main'
+                  className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
+                >
+                  <div className='flex h-full flex-col p-8 mb-6'>
+                    <Header pageTitle={title} />
+                      {children}
+                    <Footer />
+                  </div>
+                </main>
+              </div>
             </div>
+            {journalOpen && (
+              <Journal
+                day={day}
+                today={today}
+                setDay={handleSetDay}
+                onClose={toggleJournal}
+                handleCalNav={handleCalNav}
+              />
+            )}
           </div>
-          {journalOpen && (
-            <Journal
-              day={day}
-              today={today}
-              setDay={handleSetDay}
-              onClose={toggleJournal}
-              handleCalNav={handleCalNav}
-            />
-          )}
         </div>
-      </div>
+      </DataProvider>
   </>)
 }
 
