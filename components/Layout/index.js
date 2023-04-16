@@ -3,7 +3,7 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
 import Journal from '../journal';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useApplicationData } from '../../hooks/useApplicationData';
 import { DataProvider } from '../../store/DataContext';
 
@@ -47,7 +47,11 @@ export default function Layout({ children, title }) {
                 >
                   <div className='flex h-full flex-col p-8 mb-6'>
                     <Header pageTitle={title} />
-                      {children}
+                    {React.Children.map(children, (child) => {
+                      return React.cloneElement(child, {
+                        toggleJournal: toggleJournal
+                      });
+                    })}
                     <Footer />
                   </div>
                 </main>

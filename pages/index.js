@@ -11,11 +11,7 @@ import { updateLayout, parseLayout } from '../helpers/selectors'
 import Journal from '../components/journal'
 
 export default function Home (props) {
-  const {
-    user,
-    toggleJournal,
-    journalOpen
-  } = useApplicationData();
+  const { user } = useApplicationData();
 
 
   /**
@@ -37,7 +33,7 @@ export default function Home (props) {
         user={props.user}
         layout={layout}
         onLayoutChange={handleLayoutChange}
-        toggleJournal={toggleJournal}
+        toggleJournal={props.toggleJournal}
         dailyWater={props.dailyWater}
         entries={props.entries}
         water={props.water}        
@@ -47,12 +43,6 @@ export default function Home (props) {
         sleepQuality={props.sleepQuality}
         stress={props.stress}    
       />
-      {/* Remove One we have context working - cannot currently get the Dashboard calendar to work with the Journal when it lives in the Layout component - not sure how to pass props from layout and down */}
-      {journalOpen && (
-        <Journal
-          onClose={toggleJournal}
-        />
-      )}
     </Layout>
   )
 }
