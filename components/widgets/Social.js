@@ -44,8 +44,8 @@ export default function Social(props) {
   }, []);
   return(
     <>
-      <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900">Quality of Social Interactions</h3>
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
+        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Quality of Social Interactions</h3>
         <div className="px-12">
           <canvas id='social'></canvas>
         </div>

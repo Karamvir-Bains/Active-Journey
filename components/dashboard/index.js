@@ -1,24 +1,22 @@
-import { useState } from "react";
 import { Responsive, WidthProvider } from  "react-grid-layout"
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import Calendar from "../widgets/_calendar";
-import DailyWater from "../widgets/_daily-water";
-import Overview from "../widgets/_overview";
-import Nutrition from "../widgets/_nutrition";
-import Widget from "../widgets/_widget";
-import AvgMood from "../widgets/_avg-mood";
-import Sleep from "../widgets/_sleep";
-import Alcohol from "../widgets/_alcohol";
-import Social from "../widgets/_social";
-import RadialChart from "../widgets/_activity-goal";
-import CircleChart from "../widgets/_weekly-stress"
+import Overview from "../widgets/Overview";
+import Calendar from "../widgets/Calendar";
+import DailyWater from "../widgets/DailyWater";
+import Nutrition from "../widgets/Nutrition";
+import AvgMood from "../widgets/AvgMood";
+import Sleep from "../widgets/Sleep";
+import Alcohol from "../widgets/Alcohol";
+import Social from "../widgets/Social";
+import RadialChart from "../widgets/ActivityGoal";
+import CircleChart from "../widgets/WeeklyStress";
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
-  //console.log(props)
   return (
-    <div className="relative bg-blue">
+    <div className="relative">
       <ResponsiveGridLayout
         className="layout"
         layouts={props.layout}
@@ -47,7 +45,10 @@ export default function Dashboard(props) {
         <div key="calendar">
           <Calendar
             day={props.day}
-            setDay={props.setDay}
+            today={props.today}
+            handleSetDay={props.handleSetDay}
+            handleCalNav={props.handleCalNav}
+            journalOpen={props.journalOpen}
             toggleJournal={props.toggleJournal}
           />
         </div>

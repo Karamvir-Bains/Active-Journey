@@ -2,20 +2,26 @@
 import prisma from '../../../lib/prisma';
 
 export default async function handler(req, res) {  
-  if (req.method === 'PUT') {
+  if (req.method === 'GET') {
     const id = Number(req.query.id);
-    const updateLayout = await prisma.user.update({
+    const user = await prisma.user.findUnique({
       where: {
         id: id,
       },
-      data: {
-        layout: JSON.stringify(req.body.layout),
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        layout: true,
+        password: false,
+        dark_mode: true
       },
     });
-    return await res.status(200).json(updateLayout);
+    return await res.status(200).json(user);
   } else {
     return await res.status(405).json({
-      message: "access is restricted"
+      message: "incorrect request"
     });
   }
 }

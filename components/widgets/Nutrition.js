@@ -55,8 +55,8 @@ export default function Nutrition(props) {
   }, []);
   return(
     <>
-      <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-2 text-xl text-blue-900">Quality of Nutrition</h3>
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-6 mb-10 text-center">
+        <h3 className="font-bold mb-2 text-xl text-blue-900 dark:text-blue-500">Quality of Nutrition</h3>
         <div className="text-center w-full h-5/6">
           <canvas id='nutritionChart'></canvas>
         </div>

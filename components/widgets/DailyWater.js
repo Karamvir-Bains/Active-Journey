@@ -1,6 +1,4 @@
-const convertMlToCups = (val) => {
-  return Math.ceil(val / 250);
-}
+
 
 export default function DailyWater(props) { 
   // convert props.today.water to percentage to fill animation of water glass/bottle
@@ -11,6 +9,11 @@ export default function DailyWater(props) {
   if (props.dailyWater.length > 0) {
     ml = props.dailyWater[0].metric_value;
   }
+
+  const convertMlToCups = (val) => {
+    return Math.ceil(val / 250);
+  }
+
   let val = convertMlToCups(ml);
 
   const calcGlassHeight = (val) => {
@@ -40,15 +43,15 @@ export default function DailyWater(props) {
   const getGlassClass = calcGlassHeight(val);
 
   return(
-    <div className="overflow-scroll rounded-lg bg-white shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
-      <h3 className="text-center font-bold mb-3 text-xl text-blue-900">Daily Water Intake</h3>
+    <div className="overflow-scroll rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
+      <h3 className="text-center font-bold mb-3 text-xl text-blue-900 dark:text-blue-500">Daily Water Intake</h3>
       <div id="waterCup" className="mx-auto bg-blue-100 h-[65%] w-[50%] relative rounded-b-lg drop-shadow-sm">
         <div className="handle"></div>
         <div 
           className={getGlassClass}></div>
       </div>
       <div className="font-medium text-lg text-center my-3">
-        {val} out of 8 cups
+        {val} out of 8 cups  ({ml}ml)
       </div>
     </div>
   )

@@ -14,6 +14,8 @@ model User {
   email            String             @unique
   password         String
   layout           String
+  dark_mode        String?
+  background       String?
   user_metric_data User_metric_data[]
 }
 
