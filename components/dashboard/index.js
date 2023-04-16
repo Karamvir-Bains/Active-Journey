@@ -31,7 +31,7 @@ export default function Dashboard(props) {
         onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
         isDraggable={true}
         isRearrangeable={true}
-        isResizable={true}
+        isResizable={false}
       >
         <div key="overview">
           <Overview 
