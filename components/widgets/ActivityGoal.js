@@ -6,7 +6,6 @@ const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 export default function ActivityGoal() {
   const { data } = useData();
   const goal = 60;
-  const [metricValue, setMetricValue] = useState(0);
   const [progressPercentage, setProgressPercentage] = useState(0);
 
   const [options, setOptions] = useState({
@@ -30,7 +29,6 @@ export default function ActivityGoal() {
   useEffect(() => {
     if (data && data[2] && data[2].user_metric_data) {
       const newMetricValue = data[2].user_metric_data[data[2].user_metric_data.length - 1].metric_value;
-      setMetricValue(newMetricValue);
   
       let newProgressPercentage = Math.floor((newMetricValue / goal) * 100);
       newProgressPercentage = Math.min(newProgressPercentage, 100);
