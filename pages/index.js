@@ -1,18 +1,13 @@
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 import { PrismaClient } from '@prisma/client'
 import Layout from '../components/Layout'
 import Dashboard from '../components/dashboard'
 import { defaultLayout } from '../helpers/data'
 import { useApplicationData } from '../hooks/useApplicationData'
 import { updateLayout, parseLayout } from '../helpers/selectors'
-// This can be removed once we useContext
-import Journal from '../components/journal'
 
 export default function Home (props) {
   const { user } = useApplicationData();
-
 
   /**
    * Customize the Dashboard Layout
