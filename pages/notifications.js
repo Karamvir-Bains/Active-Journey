@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client'
 import { useApplicationData } from '../hooks/useApplicationData'
 
 export default function Settings (props) {
-  const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, toggleJournal, handleCalNav } =
+  const { today, day, handleSetDay, data, setData, user, setUser, journalOpen, toggleJournal } =
   useApplicationData();
 
   return (

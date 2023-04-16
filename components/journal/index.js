@@ -9,7 +9,16 @@ import { convertDateToISO, getDateText, formatDate } from '../../helpers/data';
 import { useData } from '../../store/DataContext'
 
 export default function Journal (props) {
-  const { data, updateData, selectedDate, updateDate, today, handleCalNav } = useData();
+  const { 
+    data,
+    updateData,
+    selectedDate,
+    updateDate,
+    today,
+    activeStartDate,
+    handleTodayClick,
+    handleActiveStartDateChange,
+  } = useData();
   const [showCal, setShowCal] = useState(false);
 
   //Render a list of metrics
@@ -107,7 +116,7 @@ export default function Journal (props) {
             <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4'>
                 <div className="w-[33%] flex">
                   <button
-                    onClick={() => updateDate(today)}
+                    onClick={handleTodayClick}
                     className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-white bg-blue-100 dark:bg-blue-800 hover:bg-blue-50 dark:hover:bg-blue-700 py-1 px-5 mr-auto'
                   >
                     Today
@@ -133,7 +142,8 @@ export default function Journal (props) {
                     value={selectedDate}
                     onChange={(newDay) => updateDate(newDay)}
                     maxDate={today}
-                    //onActiveStartDateChange={(e) => handleCalNav(e)}
+                    activeStartDate={activeStartDate}
+                    onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
                   />
                 }
             </div>

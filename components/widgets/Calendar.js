@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CalendarWidget from 'react-calendar'
@@ -5,14 +6,22 @@ import { formatDate } from '../../helpers/data';
 import { useData } from '../../store/DataContext';
 
 export default function Calendar (props) {
-  const { selectedDate, updateDate, today, handleCalNav } = useData();
+  const { 
+    selectedDate,
+    updateDate,
+    today,
+    activeStartDate,
+    handleTodayClick,
+    handleActiveStartDateChange,
+  } = useData();
+
   return (
     <>
     <div className='overflow-scroll rounded-lg bg-blue-200 dark:bg-blue-900 shadow-sm w-full h-full p-6'>
       <div className='flex justify-evenly content-center w-full'>
         <div className="w-[33%] md:w-[25%]">
             <button
-            onClick={() => updateDate(today)}
+            onClick={handleTodayClick}
             className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-blue-800 bg-blue-100 hover:bg-blue-50 py-1 px-5 mr-auto'
           >
             Today
@@ -33,11 +42,11 @@ export default function Calendar (props) {
           value={selectedDate}
           onChange={(newDay) => updateDate(newDay)}
           maxDate={today}
-          // onActiveStartDateChange={(e) => handleCalNav(e)}
+          activeStartDate={activeStartDate}
+          onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
         />
       </div>
     </div>
-    
     </>
   )
 }

@@ -16,7 +16,6 @@ export default function Home (props) {
     day,
     handleSetDay,
     user,
-    handleCalNav,
     toggleJournal,
     journalOpen
   } = useApplicationData();
@@ -44,7 +43,6 @@ export default function Home (props) {
         today={today}
         day={day}
         handleSetDay={handleSetDay}
-        handleCalNav={handleCalNav}
         toggleJournal={toggleJournal}
         dailyWater={props.dailyWater}
         entries={props.entries}
@@ -62,7 +60,6 @@ export default function Home (props) {
           today={today}
           setDay={handleSetDay}
           onClose={toggleJournal}
-          handleCalNav={handleCalNav}
         />
       )}
     </Layout>

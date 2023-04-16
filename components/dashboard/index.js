@@ -47,7 +47,6 @@ export default function Dashboard(props) {
             day={props.day}
             today={props.today}
             handleSetDay={props.handleSetDay}
-            handleCalNav={props.handleCalNav}
             journalOpen={props.journalOpen}
             toggleJournal={props.toggleJournal}
           />
