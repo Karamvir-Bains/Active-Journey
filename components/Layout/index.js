@@ -9,11 +9,20 @@ import { DataProvider } from '../../store/DataContext';
 
 export default function Layout({ children, title }) {
   const { toggleJournal, journalOpen, handleCalNav } = useApplicationData();
-  const [darkMode, setDarkMode] = useState('light');
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('darkMode') || 'light';
+    }
+    return 'light';
+  });
+  
 
   const toggleDarkMode = () => {
-    setDarkMode(darkMode === 'light' ? 'dark' : 'light');
-  } 
+    const newMode = darkMode === 'light' ? 'dark' : 'light';
+    localStorage.setItem('darkMode', newMode);
+    setDarkMode(newMode);
+  }
+  
 
   return(<>
       <Head>
