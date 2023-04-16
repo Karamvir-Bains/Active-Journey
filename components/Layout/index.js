@@ -3,12 +3,12 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
 import Journal from '../journal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useApplicationData } from '../../hooks/useApplicationData';
 import { DataProvider } from '../../store/DataContext';
 
 export default function Layout({ children, title }) {
-  const { toggleJournal, day, today, journalOpen, handleSetDay, handleCalNav } = useApplicationData();
+  const { toggleJournal, journalOpen, handleCalNav } = useApplicationData();
   const [darkMode, setDarkMode] = useState('light');
 
   const toggleDarkMode = () => {
@@ -46,9 +46,6 @@ export default function Layout({ children, title }) {
             </div>
             {journalOpen && (
               <Journal
-                day={day}
-                today={today}
-                setDay={handleSetDay}
                 onClose={toggleJournal}
                 handleCalNav={handleCalNav}
               />
