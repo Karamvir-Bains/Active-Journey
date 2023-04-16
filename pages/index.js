@@ -29,7 +29,6 @@ export default function Home (props) {
         layout={layout}
         onLayoutChange={handleLayoutChange}
         toggleJournal={props.toggleJournal}
-        dailyWater={props.dailyWater}
         entries={props.entries}
         water={props.water}        
         energy={props.energy}

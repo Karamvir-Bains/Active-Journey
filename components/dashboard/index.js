@@ -48,10 +48,7 @@ export default function Dashboard(props) {
           />
         </div>
         <div key="dailyWater">
-          <DailyWater
-            day={props.day}
-            dailyWater={props.dailyWater}
-          />
+          <DailyWater/>
         </div>
         <div key="activityGoal">
           <RadialChart />
