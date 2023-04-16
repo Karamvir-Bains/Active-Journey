@@ -37,7 +37,7 @@ export function useApplicationData (initial) {
     setDay(new Date(date));
   }
 
-  const toggleJournal = () => {
+  const toggleJournal = async () => {
     setJournalOpen(!journalOpen);
   };
 

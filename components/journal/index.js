@@ -98,7 +98,7 @@ export default function Journal (props) {
   return (
     <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden md:p-4'>
       <div className='absolute left-0 right-0 mx-auto w-full h-full md:w-[75%] lg:w-[800px] overflow-scroll'>
-        <div className='relative'>
+        <div className='relative sm:pl-[75px] md:pl-0'>
           <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>
             <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4'>
                 <div className="w-[33%] flex">
@@ -155,7 +155,7 @@ export default function Journal (props) {
 
             <div id='journal-footer' className='flex justify-start mb-16'>
               <button
-                className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white dark:text-slate-900 font-bold py-2 px-4 rounded'
+                className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded'
                 type='button'
                 onClick={handleSave}
               >

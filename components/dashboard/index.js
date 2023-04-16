@@ -2,16 +2,20 @@ import { useState } from "react";
 import { Responsive, WidthProvider } from  "react-grid-layout"
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import ActivityGoal from "../widgets/_activity-goal";
+import ActivityGoal from "../widgets/ActivityGoal";
 import Calendar from "../widgets/Calendar";
-import DailyWater from "../widgets/_daily-water";
-import Overview from "../widgets/_overview";
-import Nutrition from "../widgets/_nutrition";
-import Widget from "../widgets/_widget";
-import AvgMood from "../widgets/_avg-mood";
+import DailyWater from "../widgets/DailyWater";
+import Overview from "../widgets/Overview";
+import Nutrition from "../widgets/Nutrition";
+import Widget from "../widgets/Widget";
+import AvgMood from "../widgets/AvgMood";
+import Journal from "../journal";
+import { useApplicationData } from "../../hooks/useApplicationData";
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Dashboard(props) {
+
   return (
     <div className="relative">
       <ResponsiveGridLayout
@@ -43,9 +47,10 @@ export default function Dashboard(props) {
           <Calendar
             day={props.day}
             today={props.today}
-            setDay={props.setDay}
-            toggleJournal={props.toggleJournal}
+            handleSetDay={props.handleSetDay}
             handleCalNav={props.handleCalNav}
+            journalOpen={props.journalOpen}
+            toggleJournal={props.toggleJournal}
           />
         </div>
         <div key="dailyWater">

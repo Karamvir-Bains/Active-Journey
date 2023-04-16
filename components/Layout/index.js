@@ -5,49 +5,14 @@ import Footer from '../partials/Footer';
 import Journal from '../journal';
 import { useEffect, useState } from 'react';
 import { useApplicationData } from '../../hooks/useApplicationData';
-import axios from 'axios';
 
 export default function Layout({ children, title }) {
   const { toggleJournal, day, today, journalOpen, handleSetDay, handleCalNav } = useApplicationData();
+  const [darkMode, setDarkMode] = useState('light');
 
-  const [darkMode, setDarkMode] = useState(false);
-  const [bodyClass, setBodyClass] = useState('light');
-
-  useEffect(() => {
-    const user = axios.get('/api/users/1')
-      .then((res) => {
-        console.log("Response: ", res.data)
-        setDarkMode(JSON.parse(res.data.dark_mode));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-
-  }, [])
-
-  useEffect(() => {
-    setBodyClass(darkMode == true ? 'light' : 'dark');
-  }, [darkMode]);
-
-  const handleDarkMode = async () => {
-    setDarkMode(darkMode === true ? false : true);
-
-    const data = {
-      dark_mode: darkMode
-    }
-
-    try {
-      const userid = 1;
-      await fetch(`/api/users/${userid}/updateDarkMode`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-      });
-    }
-    catch (err) {
-      console.log(err);
-    }
-  }
+  const toggleDarkMode = () => {
+    setDarkMode(darkMode === 'light' ? 'dark' : 'light');
+  } 
 
   return(<>
       <Head>
@@ -56,13 +21,13 @@ export default function Layout({ children, title }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className={bodyClass}>
+      <div className={darkMode}>
         <div className='flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}'>
           <div className='flex-grow overflow-auto'>
             <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
               <Sidebar 
                 darkMode={darkMode}
-                setDarkMode={handleDarkMode}
+                toggleDarkMode={toggleDarkMode}
                 toggleJournal={toggleJournal}
               />
               <main

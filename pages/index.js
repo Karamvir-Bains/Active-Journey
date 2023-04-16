@@ -7,6 +7,8 @@ import Dashboard from '../components/dashboard'
 import { defaultLayout } from '../helpers/data'
 import { useApplicationData } from '../hooks/useApplicationData'
 import { updateLayout, parseLayout } from '../helpers/selectors'
+// This can be removed once we useContext
+import Journal from '../components/journal'
 
 export default function Home (props) {
   const {
@@ -15,8 +17,10 @@ export default function Home (props) {
     handleSetDay,
     user,
     handleCalNav,
-    toggleJournal
-  } = useApplicationData()
+    toggleJournal,
+    journalOpen
+  } = useApplicationData();
+
 
   /**
    * Customize the Dashboard Layout
@@ -32,7 +36,7 @@ export default function Home (props) {
   }
 
   return (
-    <Layout title="Dashboard | Active Journey">
+    <Layout title="Dashboard">
         <Dashboard
           user={user}
           today={today}
@@ -42,13 +46,23 @@ export default function Home (props) {
           energy={props.energy}
           mood={props.mood}
           day={day}
-          setDay={handleSetDay}
+          handleSetDay={handleSetDay}
           layout={layout}
           dailyWater={props.dailyWater}
           onLayoutChange={handleLayoutChange}
           toggleJournal={toggleJournal}
           handleCalNav={handleCalNav}
         />
+        {/* Remove One we have context working - cannot currently get the Dashboard calendar to work with the Journal when it lives in the Layout component - not sure how to pass props from layout and down */}
+        {journalOpen && (
+          <Journal
+            day={day}
+            today={today}
+            setDay={handleSetDay}
+            onClose={toggleJournal}
+            handleCalNav={handleCalNav}
+          />
+        )}
     </Layout>
   )
 }
@@ -79,18 +93,23 @@ export async function getServerSideProps () {
   })
 
   const now = Date.now()
-  const lteVal = new Date(now)
+  const lteVal = new Date(now).toISOString()
+
   let dailyWater = await prisma.User_metric_data.findMany({
     where: {
       user_id: userid,
       metric_id: 1,
       date: {
         lte: lteVal
-      }
+      },
+    },
+    orderBy: {
+      date: 'desc',
     },
     include: {
       metrics: true
-    }
+    },
+    take: 1
   })
   dailyWater = JSON.parse(JSON.stringify(dailyWater))
 

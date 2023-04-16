@@ -1,4 +1,4 @@
-import { faPersonRunning, faPlus, faGear, faUser, faBell, faList, faChartLine, faRightFromBracket, faToggleOn, faToggleOff }from '@fortawesome/free-solid-svg-icons'
+import { faPersonRunning, faPlus, faGear, faBell, faList, faChartLine, faRightFromBracket, faToggleOn, faToggleOff }from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link';
 
@@ -50,12 +50,11 @@ export default function Sidebar(props) {
               <span className="sr-only">Logout</span>
             </div>
           </a>
-          {/* onClick={() => props.handleDarkMode()} */}
-          <a onClick={props.setDarkMode} className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 dark:hover:bg-blue-900 p-4 text-blue-900 dark:text-blue-200" >
-            { props.darkMode === false && 
+          <a onClick={props.toggleDarkMode} className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 dark:hover:bg-blue-900 p-4 text-blue-900 dark:text-blue-200" >
+            { props.darkMode === 'dark' && 
               <FontAwesomeIcon icon={faToggleOn} /> 
             }
-            { props.darkMode === true &&
+            { (props.darkMode === 'light' ) &&
               <FontAwesomeIcon icon={faToggleOff} />
             }   
           </a>
