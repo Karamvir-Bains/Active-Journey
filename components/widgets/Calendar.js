@@ -11,14 +11,14 @@ export default function Calendar (props) {
       <div className='flex justify-evenly content-center w-full'>
         <div className="w-[33%] md:w-[25%]">
             <button
-            onClick={() => props.handleSetDay(props.today)}
+            onClick={() => props.handleSetDay(new Date(props.today))}
             className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-blue-800 bg-blue-100 hover:bg-blue-50 py-1 px-5 mr-auto'
           >
             Today
           </button>
         </div>
         <h3 className='w-[33%] sm:w-[50%] flex flex-col justify-self-center justify-center content-center text-blue-950 dark:text-white text-lg font-bold text-center text-[1rem]'>
-          {format(newDate, 'MMM d, yyyy')}
+          {format(props.day, 'MMM d, yyyy')}
         </h3>
         <div className="w-[33%] md:w-[25%] align-stretch">
           <button role="button" onClick={props.toggleJournal}

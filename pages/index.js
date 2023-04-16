@@ -36,33 +36,35 @@ export default function Home (props) {
   }
 
   return (
-    <Layout title="Dashboard">
-        <Dashboard
-          user={user}
-          today={today}
-          entries={props.entries}
-          water={props.water}
-          sleep={props.sleep}
-          energy={props.energy}
-          mood={props.mood}
+    <Layout title="Dashboard">      
+      <Dashboard 
+        user={props.user}
+        layout={layout}
+        onLayoutChange={handleLayoutChange}
+        today={today}
+        day={day}
+        handleSetDay={handleSetDay}
+        handleCalNav={handleCalNav}
+        toggleJournal={toggleJournal}
+        dailyWater={props.dailyWater}
+        entries={props.entries}
+        water={props.water}        
+        energy={props.energy}
+        mood={props.mood}
+        sleep={props.sleep}
+        sleepQuality={props.sleepQuality}
+        stress={props.stress}    
+      />
+      {/* Remove One we have context working - cannot currently get the Dashboard calendar to work with the Journal when it lives in the Layout component - not sure how to pass props from layout and down */}
+      {journalOpen && (
+        <Journal
           day={day}
-          handleSetDay={handleSetDay}
-          layout={layout}
-          dailyWater={props.dailyWater}
-          onLayoutChange={handleLayoutChange}
-          toggleJournal={toggleJournal}
+          today={today}
+          setDay={handleSetDay}
+          onClose={toggleJournal}
           handleCalNav={handleCalNav}
         />
-        {/* Remove One we have context working - cannot currently get the Dashboard calendar to work with the Journal when it lives in the Layout component - not sure how to pass props from layout and down */}
-        {journalOpen && (
-          <Journal
-            day={day}
-            today={today}
-            setDay={handleSetDay}
-            onClose={toggleJournal}
-            handleCalNav={handleCalNav}
-          />
-        )}
+      )}
     </Layout>
   )
 }
@@ -120,6 +122,8 @@ export async function getServerSideProps () {
   let sleep = await fetchSingleMetric({ metric_id: 2 })
   let energy = await fetchSingleMetric({ metric_id: 4 })
   let mood = await fetchSingleMetric({ metric_id: 5 })
+  let stress = await fetchSingleMetric({ metric_id: 6 });
+  let sleepQuality = await fetchSingleMetric({ metric_id: 7 });
 
   let entries = await prisma.User_metric_data.findMany({
     where: { user_id: 1 },
@@ -136,7 +140,9 @@ export async function getServerSideProps () {
       sleep,
       energy,
       mood,
-      dailyWater
+      dailyWater,
+      stress,
+      sleepQuality
     }
   }
 }
