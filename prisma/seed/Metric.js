@@ -28,7 +28,8 @@ async function seed() {
     },{
       name: "Sleep Quality",
       property: "scale",
-    }]
+    }
+  ];
 
   for (let metric of metrics) {
     await prisma.Metric.create({
