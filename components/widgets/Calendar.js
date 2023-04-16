@@ -5,7 +5,7 @@ import { formatDate } from '../../helpers/data';
 import { useData } from '../../store/DataContext';
 
 export default function Calendar (props) {
-  const { selectedDate, updateDate, today } = useData();
+  const { selectedDate, updateDate, today, handleCalNav } = useData();
   return (
     <>
     <div className='overflow-scroll rounded-lg bg-blue-200 dark:bg-blue-900 shadow-sm w-full h-full p-6'>
@@ -31,10 +31,9 @@ export default function Calendar (props) {
       <div className='bg-white dark:bg-slate-800 dark:text-white  rounded-lg mt-3 p-2'>
         <CalendarWidget 
           value={selectedDate}
-          activeStartDate={today}
           onChange={(newDay) => updateDate(newDay)}
           maxDate={today}
-          onActiveStartDateChange={(e) => props.handleCalNav(e)}
+          // onActiveStartDateChange={(e) => handleCalNav(e)}
         />
       </div>
     </div>

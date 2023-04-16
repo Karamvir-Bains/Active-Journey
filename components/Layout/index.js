@@ -8,7 +8,7 @@ import { useApplicationData } from '../../hooks/useApplicationData';
 import { DataProvider } from '../../store/DataContext';
 
 export default function Layout({ children, title }) {
-  const { toggleJournal, journalOpen, handleCalNav } = useApplicationData();
+  const { toggleJournal, journalOpen } = useApplicationData();
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('darkMode') || 'light';
@@ -56,7 +56,6 @@ export default function Layout({ children, title }) {
             {journalOpen && (
               <Journal
                 onClose={toggleJournal}
-                handleCalNav={handleCalNav}
               />
             )}
           </div>

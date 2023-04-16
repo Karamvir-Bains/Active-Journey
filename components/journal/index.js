@@ -9,7 +9,7 @@ import { convertDateToISO, getDateText, formatDate } from '../../helpers/data';
 import { useData } from '../../store/DataContext'
 
 export default function Journal (props) {
-  const { data, updateData, selectedDate, updateDate, today } = useData();
+  const { data, updateData, selectedDate, updateDate, today, handleCalNav } = useData();
   const [showCal, setShowCal] = useState(false);
 
   //Render a list of metrics
@@ -131,10 +131,9 @@ export default function Journal (props) {
                   <CalendarWidget
                     className="bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-2"
                     value={selectedDate}
-                    activeStartDate={today}
                     onChange={(newDay) => updateDate(newDay)}
                     maxDate={today}
-                    onActiveStartDateChange={(e) => {props.handleCalNav(e)}}
+                    //onActiveStartDateChange={(e) => handleCalNav(e)}
                   />
                 }
             </div>
