@@ -5,7 +5,7 @@ import { useData } from "../../store/DataContext";
 // https://codepen.io/qindazhu/pen/ZWNKoG
 // https://github.com/coiger/fill-water-animation
 
-export default function DailyWater(props) { 
+export default function DailyWater() { 
   const { data } = useData();
   const [milliliters, setMilliliters] = useState(0);
 

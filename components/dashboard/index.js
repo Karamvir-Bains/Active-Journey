@@ -61,9 +61,7 @@ export default function Dashboard(props) {
             desc="Past 7 days" />
         </div>
         <div key="mood">
-          <AvgMood 
-            mood={props.mood} 
-            entries={props.entries}/>
+          <AvgMood />
         </div>
         <div key="sleep">
           <Sleep 
