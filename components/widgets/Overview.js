@@ -17,7 +17,7 @@ export default function Overview(props) {
       // Translate quantity vals to match 1-10 scale visually on y-axis
       return (entry.metric_value / 100) - 15
     }).slice(0, range);
-    // const moodVals = props.mood.map(entry => entry.metric_value).slice(0, range);
+    const moodVals = props.mood.map(entry => entry.metric_value).slice(0, range);
     const sleepVals = props.sleep.map(entry => entry.metric_value).slice(0, range);
     const energyVals = props.energy.map(entry => entry.metric_value).slice(0, range);
 
@@ -32,18 +32,16 @@ export default function Overview(props) {
       type: 'line',
       data: {
         labels: entryIds,
-        datasets: [
-        //   {
-        //   type: 'line',
-        //   label: "Mood",
-        //   data: moodVals,
-        //   borderColor: "#c45850",
-        //   pointRadius: 0,
-        //   backgroundColor: "transparent",
-        //   fill: true,
-        //   tension: 0.3
-        // }, 
-        {
+        datasets: [{
+          type: 'line',
+          label: "Mood",
+          data: moodVals,
+          borderColor: "#c45850",
+          pointRadius: 0,
+          backgroundColor: "transparent",
+          fill: true,
+          tension: 0.3
+        }, {
           type: 'bar',
           label: "Water Intake",
           data: waterVals,

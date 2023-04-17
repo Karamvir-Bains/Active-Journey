@@ -32,6 +32,7 @@ export default function Home (props) {
         entries={props.entries}
         water={props.water}        
         energy={props.energy}
+        mood={props.mood}
         sleep={props.sleep}
         sleepQuality={props.sleepQuality}
         stress={props.stress}    
