@@ -1,26 +1,13 @@
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 import { PrismaClient } from '@prisma/client'
 import Layout from '../components/Layout'
 import Dashboard from '../components/dashboard'
 import { defaultLayout } from '../helpers/data'
 import { useApplicationData } from '../hooks/useApplicationData'
 import { updateLayout, parseLayout } from '../helpers/selectors'
-// This can be removed once we useContext
-import Journal from '../components/journal'
 
 export default function Home (props) {
-  const {
-    today,
-    day,
-    handleSetDay,
-    user,
-    handleCalNav,
-    toggleJournal,
-    journalOpen
-  } = useApplicationData();
-
+  const { user } = useApplicationData();
 
   /**
    * Customize the Dashboard Layout
@@ -41,12 +28,7 @@ export default function Home (props) {
         user={props.user}
         layout={layout}
         onLayoutChange={handleLayoutChange}
-        today={today}
-        day={day}
-        handleSetDay={handleSetDay}
-        handleCalNav={handleCalNav}
-        toggleJournal={toggleJournal}
-        dailyWater={props.dailyWater}
+        toggleJournal={props.toggleJournal}
         entries={props.entries}
         water={props.water}        
         energy={props.energy}
@@ -55,16 +37,6 @@ export default function Home (props) {
         sleepQuality={props.sleepQuality}
         stress={props.stress}    
       />
-      {/* Remove One we have context working - cannot currently get the Dashboard calendar to work with the Journal when it lives in the Layout component - not sure how to pass props from layout and down */}
-      {journalOpen && (
-        <Journal
-          day={day}
-          today={today}
-          setDay={handleSetDay}
-          onClose={toggleJournal}
-          handleCalNav={handleCalNav}
-        />
-      )}
     </Layout>
   )
 }

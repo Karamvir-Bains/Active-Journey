@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
-import ButtonGroup from "../partials/_button-group";
+import ButtonGroup from "../partials/ButtonGroup";
 
 export default function Overview(props) {
   const rangeValues = [7, 30, 90];

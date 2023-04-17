@@ -44,19 +44,11 @@ export default function Dashboard(props) {
         </div>
         <div key="calendar">
           <Calendar
-            day={props.day}
-            today={props.today}
-            handleSetDay={props.handleSetDay}
-            handleCalNav={props.handleCalNav}
-            journalOpen={props.journalOpen}
             toggleJournal={props.toggleJournal}
           />
         </div>
         <div key="dailyWater">
-          <DailyWater
-            day={props.day}
-            dailyWater={props.dailyWater}
-          />
+          <DailyWater/>
         </div>
         <div key="activityGoal">
           <RadialChart />
@@ -69,9 +61,7 @@ export default function Dashboard(props) {
             desc="Past 7 days" />
         </div>
         <div key="mood">
-          <AvgMood 
-            mood={props.mood} 
-            entries={props.entries}/>
+          <AvgMood />
         </div>
         <div key="sleep">
           <Sleep 

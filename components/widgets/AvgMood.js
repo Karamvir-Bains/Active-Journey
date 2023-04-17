@@ -1,13 +1,25 @@
-import { FontAwesomeIcon, faFaceSmile } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon, faFaceSmile } from "@fortawesome/react-fontawesome";
+import { useState, useEffect } from "react";
+import { useData } from "../../store/DataContext";
 
-export default function AvgMood(props) {
-  const valsSum = props.mood.reduce((total, val) => total + val.metric_value, 0);
-  const avgMood = Math.floor(valsSum / props.mood.length);
+export default function AvgMood() {
+  const { data } = useData();
+  const [avgMood, setAvgMood] = useState(0);
+
+  useEffect(() => {
+    if (data && data[4] && data[4].user_metric_data) {
+      const lastSevenValues = data[4].user_metric_data.slice(-7);
+      const sum = lastSevenValues.reduce((acc, curr) => acc + curr.metric_value, 0);
+      const average = sum / lastSevenValues.length;
+      setAvgMood(Number(average.toFixed(2)));
+    }
+  }, [data]);
 
   return(
     <>
     <div className="overflow-scroll rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-6 flex flex-col justify-start content-end">
       <h3 className="font-bold mb-3 text-xl text-blue-900 dark:text-blue-500">Average Mood</h3>
+      <p>Last 7 Days: {avgMood}</p>
         <div className="px-6 py-4">
           {/* ! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. */}
           { avgMood <= 10 && avgMood >= 7 ? (

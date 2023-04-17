@@ -1,20 +1,27 @@
+import { useState, useEffect } from "react";
+import { useData } from "../../store/DataContext";
 
+// convert props.today.water to percentage to fill animation of water glass/bottle
+// https://codepen.io/qindazhu/pen/ZWNKoG
+// https://github.com/coiger/fill-water-animation
 
-export default function DailyWater(props) { 
-  // convert props.today.water to percentage to fill animation of water glass/bottle
-  // https://codepen.io/qindazhu/pen/ZWNKoG
-  // https://github.com/coiger/fill-water-animation
+export default function DailyWater() { 
+  const { data } = useData();
+  const [milliliters, setMilliliters] = useState(0);
 
-  let ml = 0;
-  if (props.dailyWater.length > 0) {
-    ml = props.dailyWater[0].metric_value;
-  }
+  useEffect(() => {
+    if (data && data[0] && data[0].user_metric_data) {
+      const newMetricValue = data[0].user_metric_data[data[0].user_metric_data.length - 1].metric_value;
+      setMilliliters(newMetricValue);
+
+    }
+  }, [data]);
 
   const convertMlToCups = (val) => {
-    return Math.ceil(val / 250);
+    return Math.floor(val / 250);
   }
 
-  let val = convertMlToCups(ml);
+  let val = convertMlToCups(milliliters);
 
   const calcGlassHeight = (val) => {
     let heightClass = 'bg-blue-900 w-full absolute z-10 bottom-0 rounded-b-lg ';
@@ -51,7 +58,7 @@ export default function DailyWater(props) {
           className={getGlassClass}></div>
       </div>
       <div className="font-medium text-lg text-center my-3">
-        {val} out of 8 cups  ({ml}ml)
+        {val} out of 8 cups  ({milliliters}ml)
       </div>
     </div>
   )

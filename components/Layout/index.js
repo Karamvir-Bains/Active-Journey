@@ -3,16 +3,26 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
 import Journal from '../journal';
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useApplicationData } from '../../hooks/useApplicationData';
+import { DataProvider } from '../../store/DataContext';
 
 export default function Layout({ children, title }) {
-  const { toggleJournal, day, today, journalOpen, handleSetDay, handleCalNav } = useApplicationData();
-  const [darkMode, setDarkMode] = useState('light');
+  const { toggleJournal, journalOpen } = useApplicationData();
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('darkMode') || 'light';
+    }
+    return 'light';
+  });
+  
 
   const toggleDarkMode = () => {
-    setDarkMode(darkMode === 'light' ? 'dark' : 'light');
-  } 
+    const newMode = darkMode === 'light' ? 'dark' : 'light';
+    localStorage.setItem('darkMode', newMode);
+    setDarkMode(newMode);
+  }
+  
 
   return(<>
       <Head>
@@ -21,38 +31,40 @@ export default function Layout({ children, title }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className={darkMode}>
-        <div className='flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}'>
-          <div className='flex-grow overflow-auto'>
-            <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
-              <Sidebar 
-                darkMode={darkMode}
-                toggleDarkMode={toggleDarkMode}
-                toggleJournal={toggleJournal}
-              />
-              <main
-                id='section-main'
-                className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
-              >
-                <div className='flex h-full flex-col p-8 mb-6'>
-                  <Header pageTitle={title} />
-                    {children}
-                  <Footer />
-                </div>
-              </main>
+      <DataProvider>
+        <div className={darkMode}>
+          <div className='flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main}'>
+            <div className='flex-grow overflow-auto'>
+              <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
+                <Sidebar 
+                  darkMode={darkMode}
+                  toggleDarkMode={toggleDarkMode}
+                  toggleJournal={toggleJournal}
+                />
+                <main
+                  id='section-main'
+                  className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
+                >
+                  <div className='flex h-full flex-col p-8 mb-6'>
+                    <Header pageTitle={title} />
+                    {React.Children.map(children, (child) => {
+                      return React.cloneElement(child, {
+                        toggleJournal: toggleJournal
+                      });
+                    })}
+                    <Footer />
+                  </div>
+                </main>
+              </div>
             </div>
+            {journalOpen && (
+              <Journal
+                onClose={toggleJournal}
+              />
+            )}
           </div>
-          {journalOpen && (
-            <Journal
-              day={day}
-              today={today}
-              setDay={handleSetDay}
-              onClose={toggleJournal}
-              handleCalNav={handleCalNav}
-            />
-          )}
         </div>
-      </div>
+      </DataProvider>
   </>)
 }
 

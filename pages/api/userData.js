@@ -5,24 +5,22 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const date = req.query.date;
-  
-      // Start of day
-      const gte = new Date(date);
-      gte.setUTCHours(0, 0, 0, 0);
-  
-      // End of day
-      const lt = new Date(date);
-      lt.setUTCHours(23, 59, 59, 999);
-  
-      // Fetching metrics from the database that have user metric data within the specified date range
+
+      // Start of day 90 days ago in UTC
+      const gte = new Date(new Date(date).toISOString().slice(0, 10) + "T00:00:00.000Z");
+      gte.setUTCDate(gte.getUTCDate() - 90);
+
+      // End of day in UTC
+      const lt = new Date(new Date(date).toISOString().slice(0, 10) + "T23:59:59.999Z");
+
       const metrics = await prisma.metric.findMany({
         include: {
           user_metric_data: {
-            where: { date: { gte,lt } }
+            where: { date: { gte, lt } }
           }
         }
       });
-  
+
       // Sending the metrics as JSON response
       res.status(200).json({ metrics });
     } catch (error) {
@@ -33,22 +31,19 @@ export default async function handler(req, res) {
     }
   }
 
-  if (req.method === "POST") {
-    const metrics = req.body;
   
-    async function updateMetrics(id, value) {
-      const updateMetric = await prisma.user_metric_data.update({
+  if (req.method === "POST") {
+    const userMetricData = req.body;
+
+    const id = userMetricData.userMetricDataId;
+    const value = userMetricData.newValue;
+  
+    try {
+      await prisma.user_metric_data.update({
         where: { id },
         data: { metric_value: value }
       });
-    }
-  
-    try {
-      for (const metric of metrics) {
-        const id = metric.user_metric_data[0].id;
-        const value = metric.user_metric_data[0].metric_value;
-        await updateMetrics(id, value);
-      }
+      
       res.status(201).json({ message: "Metrics updated successfully." });
     } catch (error) {
       console.error(error);
@@ -57,5 +52,4 @@ export default async function handler(req, res) {
       await prisma.$disconnect();
     }
   }
-  
 }
