@@ -1,3 +1,5 @@
+const { PrismaClient } = require('@prisma/client');
+
 const prisma = new PrismaClient();
 
 async function createMockEntry(id, max, min, date) {
