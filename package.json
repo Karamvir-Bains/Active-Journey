@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:seed": "node prisma/seed/Reset.js && node prisma/seed/User.js && node prisma/seed/Metric.js && node prisma/seed/User_metric_data.js"
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",
@@ -40,6 +41,6 @@
   },
   "proxy": "http://localhost:3000",
   "prisma": {
-    "seed": "node prisma/seed/seed.js"
+    "seed": "npm run prisma:seed"
   }
 }

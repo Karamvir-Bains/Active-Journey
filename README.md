@@ -2,7 +2,25 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Create your .env file:
+Copy .env.example to .env
+
+Install project dependencies:
+`npm install`
+
+Set-up Database:
+`npx prisma generate`
+
+db push uses the same engine as Prisma Migrate to synchronize your Prisma schema with your database schema. The db push command:
+`npx prisma db push`
+
+Run Database migration:
+`npx prisma migrate dev`
+
+Start the Database Studio in the browser:
+`npx prisma studio`
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -48,18 +66,6 @@ db push uses the same engine as Prisma Migrate to synchronize your Prisma schema
 
 Run Database migration:
 `npx prisma migrate dev`
-
-<!-- Are these still necessary?
-
-Seed Database: 
-`npx prisma seed`
-
-`prisma db seed`
-
-Reset Database:
-`prisma migrate reset` 
-
--->
 
 Start the Database Studio in the browser:
 `npx prisma studio`

@@ -2,7 +2,7 @@ export default function ScaleComponent(props) {
   return (
     <div className="mb-6">
       <div>
-        <label className="text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+        <label className="text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4">
           {props.name}
         </label>
       </div>

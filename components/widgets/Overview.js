@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
-import ButtonGroup from "../partials/_button-group";
+import ButtonGroup from "../partials/ButtonGroup";
 
 export default function Overview(props) {
   const rangeValues = [7, 30, 90];
@@ -81,7 +81,7 @@ export default function Overview(props) {
 
   return (
     <>
-      <div className="rounded-lg bg-white shadow-sm w-full h-full p-3 mb-10">
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-3 mb-10">
         <div className="inline-block relative z-10">
           <ButtonGroup
             ranges={rangeValues} 

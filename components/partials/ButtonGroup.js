@@ -1,4 +1,4 @@
-import Button from "./_button";
+import Button from "./Button";
 
 export default function ButtonGroup(props) {
   function setSelected(range) {

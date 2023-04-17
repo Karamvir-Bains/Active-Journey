@@ -3,13 +3,11 @@ import dynamic from 'next/dynamic';
 
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-
 class CircleChart extends React.Component {
   constructor(props) {
     super(props);
 
     const stressVal = props.stress.map(entry => entry.metric_value * 10).slice(0, 7);
-    
 
     this.state = {
       options: {
@@ -60,8 +58,8 @@ class CircleChart extends React.Component {
   render() {
     return(
       <>
-        <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 text-center">
-          <h3 className="font-bold mb-1 text-xl text-blue-900">Weekly Stress</h3>
+        <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
+          <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Weekly Stress</h3>
           <div className="px-12">
           <ApexCharts options={this.state.options} series={this.state.options.series} type="radialBar" height={400} />
           </div>
@@ -72,6 +70,3 @@ class CircleChart extends React.Component {
 }
 
 export default CircleChart;
-
-
-  
