@@ -1,72 +1,120 @@
-import React from "react";
-import dynamic from 'next/dynamic';
+import { useEffect } from "react"
+import { Chart } from "chart.js/auto";
+import { useData } from "../../store/DataContext";
 
-const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
+export default function WeeklyStress(props) {
+  // const { data } = useData();
+  // const stressData = data[7];
+  // console.log('stress data: ', stressData);
+  // const [stressPercentage, setStressPercentage] = useState(0);
 
-class CircleChart extends React.Component {
-  constructor(props) {
-    super(props);
+  // const [options, setOptions] = useState({
+  //   chart: {
+  //     type: 'radialBar',
+  //   },
+  //   series: [progressPercentage],
+  //   colors: ["#BFDBFE"],
+  //   labels: ['Progress'],
+  //   fill: {
+  //     type: "gradient",
+  //     gradient: {
+  //       shade: "dark",
+  //       type: "horizontal",
+  //       gradientToColors: ["#87D4F9"],
+  //       stops: [0, 100]
+  //     }
+  //   },
+  // });
 
-    const stressVal = props.stress.map(entry => entry.metric_value * 10).slice(0, 7);
-
-    this.state = {
-      options: {
-        chart: {
-          height: 350,
-          type: "radialBar",
-        },
-        series: stressVal,
-        labels: ["04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"],
-        colors: ["#BFDBFE"],
-        plotOptions: {
-          radialBar: {
-            startAngle: -90,
-            endAngle: 90,
-            track: {
-              background: '#333',
-              startAngle: -90,
-              endAngle: 90,
-            },
-            dataLabels: {
-              name: {
-                show: true,
-              },
-              value: {
-                color: "#111",
-                fontSize: "30px",
-                show: true
-              },
-            }
-          }
-        },
-        fill: {
-          type: "gradient",
-          gradient: {
-            shade: "dark",
-            type: "horizontal",
-            gradientToColors: ["#87D4F9"],
-            stops: [0, 100]
-          }
-        },
-        stroke: {
-          lineCap: "butt"
-        },
-      },
+  useEffect(() => {
+    // if (data && stressData && stressData.user_metric_data) {
+    //   const newStressValue = stressData.user_metric_data[stressData.user_metric_data.length - 1].metric_value;
+    //   console.log('new stress val: ', newStressValue);
+    // }
+    const stressVals = props.stress.map(entry => entry).slice(0, 7);
+    let avgStress = stressVals.reduce((total, val) => total + val.metric_value, 0) / stressVals.length;
+    avgStress = Math.floor(avgStress) * 10;
+    
+    var ctx = document.getElementById('activityChart').getContext('2d');
+    const data = {
+      datasets: [{
+        label: 'Average Stress for Past Week',
+        data: [25, 50, 25],
+        borderWidth: 0,
+        cutout: '60%',
+        circumference: 180,
+        rotation: 270,
+        backgroundColor: [
+          'rgb(144, 12, 63)',
+          'rgb(255, 195, 0)',
+          'rgb(76, 187, 23)'
+        ],
+        needleValue: avgStress
+      }]
     };
-  }
 
-  render() {
-    return(
-      <>
-        <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-          <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Weekly Stress</h3>
-          <div className="px-12">
-          <ApexCharts options={this.state.options} series={this.state.options.series} type="radialBar" height={400} />
-          </div>
+    // plugin block
+    const gaugeNeedle = {
+      id: 'gaugeNeedle',
+      afterDatasetsDraw(chart, args, pluginOptions) {
+        const { ctx, data, config, chartArea: { 
+            top, bottom, left, right, width, height 
+          } } = chart;
+        ctx.save();
+        
+        const needleValue = data.datasets[0].needleValue;
+        const dataTotal = data.datasets[0].data.reduce((a, b) => a + b, 0);
+        
+        const angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
+        // console.log('angle: ', chart._metasets[0].data[0].y);
+        const cx = width / 2;
+        const cy = chart._metasets[0].data[0].y;
+        const offsetTop = ctx.canvas.offsetTop;
+
+        //needle
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(0, -2);
+        ctx.lineTo(height - offsetTop + 30, 0);
+        ctx.lineTo(0, 2);
+        ctx.fillStyle = '#444';
+        ctx.fill();
+
+        // needle dot
+        ctx.translate(-cx, -cy);
+        ctx.beginPath();
+        ctx.arc(cx, cy, 5, 0, 10);
+        ctx.fill();
+        ctx.restore();
+      }
+    };
+
+    var activityChart = new Chart(ctx, {
+      type: 'doughnut',
+      data,
+      options: {
+        aspectRatio: 1.5,
+        hover: {mode: null},
+        legend: { display: false },
+        plugins: { tooltip: { enabled: false } }
+      },
+      plugins: [gaugeNeedle]
+    });
+
+    return () => {
+      activityChart.destroy()
+    }
+  }, [props.stress]);
+
+  return(
+    <>
+      <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10">
+        <h3 className="font-bold mb-1 text-xl text-blue-900">Weekly Stress</h3>
+        <div className="py-3">
+          <canvas id='activityChart'></canvas>
         </div>
-      </>
-    )
-  }
-}
-
-export default CircleChart;
+      </div>
+    </>
+  )
+};
