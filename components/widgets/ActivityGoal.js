@@ -39,7 +39,7 @@ export default function ActivityGoal() {
         series: [newProgressPercentage],
       });
     }
-  }, [data, options]);
+  }, [data]);
   
 
   return(

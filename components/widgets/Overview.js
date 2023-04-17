@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
 import ButtonGroup from "../partials/ButtonGroup";
+import { useData } from "../../store/DataContext";
 
 export default function Overview(props) {
+  const { data } = useData();
+  const waterData = '';
+
+  // Date range navigation
   const rangeValues = [7, 30, 90];
   const [range, setRange] = useState(7);
   function changeRange(newRange) {

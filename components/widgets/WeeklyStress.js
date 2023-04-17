@@ -1,42 +1,25 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
 import { useData } from "../../store/DataContext";
 
 export default function WeeklyStress(props) {
-  // const { data } = useData();
-  // const stressData = data[7];
-  // console.log('stress data: ', stressData);
-  // const [stressPercentage, setStressPercentage] = useState(0);
-
-  // const [options, setOptions] = useState({
-  //   chart: {
-  //     type: 'radialBar',
-  //   },
-  //   series: [progressPercentage],
-  //   colors: ["#BFDBFE"],
-  //   labels: ['Progress'],
-  //   fill: {
-  //     type: "gradient",
-  //     gradient: {
-  //       shade: "dark",
-  //       type: "horizontal",
-  //       gradientToColors: ["#87D4F9"],
-  //       stops: [0, 100]
-  //     }
-  //   },
-  // });
+  const { data } = useData();
+  const [stressAverage, setStressAverage] = useState(0);
 
   useEffect(() => {
-    // if (data && stressData && stressData.user_metric_data) {
-    //   const newStressValue = stressData.user_metric_data[stressData.user_metric_data.length - 1].metric_value;
-    //   console.log('new stress val: ', newStressValue);
-    // }
-    const stressVals = props.stress.map(entry => entry).slice(0, 7);
-    let avgStress = stressVals.reduce((total, val) => total + val.metric_value, 0) / stressVals.length;
-    avgStress = Math.floor(avgStress) * 10;
+
+    if (data && data[5] && data[5].user_metric_data) {
+      let avgStress = data[5].user_metric_data
+        .slice(-7)
+        .reduce((total, val) => total + val.metric_value, 0);
+      console.log('avgStress before: ', avgStress);
+      avgStress = (avgStress / 7 * 10);
+      console.log('avgStress after: ', avgStress);
+      setStressAverage(avgStress);
+    }
     
-    var ctx = document.getElementById('activityChart').getContext('2d');
-    const data = {
+    const ctx = document.getElementById('activityChart').getContext('2d');
+    const chartData = {
       datasets: [{
         label: 'Average Stress for Past Week',
         data: [25, 50, 25],
@@ -49,7 +32,7 @@ export default function WeeklyStress(props) {
           'rgb(255, 195, 0)',
           'rgb(76, 187, 23)'
         ],
-        needleValue: avgStress
+        needleValue: stressAverage
       }]
     };
 
@@ -65,13 +48,13 @@ export default function WeeklyStress(props) {
         const needleValue = data.datasets[0].needleValue;
         const dataTotal = data.datasets[0].data.reduce((a, b) => a + b, 0);
         
+        // Calculate needle angle
         const angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
-        // console.log('angle: ', chart._metasets[0].data[0].y);
         const cx = width / 2;
         const cy = chart._metasets[0].data[0].y;
         const offsetTop = ctx.canvas.offsetTop;
 
-        //needle
+        // Draw needle
         ctx.translate(cx, cy);
         ctx.rotate(angle);
         ctx.beginPath();
@@ -81,7 +64,7 @@ export default function WeeklyStress(props) {
         ctx.fillStyle = '#444';
         ctx.fill();
 
-        // needle dot
+        // Draw needle dot
         ctx.translate(-cx, -cy);
         ctx.beginPath();
         ctx.arc(cx, cy, 5, 0, 10);
@@ -90,9 +73,9 @@ export default function WeeklyStress(props) {
       }
     };
 
-    var activityChart = new Chart(ctx, {
+    const activityChart = new Chart(ctx, {
       type: 'doughnut',
-      data,
+      data: chartData,
       options: {
         aspectRatio: 1.5,
         hover: {mode: null},
@@ -105,7 +88,7 @@ export default function WeeklyStress(props) {
     return () => {
       activityChart.destroy()
     }
-  }, [props.stress]);
+  }, [data, stressAverage]);
 
   return(
     <>
