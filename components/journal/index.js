@@ -160,7 +160,10 @@ export default function Journal (props) {
               <button
                 className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded'
                 type='button'
-                onClick={handleSave}
+                onClick={() => {
+                  handleSave()
+                  props.onClose()
+                }}
               >
                 Save Journal
               </button>

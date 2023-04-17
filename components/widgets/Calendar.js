@@ -22,7 +22,7 @@ export default function Calendar (props) {
         <div className="w-[33%] md:w-[25%]">
             <button
             onClick={handleTodayClick}
-            className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-blue-800 bg-blue-100 hover:bg-blue-50 py-1 px-5 mr-auto'
+            className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-blue-800 bg-blue-100 hover:bg-blue-50 py-1 px-3 xl:px-5 mr-auto'
           >
             Today
           </button>
