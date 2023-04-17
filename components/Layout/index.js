@@ -8,20 +8,21 @@ import { useApplicationData } from '../../hooks/useApplicationData';
 import { DataProvider } from '../../store/DataContext';
 
 export default function Layout({ children, title }) {
-  const { toggleJournal, journalOpen } = useApplicationData();
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('darkMode') || 'light';
-    }
-    return 'light';
-  });
+  const { toggleJournal, journalOpen, darkMode,
+    toggleDarkMode } = useApplicationData();
+  // const [darkMode, setDarkMode] = useState(() => {
+  //   if (typeof window !== 'undefined') {
+  //     return localStorage.getItem('darkMode') || 'light';
+  //   }
+  //   return 'light';
+  // });
   
 
-  const toggleDarkMode = () => {
-    const newMode = darkMode === 'light' ? 'dark' : 'light';
-    localStorage.setItem('darkMode', newMode);
-    setDarkMode(newMode);
-  }
+  // const toggleDarkMode = () => {
+  //   const newMode = darkMode === 'light' ? 'dark' : 'light';
+  //   localStorage.setItem('darkMode', newMode);
+  //   setDarkMode(newMode);
+  // }
   
 
   return(<>

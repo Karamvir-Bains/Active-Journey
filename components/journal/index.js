@@ -109,7 +109,7 @@ export default function Journal (props) {
   }
 
   return (
-    <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden md:p-4 bg-slate-500 bg-opacity-75'>
+    <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden md:p-4 bg-slate-500 dark:bg-slate-800 bg-opacity-75 dark:bg-opacity-80'>
       <div className='absolute left-0 right-0 mx-auto w-full h-full md:w-[75%] lg:w-[800px] overflow-scroll'>
         <div className='relative sm:pl-[75px] md:pl-0'>
           <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>

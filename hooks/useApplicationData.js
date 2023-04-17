@@ -13,16 +13,20 @@ import { format } from 'date-fns';
 export function useApplicationData (initial) {
   const [user, setUser] = useState({id: 1});
   const [journalOpen, setJournalOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('darkMode') || 'light';
+    }
+    return 'light';
+  });
   let formatDate = format(new Date(), 'yyyy-MM-dd');
 
   useEffect(() => {  
     Promise.all([
-      axios.get(`/api/users/${user.id}/metrics/${String(formatDate)}`),
       axios.get(`/api/users/${user.id}`),
     ])
       .then(all => {
-        setData(all[0].data)
-        setUser(all[1].data);
+        setUser(all[0].data);
       })
       .catch(err => {
         console.log("Error Message: ", err);
@@ -34,10 +38,18 @@ export function useApplicationData (initial) {
     setJournalOpen(!journalOpen);
   };
 
+  const toggleDarkMode = () => {
+    const newMode = darkMode === 'light' ? 'dark' : 'light';
+    localStorage.setItem('darkMode', newMode);
+    setDarkMode(newMode);
+  }
+
   return {
     user,
     setUser,
     journalOpen,
     toggleJournal,
+    darkMode,
+    toggleDarkMode
   }
 }
