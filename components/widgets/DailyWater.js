@@ -5,7 +5,8 @@ import { useData } from "../../store/DataContext";
 // https://codepen.io/qindazhu/pen/ZWNKoG
 // https://github.com/coiger/fill-water-animation
 
-export default function DailyWater() { 
+export default function DailyWater(props) {
+  console.log(props); 
   const { data } = useData();
   const [milliliters, setMilliliters] = useState(0);
 
@@ -57,8 +58,9 @@ export default function DailyWater() {
         <div 
           className={getGlassClass}></div>
       </div>
-      <div className="font-medium text-lg text-center my-3">
-        {val} out of 8 cups  ({milliliters}ml)
+      <div className="font-medium text-xl text-center my-3">
+        {val} / 8 cups<br />
+         ({milliliters}ml)
       </div>
     </div>
   )

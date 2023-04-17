@@ -3,8 +3,10 @@ import { format } from 'date-fns'
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import { PrismaClient } from '@prisma/client'
+import { useDarkMode } from '../hooks/useDarkMode'
 
 export default function Settings (props) {
+  const [darkMode, toggleDarkMode] = useDarkMode();
   const entries = props.entries.map((entry, idx) => {
     const formatDate = format(new Date(entry.date), 'MMMM d,  yyyy')
     return (
@@ -19,7 +21,7 @@ export default function Settings (props) {
     )
   });
   return (
-    <Layout title="Journal List View">
+    <Layout title="Journal List View" darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
       <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto'>
         <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
           <thead>

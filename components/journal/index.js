@@ -113,7 +113,7 @@ export default function Journal (props) {
       <div className='absolute left-0 right-0 mx-auto w-full h-full md:w-[75%] lg:w-[800px] overflow-scroll'>
         <div className='relative sm:pl-[75px] md:pl-0'>
           <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>
-            <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4'>
+            <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4 relative'>
                 <div className="w-[33%] flex">
                   <button
                     onClick={handleTodayClick}
@@ -138,9 +138,12 @@ export default function Journal (props) {
             <div className="sm:w-[400px] mx-auto">
                 {showCal && 
                   <CalendarWidget
-                    className="bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-2"
+                    className="absolute w-[350px] z-10 right-10 bg-white dark:bg-slate-900 dark:text-white rounded-lg p-2 drop-shadow-xl"
                     value={selectedDate}
-                    onChange={(newDay) => updateDate(newDay)}
+                    onChange={(newDay) => {
+                      updateDate(newDay)
+                      setShowCal(false)
+                    }}
                     maxDate={today}
                     activeStartDate={activeStartDate}
                     onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}

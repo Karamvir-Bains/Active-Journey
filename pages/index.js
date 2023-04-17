@@ -5,10 +5,11 @@ import Dashboard from '../components/dashboard'
 import { defaultLayout } from '../helpers/data'
 import { useApplicationData } from '../hooks/useApplicationData'
 import { updateLayout, parseLayout } from '../helpers/selectors'
+import { useDarkMode } from '../hooks/useDarkMode'
 
 export default function Home (props) {
   const { user } = useApplicationData();
-
+  const [ darkMode, toggleDarkMode ] = useDarkMode();
   /**
    * Customize the Dashboard Layout
    */
@@ -23,7 +24,7 @@ export default function Home (props) {
   }
 
   return (
-    <Layout title="Dashboard">      
+    <Layout title="Dashboard" darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
       <Dashboard 
         user={props.user}
         layout={layout}
@@ -35,7 +36,9 @@ export default function Home (props) {
         mood={props.mood}
         sleep={props.sleep}
         sleepQuality={props.sleepQuality}
-        stress={props.stress}    
+        stress={props.stress} 
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
       />
     </Layout>
   )

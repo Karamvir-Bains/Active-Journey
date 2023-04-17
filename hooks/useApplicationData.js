@@ -21,7 +21,7 @@ export function useApplicationData (initial) {
   });
   let formatDate = format(new Date(), 'yyyy-MM-dd');
 
-  useEffect(() => {  
+  useEffect(() => {
     Promise.all([
       axios.get(`/api/users/${user.id}`),
     ])
@@ -34,7 +34,7 @@ export function useApplicationData (initial) {
       });
   }, []);
 
-  const toggleJournal = async () => {
+  const toggleJournal = () => {
     setJournalOpen(!journalOpen);
   };
 
@@ -47,6 +47,7 @@ export function useApplicationData (initial) {
   return {
     user,
     setUser,
+    formatDate,
     journalOpen,
     toggleJournal,
     darkMode,

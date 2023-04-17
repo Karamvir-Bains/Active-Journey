@@ -7,23 +7,8 @@ import React, { useState } from 'react';
 import { useApplicationData } from '../../hooks/useApplicationData';
 import { DataProvider } from '../../store/DataContext';
 
-export default function Layout({ children, title }) {
-  const { toggleJournal, journalOpen, darkMode,
-    toggleDarkMode } = useApplicationData();
-  // const [darkMode, setDarkMode] = useState(() => {
-  //   if (typeof window !== 'undefined') {
-  //     return localStorage.getItem('darkMode') || 'light';
-  //   }
-  //   return 'light';
-  // });
-  
-
-  // const toggleDarkMode = () => {
-  //   const newMode = darkMode === 'light' ? 'dark' : 'light';
-  //   localStorage.setItem('darkMode', newMode);
-  //   setDarkMode(newMode);
-  // }
-  
+export default function Layout({ children, title, darkMode, toggleDarkMode }) {
+  const { toggleJournal, journalOpen } = useApplicationData();
 
   return(<>
       <Head>
@@ -39,8 +24,8 @@ export default function Layout({ children, title }) {
               <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
                 <Sidebar 
                   darkMode={darkMode}
-                  toggleDarkMode={toggleDarkMode}
                   toggleJournal={toggleJournal}
+                  toggleDarkMode={toggleDarkMode}
                 />
                 <main
                   id='section-main'

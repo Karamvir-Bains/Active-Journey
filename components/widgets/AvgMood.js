@@ -2,7 +2,7 @@ import { FontAwesomeIcon, faFaceSmile } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
 import { useData } from "../../store/DataContext";
 
-export default function AvgMood() {
+export default function AvgMood(props) {
   const { data } = useData();
   const [avgMood, setAvgMood] = useState(0);
 
@@ -20,6 +20,7 @@ export default function AvgMood() {
     <div className="overflow-scroll rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-6 flex flex-col justify-start content-end">
       <h3 className="font-bold mb-3 text-xl text-blue-900 dark:text-blue-500">Average Mood</h3>
       <p>Last 7 Days: {avgMood}</p>
+      {props.darkMode}
         <div className="px-6 py-4">
           {/* ! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. */}
           { avgMood <= 10 && avgMood >= 7 ? (
