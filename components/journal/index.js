@@ -109,7 +109,7 @@ export default function Journal (props) {
   }
 
   return (
-    <div className='fixed w-full h-full bg-slate-500 bg-opacity-25 md:ml-[45px] lg:ml-[0px]'>
+    <div className='overflow-y-scroll md:overflow-y-hidden fixed w-full h-full bg-slate-500 bg-opacity-25 md:ml-[45px] lg:ml-[0px]'>
       <div className='absolute top-[3vh] left-0 right-0 mx-auto w-full h-full w-[95vw] sm:w-[75vw] md:w-[70vw] lg:w-[40vw] 2xl:w-[30vw]'>
         <div className='relative sm:pl-[75px] md:pl-0'>
           <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>
@@ -130,7 +130,7 @@ export default function Journal (props) {
                     showCal={showCal}
                     setShowCal={setShowCal}
                   />
-                  <button className='text-gray-400 hover:text-red-600  cursor-pointer w-[24px] h-[24px]' onClick={handleClose}>
+                  <button className='text-gray-400 hover:text-red-600 cursor-pointer w-[24px] h-[24px]' onClick={handleClose}>
                     <FontAwesomeIcon icon={faTimes} />
                   </button>
                 </div>
@@ -138,7 +138,7 @@ export default function Journal (props) {
 
             <div
               id='journal-entries'
-              className='overflow-y-scroll scrollbar-hidden my-6 h-[53vh] sm:h-[35vh] md:h-[76vh] lg:h-[68vh] lg:pr-[15px]'
+              className='overflow-y-hidden sm:overflow-y-scroll scrollbar-hidden my-6 md:h-[76vh] lg:h-[68vh] lg:pr-[15px]'
             >
               <div className="sm:w-[20vw] mx-auto">
                 {showCal &&
@@ -158,7 +158,7 @@ export default function Journal (props) {
               {metricList}
             </div>
 
-            <div id='journal-footer' className='flex justify-start mb-3'>
+            <div id='journal-footer' className='flex justify-start mb-3 pb-20 md:pb-[0px]'>
               <button
                 className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded'
                 type='button'
