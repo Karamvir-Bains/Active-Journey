@@ -7,18 +7,16 @@ export default function WeeklyStress(props) {
   const [stressAverage, setStressAverage] = useState(0);
 
   useEffect(() => {
-
     if (data && data[5] && data[5].user_metric_data) {
       let avgStress = data[5].user_metric_data
         .slice(-7)
         .reduce((total, val) => total + val.metric_value, 0);
-      console.log('avgStress before: ', avgStress);
       avgStress = (avgStress / 7 * 10);
-      console.log('avgStress after: ', avgStress);
       setStressAverage(avgStress);
     }
-    
+
     const ctx = document.getElementById('activityChart').getContext('2d');
+
     const chartData = {
       datasets: [{
         label: 'Average Stress for Past Week',
@@ -28,27 +26,24 @@ export default function WeeklyStress(props) {
         circumference: 180,
         rotation: 270,
         backgroundColor: [
-          'rgb(144, 12, 63)',
-          'rgb(255, 195, 0)',
-          'rgb(76, 187, 23)'
+          'rgba(76, 187, 23)',
+          'rgba(255, 195, 0)',
+          'rgba(144, 12, 63)'
         ],
         needleValue: stressAverage
       }]
     };
 
-    // plugin block
+    // Needle plugin block
     const gaugeNeedle = {
       id: 'gaugeNeedle',
-      afterDatasetsDraw(chart, args, pluginOptions) {
-        const { ctx, data, config, chartArea: { 
-            top, bottom, left, right, width, height 
-          } } = chart;
+      afterDatasetsDraw(chart) {
+        const { ctx, data, chartArea: { width, height } } = chart;
         ctx.save();
-        
+
+        // Calculate needle angle
         const needleValue = data.datasets[0].needleValue;
         const dataTotal = data.datasets[0].data.reduce((a, b) => a + b, 0);
-        
-        // Calculate needle angle
         const angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
         const cx = width / 2;
         const cy = chart._metasets[0].data[0].y;
