@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import { useData } from "../../store/DataContext";
 
-// convert props.today.water to percentage to fill animation of water glass/bottle
-// https://codepen.io/qindazhu/pen/ZWNKoG
-// https://github.com/coiger/fill-water-animation
-
 export default function DailyWater(props) {
   const { data } = useData();
   const [milliliters, setMilliliters] = useState(0);

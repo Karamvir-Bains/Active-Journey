@@ -47,8 +47,7 @@ export default function ActivityGoal(props) {
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Activity Goal</h3>
-        {darkMode}
+        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Activity Goal {darkMode}</h3>
         <p className="text-center">{ progressPercentage === 100 ? "Congrats you hit your goal!" : "" }</p>
         <div className="px-6">
           <ApexCharts options={options} series={options.series} type="radialBar" height={260} />
