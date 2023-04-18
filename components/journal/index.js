@@ -138,7 +138,7 @@ export default function Journal (props) {
 
             <div
               id='journal-entries'
-              className='overflow-y-scroll scrollbar-hidden my-6 h-[46vh] sm:h-[19vh] md:h-[70vh] lg:h-[61vh] lg:pr-[15px]'
+              className='overflow-y-scroll scrollbar-hidden my-6 h-[53vh] sm:h-[35vh] md:h-[76vh] lg:h-[68vh] lg:pr-[15px]'
             >
               <div className="sm:w-[20vw] mx-auto">
                 {showCal &&
@@ -158,7 +158,7 @@ export default function Journal (props) {
               {metricList}
             </div>
 
-            <div id='journal-footer' className='flex justify-start mb-16'>
+            <div id='journal-footer' className='flex justify-start mb-3'>
               <button
                 className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded'
                 type='button'
