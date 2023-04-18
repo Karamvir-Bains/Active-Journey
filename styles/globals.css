@@ -44,3 +44,7 @@ react-calendar__tile--now:hover {
 .dark button.react-calendar__navigation__arrow:disabled {
   color: #666;
 }
+
+#journal-entries::-webkit-scrollbar {
+  display: none;
+}
