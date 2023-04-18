@@ -140,7 +140,7 @@ export default function Journal (props) {
               id='journal-entries'
               className='overflow-y-hidden sm:overflow-y-scroll scrollbar-hidden my-6 md:h-[76vh] lg:h-[68vh] lg:pr-[15px]'
             >
-              <div className="sm:w-[20vw] mx-auto">
+              <div className="md:w-[20vw] mx-auto">
                 {showCal &&
                   <div className='flex flex-col'>
                     <CalendarWidget
@@ -151,7 +151,7 @@ export default function Journal (props) {
                       activeStartDate={activeStartDate}
                       onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
                     />
-                    <button className='border-b border-t border-gray-300' onClick={() => setShowCal(!showCal)}>^</button>
+                    <button className='border-b border-t border-gray-300 mb-4 md:mb-[0px]' onClick={() => setShowCal(!showCal)}>^</button>
                   </div>
                 }
               </div>
