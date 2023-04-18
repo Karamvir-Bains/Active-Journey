@@ -3,10 +3,9 @@ import { format } from 'date-fns'
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import { PrismaClient } from '@prisma/client'
-import { useDarkMode } from '../hooks/useDarkMode'
+import { ThemeProvider } from '../store/ThemeContext';
 
-export default function Settings (props) {
-  const [darkMode, toggleDarkMode] = useDarkMode();
+export default function List (props) {
   const entries = props.entries.map((entry, idx) => {
     const formatDate = format(new Date(entry.date), 'MMMM d,  yyyy')
     return (
@@ -21,23 +20,24 @@ export default function Settings (props) {
     )
   });
   return (
-    <Layout title="Journal List View" darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
-      <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto'>
-        <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
-          <thead>
-            <tr className='bg-blue-900 text-white'>
-              <th className='text-left p-2 border border-slate-200'>Day</th>
-              <th className='text-left p-2 border border-slate-200'>Metric</th>
-              <th className='text-left p-2 border border-slate-200'>Value</th>
-            </tr>
-          </thead>
-          <tbody>{entries}</tbody>
-        </table>
-      </section>
-    </Layout>
+    <ThemeProvider>
+      <Layout title="Journal List View">
+        <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto'>
+          <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
+            <thead>
+              <tr className='bg-blue-900 dark:bg-blue-800 text-white'>
+                <th className='text-left p-2 border border-slate-200'>Day</th>
+                <th className='text-left p-2 border border-slate-200'>Metric</th>
+                <th className='text-left p-2 border border-slate-200'>Value</th>
+              </tr>
+            </thead>
+            <tbody>{entries}</tbody>
+          </table>
+        </section>
+      </Layout>
+    </ThemeProvider>
   )
 }
-
 
 export async function getServerSideProps () {
   const prisma = new PrismaClient()

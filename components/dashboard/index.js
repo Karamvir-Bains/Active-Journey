@@ -40,27 +40,19 @@ export default function Dashboard (props) {
             sleep={props.sleep}
             energy={props.energy}
             mood={props.mood}
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='calendar'>
           <Calendar 
             toggleJournal={props.toggleJournal}
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='dailyWater'>
           <DailyWater
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='activityGoal'>
           <RadialChart
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='stress'>
@@ -69,14 +61,10 @@ export default function Dashboard (props) {
             entries={props.entries}
             title='Stress'
             desc='Past 7 days'
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='mood'>
           <AvgMood 
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='sleep'>
@@ -86,8 +74,6 @@ export default function Dashboard (props) {
             entries={props.entries}
             title='Sleep Quality vs Hours'
             desc='Past 7 days'
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='social'>
@@ -95,8 +81,6 @@ export default function Dashboard (props) {
             entries={props.entries}
             title='Quality of Social Interactions'
             desc='Past 30 days'
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='alcohol'>
@@ -104,15 +88,11 @@ export default function Dashboard (props) {
             entries={props.entries}
             title='Alcohol Intake'
             desc='Past 7 days'
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
         <div key='nutrition'>
           <Nutrition 
             entries={props.entries}
-            darkMode={props.darkMode}
-            toggleDarkMode={props.toggleDarkMode}
           />
         </div>
       </ResponsiveGridLayout>

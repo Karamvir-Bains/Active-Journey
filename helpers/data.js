@@ -35,6 +35,24 @@ const defaultLayout = {
   ]
 }
 
+/**
+ * Colour Palette for Charts
+ */
+
+export const palette = {
+  'light': {
+    'energy': '#f59e0b',
+    'sleep': '#14b8a6',
+    'water': '#3b82f6',
+    'red': '#be123c',
+  },
+  'dark': {
+    'energy': '#f97316',
+    'sleep': '#2dd4bf',
+    'water': '#1e40af',
+    'red': '#e11d48',
+  }
+}
 
 
 /**

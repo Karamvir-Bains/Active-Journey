@@ -1,18 +1,18 @@
 import Image from 'next/image';
 import Layout from '../components/Layout';
 import { PrismaClient } from '@prisma/client';
-import { useDarkMode } from '../hooks/useDarkMode';
+import { ThemeProvider } from '../store/ThemeContext';
 
 export default function Profile(props) {
-  const [darkMode, toggleDarkMode] = useDarkMode();
-
   return (
-    <Layout title="Profile" darkMode={darkMode} toggleDarkMode={toggleDarkMode}>      
-      <section className="mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-4">
-        <h2 className="text-xl text-blue-500 font-semibold mb-3">{props.user.first_name} {props.user.last_name}</h2>
-        <p>Member Since: March 1, 2023</p>
-      </section>
-    </Layout>
+    <ThemeProvider>
+      <Layout title="Profile">      
+        <section className="mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-4">
+          <h2 className="text-xl text-blue-500 font-semibold mb-3">{props.user.first_name} {props.user.last_name}</h2>
+          <p>Member Since: March 1, 2023</p>
+        </section>
+      </Layout>
+    </ThemeProvider>
   )
 }
 
