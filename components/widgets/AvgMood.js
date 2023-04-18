@@ -19,8 +19,8 @@ export default function AvgMood() {
     <>
     <div className="overflow-scroll rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-6 flex flex-col justify-start content-end">
       <h3 className="font-bold mb-3 text-xl text-blue-900 dark:text-blue-500">Average Mood</h3>
-      <p>Last 7 Days: {avgMood}</p>
-        <div className="px-6 py-4">
+      <p className="text-xs">Last 7 Days: {avgMood}</p>
+        <div className="px-3 py-4">
           {/* ! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. */}
           { avgMood <= 10 && avgMood >= 7 ? (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
