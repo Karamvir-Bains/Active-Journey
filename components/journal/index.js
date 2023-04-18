@@ -140,7 +140,7 @@ export default function Journal (props) {
               id='journal-entries'
               className='overflow-y-hidden sm:overflow-y-scroll scrollbar-hidden my-6 md:h-[76vh] lg:h-[68vh] lg:pr-[15px]'
             >
-              <div className="md:w-[20vw] mx-auto">
+              <div className="md:w-[35vw] lg:w-[20vw] mx-auto">
                 {showCal &&
                   <div className='flex flex-col'>
                     <CalendarWidget
