@@ -109,8 +109,8 @@ export default function Journal (props) {
   }
 
   return (
-    <div className='fixed w-full h-full bg-slate-500 bg-opacity-25'>
-      <div className='absolute top-10 left-0 right-0 mx-auto w-full h-full md:w-[75%] lg:w-[40vw]'>
+    <div className='fixed w-full h-full bg-slate-500 bg-opacity-25 md:ml-[45px] lg:ml-[0px]'>
+      <div className='absolute top-[3vh] left-0 right-0 mx-auto w-full h-full w-[95vw] sm:w-[75vw] md:w-[70vw] lg:w-[40vw]'>
         <div className='relative sm:pl-[75px] md:pl-0'>
           <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>
             <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4'>
@@ -138,7 +138,7 @@ export default function Journal (props) {
 
             <div
               id='journal-entries'
-              className='overflow-y-scroll scrollbar-hidden my-6 lg:h-[60vh] sm:h-[55vh] lg:pr-[15px]'
+              className='overflow-y-scroll scrollbar-hidden my-6 h-[46vh] sm:h-[19vh] md:h-[70vh] lg:h-[61vh] lg:pr-[15px]'
             >
               <div className="sm:w-[20vw] mx-auto">
                 {showCal &&
