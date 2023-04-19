@@ -7,7 +7,7 @@ export default function Overview(props) {
   const { data } = useData();
 
   // Date range navigation
-  const rangeValues = [7, 30, 90];
+  const rangeValues = [7, 15, 30];
   const [range, setRange] = useState(7);
   function changeRange(newRange) {
     setRange(newRange);
@@ -15,7 +15,7 @@ export default function Overview(props) {
 
   // Array for each metric sliced to range of days
   const createData = useCallback((water, sleep, energy, mood) => {
-    let waterVals = water.user_metric_data.reverse().slice(0, range);
+    let waterVals = water.user_metric_data.slice(-range);
     // create date label array 
     // if range 30 or 90 only first and last date
     const labelVals = waterVals.map((val) =>  val.date.substring(5, 10));
@@ -23,13 +23,13 @@ export default function Overview(props) {
 
     waterVals = waterVals.map(e => Math.floor((e.metric_value / 100) - 10));
     const sleepVals = sleep.user_metric_data
-      .slice(0, range)
+      .slice(-range)
       .map(e => e.metric_value);
     const energyVals = energy.user_metric_data
-      .slice(0, range)
+      .slice(-range)
       .map(e => e.metric_value);
     const moodVals = mood.user_metric_data
-      .slice(0, range)
+      .slice(-range)
       .map(e => e.metric_value);
     return [
       waterVals,
@@ -107,6 +107,7 @@ export default function Overview(props) {
 
   useEffect(() => {
     if (data && data[0] && data[0].user_metric_data) {
+      console.log('data: ', data);
       const metricValueSets = createData(data[0], data[1], data[3], data[4]);
 
       const overviewChart = createChart(metricValueSets);
@@ -116,7 +117,7 @@ export default function Overview(props) {
       }
     }
     
-}, [range, data, createData, createChart]);
+}, [range, data]);
 
   return (
     <>
