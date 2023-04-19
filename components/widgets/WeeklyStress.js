@@ -54,7 +54,7 @@ export default function WeeklyStress(props) {
         ctx.rotate(angle);
         ctx.beginPath();
         ctx.moveTo(0, -2);
-        ctx.lineTo(height - offsetTop + 30, 0);
+        ctx.lineTo(height - offsetTop -30, 0);
         ctx.lineTo(0, 2);
         ctx.fillStyle = '#444';
         ctx.fill();
@@ -72,6 +72,8 @@ export default function WeeklyStress(props) {
       type: 'doughnut',
       data: chartData,
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         aspectRatio: 1.5,
         hover: {mode: null},
         legend: { display: false },
@@ -89,9 +91,9 @@ export default function WeeklyStress(props) {
     <>
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 dark:bg-slate-800 dark:text-white">
         <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
-        <div className="py-9">
+        <div className="">
           <canvas id='activityChart'></canvas>
-          <p className="text-center pt-6">Clever text here</p>
+          {/* <p className="text-center pt-6">Clever text here</p> */}
         </div>
       </div>
     </>
