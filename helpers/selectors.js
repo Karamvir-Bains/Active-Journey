@@ -1,5 +1,5 @@
 import { defaultLayout } from './data';
-import { format } from 'date-fns';
+import { format, subDays } from 'date-fns';
 
 export async function updateLayout(id, layout) {
   let newLayout = layout;
@@ -66,4 +66,20 @@ export const createMetricsObject = (id, days,entries) => {
     }
   }
   return newObj;
+}
+
+/**
+ * Build Data Labels basedon selected date
+ * 
+ * @kgislason
+ */
+
+export const buildLabels = (date, days) => {
+  let array = [];
+  for (let i = days - 1; i > 0; i--) {
+    array.push(format(subDays(date, i), 'MMM dd'))
+  }
+
+  array.push(format(date, 'MMM dd'));
+  return array;
 }

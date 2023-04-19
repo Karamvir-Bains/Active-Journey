@@ -49,7 +49,7 @@ export default function Alcohol(props) {
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
         <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Alcohol</h3>
-        <div className="p-4">
+        <div className="max-w-[90%] max-h-[90%] mx-auto flex flex-col items-center">
           <canvas id='alcohol'></canvas>
         </div>
       </div>

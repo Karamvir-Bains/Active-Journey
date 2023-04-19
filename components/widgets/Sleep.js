@@ -3,7 +3,7 @@ import { palette } from "../../helpers/data";
 import { useState, useEffect, useRef } from "react"
 import { useData } from "../../store/DataContext";
 import { Chart } from "chart.js/auto";
-import { format, subDays } from 'date-fns';
+import { buildLabels } from '../../helpers/selectors';
 
 export default function Sleep(props) {
   const darkMode = useTheme();
@@ -12,52 +12,43 @@ export default function Sleep(props) {
     selectedDate,
     data } = useData();
 
-  const [sleep, setSleep] = useState(props.sleep.slice(-7).map(item => item.metric_value));
-  const [sleepQuality, setSleepQuatlity] = useState(props.sleepQuality.slice(-7).map(item => item.metric_value));
-
-  const buildLabels = () => {
-    return [
-      format(subDays(selectedDate, 6), 'MMM dd'),
-      format(subDays(selectedDate, 5), 'MMM dd'),
-      format(subDays(selectedDate, 4), 'MMM dd'),
-      format(subDays(selectedDate, 3), 'MMM dd'),
-      format(subDays(selectedDate, 2), 'MMM dd'),
-      format(subDays(selectedDate, 1), 'MMM dd'),
-      format(selectedDate, 'MMM dd')
-    ]
-  }
+  const [sleep, setSleep] = useState(props.sleep.map(item => item.metric_value));
+  const [sleepQuality, setSleepQuatlity] = useState(props.sleepQuality.map(item => item.metric_value));
+  let options = {
+    type: 'line',
+    data: {
+      labels: buildLabels(selectedDate, 7),
+      datasets: [{
+        type: 'line',
+        label: "Sleep Duration",
+        data: sleep,
+        borderColor: colours.alcohol,
+        pointRadius: 0,
+        fill: true,
+        borderDash: [5, 5],
+      }, 
+      {
+        type: "line",
+        label: "Sleep Quality",
+        data: sleepQuality,
+        backgroundColor: colours.sleep,
+        fill: true
+      }]
+    },
+    option: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: { 
+        y: { 
+          display: false 
+        },
+      }
+    }
+  };
 
   //use data object to pass charts live data on refresh
   useEffect(() => {
-    //create chart and all options 
-
-    let options = {
-      type: 'line',
-      data: {
-        labels: buildLabels(),
-        datasets: [{
-          type: 'line',
-          label: "Sleep Duration",
-          data: sleep,
-          borderColor: "#000305",
-          pointRadius: 0,
-          fill: true,
-          borderDash: [5, 5],
-        }, 
-        {
-          type: "line",
-          label: "Sleep Quality",
-          data: sleepQuality,
-          backgroundColor: colours.sleep,
-          fill: true
-        }]
-      },
-      option: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: { y: { display: false } }
-      }
-    };
+    //create chart and all options     
     const ctx = document.getElementById("sleep").getContext('2d');
     var gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
@@ -85,7 +76,7 @@ export default function Sleep(props) {
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
         <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Sleep vs Quality</h3>
-        <div className="px-12">
+        <div className="max-w-[90%] max-h-[90%] mx-auto flex flex-col items-center">
           <canvas id='sleep'></canvas>
         </div>
       </div>

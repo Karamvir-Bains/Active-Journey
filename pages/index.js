@@ -30,7 +30,6 @@ export default function Home (props) {
           darkMode={props.user.dark_mode}
           firstName={props.user.first_name}
         >
-
           <Dashboard 
             user={props.user}
             layout={layout}
@@ -42,6 +41,7 @@ export default function Home (props) {
             sleep={props.sleep}
             sleepQuality={props.sleepQuality}
             stress={props.stress}
+            social={props.social}
           />
         </Layout>
       </ThemeProvider>
@@ -95,23 +95,78 @@ export async function getServerSideProps () {
     },
     take: 1
   })
-  dailyWater = JSON.parse(JSON.stringify(dailyWater))
 
-  // const currDate = new Date();
+  const currDate = new Date();
+  console.log(currDate);
   const mockCurrDate = '2023-05-04T07:00:00.000Z'
-  let today = await fetchSingleMetric({ date: mockCurrDate }) // Try using lteVal
+  let today = await fetchSingleMetric({ date: lteVal }) // Try using lteVal
   let water = await fetchSingleMetric({ metric_id: 1 })
-  let sleep = await fetchSingleMetric({ metric_id: 2 })
+  // let sleep = await fetchSingleMetric({ metric_id: 2 })
   let energy = await fetchSingleMetric({ metric_id: 4 })
   let mood = await fetchSingleMetric({ metric_id: 5 })
   let stress = await fetchSingleMetric({ metric_id: 6 });
-  let sleepQuality = await fetchSingleMetric({ metric_id: 7 });
-
+  // let sleepQuality = await fetchSingleMetric({ metric_id: 7 });
   let entries = await prisma.User_metric_data.findMany({
     where: { user_id: 1 },
     include: { metrics: true },
     take: 30
   })
+
+  let sleep = await prisma.User_metric_data.findMany({
+    where: { 
+      user_id: userid,
+      metric_id: 2,
+      date: {
+        lte: lteVal
+      },
+    },
+    orderBy: {
+      date: 'desc',
+    },
+    include: {
+      metrics: true
+    },
+    take: 7
+  })
+
+  let sleepQuality = await prisma.User_metric_data.findMany({
+    where: { 
+      user_id: userid,
+      metric_id: 7,
+      date: {
+        lte: lteVal
+      },
+    },
+    orderBy: {
+      date: 'desc',
+    },
+    include: {
+      metrics: true
+    },
+    take: 7
+  })
+
+  let social = await prisma.User_metric_data.findMany({
+    where: { 
+      user_id: 1,
+      metric_id: 8,
+      date: {
+        lte: lteVal
+      },
+    },
+    orderBy: {
+      date: 'desc',
+    },
+    include: {
+      metrics: true
+    },
+    take: 30
+  })
+
+  dailyWater = JSON.parse(JSON.stringify(dailyWater))
+  sleep = JSON.parse(JSON.stringify(sleep))
+  sleepQuality = JSON.parse(JSON.stringify(sleepQuality))
+  social = JSON.parse(JSON.stringify(social))
   entries = JSON.parse(JSON.stringify(entries))
 
   return {
@@ -124,7 +179,8 @@ export async function getServerSideProps () {
       mood,
       dailyWater,
       stress,
-      sleepQuality
+      sleepQuality,
+      social
     }
   }
 }
