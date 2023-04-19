@@ -2,8 +2,8 @@ import { useEffect } from "react"
 import { Chart } from "chart.js";
 function Example() {
   useEffect(() => {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    var ctx = document.getElementById('testChart').getContext('2d');
+    var testChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -46,7 +46,7 @@ function Example() {
       <div className="rounded-lg bg-white dark:bg-slate-900 dark:text-white  shadow-sm w-full h-full p-1 mb-10">
         <div className="bg-blue-100 text-center">
           <div className="absolute top-3 right-3 bottom-3 left-3">
-            <canvas id='myChart'></canvas>
+            <canvas id='testChart'></canvas>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export default function InputComponent(props) {
               onChange={props.handleChange}
             />
 
-            <label className="text-gray-500 dark:text-gray-100 font-bold text-sm ml-2">{props.unit || ""}</label>
+            <label className="text-gray-500 dark:text-gray-100 font-bold text-sm ml-3 w-6 text-right">{props.unit || ""}</label>
           </div>
 
         </div>

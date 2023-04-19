@@ -28,14 +28,13 @@ export function useApplicationData (initial) {
       });
   }, []);
 
-  const toggleJournal = async () => {
+  const toggleJournal = () => {
     setJournalOpen(!journalOpen);
   };
 
   return {
     user,
     setUser,
-    journalOpen,
-    toggleJournal,
+    formatDate,
   }
 }

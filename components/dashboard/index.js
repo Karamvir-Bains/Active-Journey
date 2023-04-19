@@ -1,4 +1,4 @@
-import { Responsive, WidthProvider } from  "react-grid-layout"
+import { Responsive, WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import Overview from "../widgets/Overview";
@@ -12,13 +12,13 @@ import Social from "../widgets/Social";
 import RadialChart from "../widgets/ActivityGoal";
 import WeeklyStress from "../widgets/WeeklyStress";
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+const ResponsiveGridLayout = WidthProvider(Responsive)
 
-export default function Dashboard(props) {
+export default function Dashboard (props) {
   return (
-    <div className="relative">
+    <div className='relative'>
       <ResponsiveGridLayout
-        className="layout"
+        className='layout'
         layouts={props.layout}
         breakpoints={{
           lg: 1024,
@@ -33,22 +33,25 @@ export default function Dashboard(props) {
         isRearrangeable={true}
         isResizable={true}
       >
-        <div key="overview">
-          <Overview 
+        <div key='overview'>
+          <Overview
             entries={props.entries}
             water={props.water}
-            sleep={props.sleep} 
+            sleep={props.sleep}
             energy={props.energy}
             mood={props.mood}
           />
         </div>
-        <div key="calendar">
-          <Calendar
-            toggleJournal={props.toggleJournal}
+        <div key='calendar'>
+          <Calendar />
+        </div>
+        <div key='dailyWater'>
+          <DailyWater
           />
         </div>
-        <div key="dailyWater">
-          <DailyWater/>
+        <div key='activityGoal'>
+          <RadialChart
+          />
         </div>
         <div key="activityGoal">
           <RadialChart />
@@ -60,35 +63,39 @@ export default function Dashboard(props) {
               title="Stress" 
               desc="Past 7 days" />
         </div>
-        <div key="mood">
-          <AvgMood />
+        <div key='mood'>
+          <AvgMood 
+          />
         </div>
-        <div key="sleep">
-          <Sleep 
-            sleep={props.sleep} 
-            sleepQuality={props.sleepQuality} 
+        <div key='sleep'>
+          <Sleep
+            sleep={props.sleep}
+            sleepQuality={props.sleepQuality}
             entries={props.entries}
-            title="Sleep Quality vs Hours" 
-            desc="Past 7 days" />
+            title='Sleep Quality vs Hours'
+            desc='Past 7 days'
+          />
         </div>
-        <div key="social">
-          <Social 
-            entries={props.entries} 
-            title="Quality of Social Interactions" 
-            desc="Past 30 days" />
+        <div key='social'>
+          <Social
+            entries={props.entries}
+            title='Quality of Social Interactions'
+            desc='Past 30 days'
+          />
         </div>
-        <div key="alcohol">
-          <Alcohol 
-            entries={props.entries} 
-            title="Alcohol Intake" 
-            desc="Past 7 days" />
+        <div key='alcohol'>
+          <Alcohol
+            entries={props.entries}
+            title='Alcohol Intake'
+            desc='Past 7 days'
+          />
         </div>
-        <div key="nutrition">
+        <div key='nutrition'>
           <Nutrition 
-            entries={props.entries} />
+            entries={props.entries}
+          />
         </div>
       </ResponsiveGridLayout>
     </div>
-  );
-};
-
+  )
+}

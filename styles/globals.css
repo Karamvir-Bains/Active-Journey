@@ -44,3 +44,80 @@ react-calendar__tile--now:hover {
 .dark button.react-calendar__navigation__arrow:disabled {
   color: #666;
 }
+
+/* Water Widget Animation */
+@keyframes moveWater {
+  0% {
+    translate: (0, 0);
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 40% 10%;
+  }
+}
+
+@keyframes moveWater2 {
+  0% {
+    translate: (0, 0);
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 30% 10%;
+  }
+}
+
+@keyframes moveWater3 {
+  0% {
+    translate: (0, 0);
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 50% 5%;
+  }
+}
+
+#wave-1 {
+  animation: 3s moveWater 0 infinite;
+  background: url(../public/wave.svg) no-repeat;
+  background-size: cover;
+  height: 20px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  z-index: 102;
+}
+
+#wave-2 {
+  animation: 3s moveWater2 infinite;
+  background: url(../public/wave-1.svg) no-repeat;
+  background-size: cover;
+  height: 20px;
+  width: 100%;
+  position: absolute;
+  z-index: 101;
+}
+
+#wave-3 {
+  animation: 3s moveWater3 1.75s infinite;
+  background: url(../public/wave-2.svg) no-repeat;
+  background-size: cover;
+  height: 20px;
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+}
+
+/* Background */
+.sunset #section-main {
+  background-image: url('../public/sunset.jpg');
+  background-size: cover;
+}
+
+.mountains #section-main {
+  background-image: url('../public/mountains.png');
+  background-size: cover;
+}
+
+#journal-entries::-webkit-scrollbar {
+  display: none;
+}

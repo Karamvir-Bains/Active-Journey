@@ -3,11 +3,11 @@ import prisma from '../../../../lib/prisma';
 
 export default async function handler(req, res) { 
   const id = Number(req.query.id); 
+  console.log("Request", req.body);
   if (req.method === 'PUT') {
-    
     const updateDarkMode = await prisma.user.update({
       data: {
-        "dark_mode": JSON.stringify(req.body.dark_mode),
+        dark_mode: req.body,
       },
       where: {
         id: id,
