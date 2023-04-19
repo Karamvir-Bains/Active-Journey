@@ -49,10 +49,6 @@ export default function Dashboard (props) {
           <DailyWater
           />
         </div>
-        <div key='activityGoal'>
-          <RadialChart
-          />
-        </div>
         <div key="activityGoal">
           <RadialChart />
         </div>
