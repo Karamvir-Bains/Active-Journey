@@ -27,7 +27,7 @@ export default function Overview(props) {
       .map(e => e.metric_value);
     const moodVals = mood.user_metric_data
       .slice(-range)
-      .map(e => e.metric_value);
+      .map(e => (e.metric_value / 10));
     return [
       waterVals,
       sleepVals,
@@ -45,7 +45,16 @@ export default function Overview(props) {
         labels: metricValueSets[4],
         datasets: [{
           type: 'line',
-          label: "Mood",
+          label: "Energy Level",
+          data: metricValueSets[2],
+          borderWidth: 0,
+          pointRadius: 0,
+          backgroundColor: "rgba(255,192,77, 0.5)",
+          fill: true,
+          tension: 0.3
+        }, {
+          type: 'line',
+          label: "Activity",
           data: metricValueSets[3],
           borderColor: "#c45850",
           pointRadius: 0,
@@ -65,37 +74,13 @@ export default function Overview(props) {
           data: metricValueSets[1],
           borderRadius: 4,
           backgroundColor: "#71d1bd"
-        }, {
-          type: 'line',
-          label: "Energy Level",
-          data: metricValueSets[2],
-          borderWidth: 0,
-          pointRadius: 0,
-          backgroundColor: "#ffc04d",
-          fill: true,
-          tension: 0.3
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         scales: { 
-          y: { display: false },
-          // x: {
-          //   ticks: {
-          //     callback: function (chart) {
-          //       // chart.ticks = [];
-          //       // chart.ticks.push({ value: 0, label: "0 kWh" });
-          //       console.log('Ticks fn running', chart);
-          //       // return chart.ticks.filter((t, index) => {
-          //       //   // always show the first and the last tick
-          //       //   if (index === 0 || index === chart.ticks.length - 1) {
-          //       //     return t;
-          //       //   }
-          //       // });
-          //     }
-          //   }
-          // }
+          y: { display: false }
         },
         plugins: { legend: { align: 'end' } }
       }
@@ -105,7 +90,7 @@ export default function Overview(props) {
   useEffect(() => {
     if (data && data[0] && data[0].user_metric_data) {
       console.log('data: ', data);
-      const metricValueSets = createData(data[0], data[1], data[3], data[4]);
+      const metricValueSets = createData(data[0], data[1], data[3], data[2]);
 
       const overviewChart = createChart(metricValueSets);
 
