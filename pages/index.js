@@ -34,10 +34,6 @@ export default function Home (props) {
             user={props.user}
             layout={layout}
             onLayoutChange={handleLayoutChange}
-            entries={props.entries}
-            water={props.water}        
-            energy={props.energy}
-            mood={props.mood}
             sleep={props.sleep}
             sleepQuality={props.sleepQuality}
             stress={props.stress}
@@ -96,16 +92,11 @@ export async function getServerSideProps () {
     take: 1
   })
 
-  const currDate = new Date();
-  console.log(currDate);
-  const mockCurrDate = '2023-05-04T07:00:00.000Z'
-  let today = await fetchSingleMetric({ date: lteVal }) // Try using lteVal
+  let today = await fetchSingleMetric({ date: lteVal })
   let water = await fetchSingleMetric({ metric_id: 1 })
-  // let sleep = await fetchSingleMetric({ metric_id: 2 })
   let energy = await fetchSingleMetric({ metric_id: 4 })
   let mood = await fetchSingleMetric({ metric_id: 5 })
   let stress = await fetchSingleMetric({ metric_id: 6 });
-  // let sleepQuality = await fetchSingleMetric({ metric_id: 7 });
   let entries = await prisma.User_metric_data.findMany({
     where: { user_id: 1 },
     include: { metrics: true },
@@ -172,8 +163,6 @@ export async function getServerSideProps () {
   return {
     props: {
       user,
-      entries,
-      water,
       sleep,
       energy,
       mood,

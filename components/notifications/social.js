@@ -19,7 +19,7 @@ export default function SocialNotification(props) {
       <p className='mb-4'>Social interactions are crticial for mental and physical health. As the Harvard Women’s Health Watch reported, “Dozens of studies have shown that people who have satisfying relationships with family, friends and their community are happier, have fewer health problems, and live longer.” <br /><small>(<a href="https://www.nytimes.com/2017/06/12/well/live/having-friends-is-good-for-you.html">Source: Social Interaction Is Critical for Mental and Physical Health, The New York Times</a> )</small></p>
       {count > 0 && 
         <div className="p-4 bg-blue-200 dark:bg-slate-800 bg-opacity-50 rounded-xl mb-4"> 
-        {message}
+        {message} 
           <ul className='list-disc ml-4'>{social}</ul>
         </div>
       }

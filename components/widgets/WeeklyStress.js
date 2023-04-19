@@ -58,7 +58,7 @@ export default function WeeklyStress(props) {
         ctx.rotate(angle);
         ctx.beginPath();
         ctx.moveTo(0, -2);
-        ctx.lineTo(height - offsetTop + 30, 0);
+        ctx.lineTo(height - offsetTop -30, 0);
         ctx.lineTo(0, 2);
         ctx.fillStyle = '#444';
         ctx.fill();
@@ -76,6 +76,8 @@ export default function WeeklyStress(props) {
       type: 'doughnut',
       data: chartData,
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         aspectRatio: 1.5,
         hover: {mode: null},
         legend: { display: false },
@@ -90,16 +92,11 @@ export default function WeeklyStress(props) {
   }, [data, stressAverage]);
 
   return(
-    <>
-      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-2 lg:p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
-        <div className="relative w-[90%] h-[60%] flex flex-col items-center mx-auto">
-          <canvas id='activityChart'></canvas>
-          {stressAverage > 70 && 
-              <div className="bg-white dark:bg-slate-900 bg-opacity-60 dark:bg-opacity-60 rounded-lg p-2 absolute bottom-0 left-0 right-0 mx-auto
-              ">Try daily meditation or yoga to bring your stress levels down.
-              </div>
-            }  
+    <>    
+      <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 dark:bg-slate-800 dark:text-white">
+        <h3 className="text-center font-bold mb-1 text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
+        <div className="w-full h-[75%] flex flex-col mx-auto">
+          <canvas id='activityChart'></canvas> 
           <p className="mx-auto text-center">
             Your Weekly Stress is at {formatVal(stressAverage)}%
           </p>
