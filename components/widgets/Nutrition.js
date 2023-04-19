@@ -1,22 +1,27 @@
 import { useEffect } from "react"
 import { Chart } from "chart.js/auto";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function Nutrition(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
+
   useEffect(() => {
     const ctx = document.getElementById('nutritionChart').getContext('2d');
     const labels = ["04/05", "04//06", "04/07", "04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"];
 
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
-    gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
-    gradient.addColorStop(1, 'rgba(199, 223, 255, 1)');
+    // const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    // gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
+    // gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
+    // gradient.addColorStop(1, 'rgba(199, 223, 255, 1)');
     
     const data = {
       labels: labels,
       datasets: [
         {
           data: [1, 9, 8, 9, 4, 4, 7, 10, 9, 8],
-          backgroundColor: gradient,
+          backgroundColor: colours.energy,
           borderRadius: 15
         }
       ]

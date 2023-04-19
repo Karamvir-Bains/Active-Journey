@@ -1,7 +1,12 @@
 import { useEffect } from "react"
 import { Chart } from "chart.js/auto";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function Sleep(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
+
   useEffect(() => {
 
     const ctx = document.getElementById("sleep").getContext('2d');
@@ -33,7 +38,7 @@ export default function Sleep(props) {
           type: "line",
           label: "Sleep Quality",
           data: sleepQual,
-          backgroundColor: gradient,
+          backgroundColor: colours.sleep,
           fill: true
         }]
       },

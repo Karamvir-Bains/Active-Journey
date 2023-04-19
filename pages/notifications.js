@@ -4,16 +4,26 @@ import { PrismaClient } from '@prisma/client'
 import { ThemeProvider } from '../store/ThemeContext';
 import { JournalProvider } from '../store/JournalContext';
 import WaterNotification from '../components/notifications/water';
+import SocialNotification from '../components/notifications/social';
 
-export default function Settings (props) {
-
+export default function Notifications (props) {
+  console.log(props.metrics);
   return (
   <JournalProvider>
     <ThemeProvider initial={props.user.dark_mode}>
-      <Layout title="Notifications" background={props.user.background}  darkMode={props.user.dark_mode}>
+      <Layout 
+        title="Notifications"
+        background={props.user.background}
+        darkMode={props.user.dark_mode}
+        firstName={props.user.first_name}
+      >
         <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 md:p-10'>
           <WaterNotification
             metrics={props.metrics[0]}
+          />
+          {/* Change to [7] once we have social data seeded */}
+          <SocialNotification
+            metrics={props.metrics[7]}
           />
         </section>
       </Layout>

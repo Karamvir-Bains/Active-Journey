@@ -24,10 +24,11 @@ export default function Journal (props) {
   //Render a list of metrics
   const metricList = data.map((metric, index) => {
     const { id, name, property, unit, user_metric_data } = metric;
-
     // user_metric_data id and value
     const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1].id;
     const value = user_metric_data[data[index].user_metric_data.length - 1].metric_value;
+
+    console.log("Value: ", user_metric_data[data[index].user_metric_data.length - 1])
 
     // Render InputComponent if property is 'input'
     if (property === "input") {
@@ -109,7 +110,7 @@ export default function Journal (props) {
   }
 
   return (
-    <div className='overflow-y-scroll md:overflow-y-hidden fixed w-full h-full bg-slate-500 bg-opacity-50 dark:bg-slate-900 dark:bg-opacity-60 md:ml-[45px] lg:ml-[0px]'>
+    <div className='overflow-y-scroll md:overflow-y-hidden fixed w-full h-full bg-slate-500 bg-opacity-70 dark:bg-slate-900 dark:bg-opacity-70 md:ml-[45px] lg:ml-[0px]'>
       <div className='absolute top-[3vh] left-0 right-0 mx-auto h-full w-[95vw] sm:w-[75vw] md:w-[70vw] lg:w-[40vw] 2xl:w-[30vw]'>
         <div className='relative sm:pl-[75px] md:pl-0'>
           <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>
@@ -117,7 +118,7 @@ export default function Journal (props) {
                 <div className="w-[33%] flex">
                   <button
                     onClick={handleTodayClick}
-                    className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-white bg-blue-100 dark:bg-blue-800 hover:bg-blue-50 dark:hover:bg-blue-700 py-1 px-5 mr-auto'
+                    className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-white bg-blue-100 dark:bg-orange-700 hover:bg-blue-50 dark:hover:bg-orange-600 py-1 px-5 mr-auto'
                   >
                     Today
                   </button>
@@ -144,14 +145,14 @@ export default function Journal (props) {
                 {showCal &&
                   <div className='flex flex-col'>
                     <CalendarWidget
-                      className="bg-white dark:bg-slate-900 dark:text-white border-t"
+                      className="bg-white dark:bg-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-lg p-2"
                       value={selectedDate}
                       onChange={(newDay) => updateDate(newDay)}
                       maxDate={today}
                       activeStartDate={activeStartDate}
                       onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
                     />
-                    <button className='border-b border-t border-gray-300 mb-4 md:mb-[0px]' onClick={() => setShowCal(!showCal)}>
+                    <button className='mb-4 md:mb-[0px] w-[24px] h-[24px] mx-auto hover:text-blue-700' onClick={() => setShowCal(!showCal)}>
                       <FontAwesomeIcon icon={faChevronUp} />
                     </button>
                   </div>
@@ -162,7 +163,7 @@ export default function Journal (props) {
 
             <div id='journal-footer' className='flex justify-start mb-3 pb-20 md:pb-[0px]'>
               <button
-                className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded'
+                className='shadow bg-blue-800 hover:bg-blue-700 dark:bg-orange-700 dark:hover:bg-orange-800 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded'
                 type='button'
                 onClick={() => {
                   handleSave()

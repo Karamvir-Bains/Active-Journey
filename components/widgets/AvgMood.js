@@ -1,8 +1,12 @@
 import { FontAwesomeIcon, faFaceSmile } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
 import { useData } from "../../store/DataContext";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function AvgMood(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
   const { data } = useData();
   const [avgMood, setAvgMood] = useState(0);
 
