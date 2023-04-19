@@ -30,18 +30,12 @@ export default function Home (props) {
           darkMode={props.user.dark_mode}
           firstName={props.user.first_name}
         >
-
           <Dashboard 
             user={props.user}
             layout={layout}
             onLayoutChange={handleLayoutChange}
-            entries={props.entries}
-            water={props.water}        
-            energy={props.energy}
-            mood={props.mood}
             sleep={props.sleep}
             sleepQuality={props.sleepQuality}
-            stress={props.stress}
           />
         </Layout>
       </ThemeProvider>
@@ -76,54 +70,13 @@ export async function getServerSideProps () {
     }
   })
 
-  const now = Date.now()
-  const lteVal = new Date(now).toISOString()
-
-  let dailyWater = await prisma.User_metric_data.findMany({
-    where: {
-      user_id: userid,
-      metric_id: 1,
-      date: {
-        lte: lteVal
-      },
-    },
-    orderBy: {
-      date: 'desc',
-    },
-    include: {
-      metrics: true
-    },
-    take: 1
-  })
-  dailyWater = JSON.parse(JSON.stringify(dailyWater))
-
-  // const currDate = new Date();
-  const mockCurrDate = '2023-05-04T07:00:00.000Z'
-  let today = await fetchSingleMetric({ date: mockCurrDate }) // Try using lteVal
-  let water = await fetchSingleMetric({ metric_id: 1 })
   let sleep = await fetchSingleMetric({ metric_id: 2 })
-  let energy = await fetchSingleMetric({ metric_id: 4 })
-  let mood = await fetchSingleMetric({ metric_id: 5 })
-  let stress = await fetchSingleMetric({ metric_id: 6 });
   let sleepQuality = await fetchSingleMetric({ metric_id: 7 });
-
-  let entries = await prisma.User_metric_data.findMany({
-    where: { user_id: 1 },
-    include: { metrics: true },
-    take: 30
-  })
-  entries = JSON.parse(JSON.stringify(entries))
 
   return {
     props: {
       user,
-      entries,
-      water,
       sleep,
-      energy,
-      mood,
-      dailyWater,
-      stress,
       sleepQuality
     }
   }

@@ -1,16 +1,16 @@
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import Overview from '../widgets/Overview'
-import Calendar from '../widgets/Calendar'
-import DailyWater from '../widgets/DailyWater'
-import Nutrition from '../widgets/Nutrition'
-import AvgMood from '../widgets/AvgMood'
-import Sleep from '../widgets/Sleep'
-import Alcohol from '../widgets/Alcohol'
-import Social from '../widgets/Social'
-import RadialChart from '../widgets/ActivityGoal'
-import CircleChart from '../widgets/WeeklyStress'
+import Overview from "../widgets/Overview";
+import Calendar from "../widgets/Calendar";
+import DailyWater from "../widgets/DailyWater";
+import Nutrition from "../widgets/Nutrition";
+import AvgMood from "../widgets/AvgMood";
+import Sleep from "../widgets/Sleep";
+import Alcohol from "../widgets/Alcohol";
+import Social from "../widgets/Social";
+import RadialChart from "../widgets/ActivityGoal";
+import WeeklyStress from "../widgets/WeeklyStress";
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -49,17 +49,15 @@ export default function Dashboard (props) {
           <DailyWater
           />
         </div>
-        <div key='activityGoal'>
-          <RadialChart
-          />
+        <div key="activityGoal">
+          <RadialChart />
         </div>
-        <div key='stress'>
-          <CircleChart
-            stress={props.stress}
-            entries={props.entries}
-            title='Stress'
-            desc='Past 7 days'
-          />
+        <div key="stress">
+            <WeeklyStress 
+              stress={props.stress} 
+              entries={props.entries} 
+              title="Stress" 
+              desc="Past 7 days" />
         </div>
         <div key='mood'>
           <AvgMood 
