@@ -15,7 +15,12 @@ export default function Overview(props) {
 
   // Array for each metric sliced to range of days
   const createData = useCallback((water, sleep, energy, mood) => {
-    let waterVals = water.user_metric_data.slice(0, range);
+    let waterVals = water.user_metric_data.reverse().slice(0, range);
+    // create date label array 
+    // if range 30 or 90 only first and last date
+    const labelVals = waterVals.map((val) =>  val.date.substring(5, 10));
+    console.log('labelvals: ', labelVals);
+
     waterVals = waterVals.map(e => Math.floor((e.metric_value / 100) - 10));
     const sleepVals = sleep.user_metric_data
       .slice(0, range)
@@ -26,13 +31,12 @@ export default function Overview(props) {
     const moodVals = mood.user_metric_data
       .slice(0, range)
       .map(e => e.metric_value);
-    const labels = Array.from({length: range}, (_, index) => index + 1);
     return [
       waterVals,
       sleepVals,
       energyVals,
       moodVals,
-      labels
+      labelVals
     ];
   }, [range]); 
 
