@@ -27,8 +27,7 @@ export default function Overview(props) {
     //   moodVals,
     //   sleepVals,
     //   energyVals } = createData();
-
-    var myChart = new Chart(ctx, {
+    const myChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: entryIds,

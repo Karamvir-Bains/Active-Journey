@@ -18,9 +18,9 @@ export default function ScaleComponent(props) {
           onChange={props.handleChange}
         />
         <div className="flex justify-between w-full">
-          <span>😔</span>
-          <span>😐</span>
-          <span>😊</span>
+          <span className='text-2xl'>😔</span>
+          <span className='text-2xl'>😐</span>
+          <span className='text-2xl'>😊</span>
         </div>
       </div>
     </div>
