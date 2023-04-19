@@ -19,7 +19,7 @@ export default function DailyWater(props) {
   let val = convertMlToCups(milliliters);
 
   const calcGlassHeight = (val) => {
-    let heightClass = 'bg-gradient-to-t from-blue-500 to-blue-700 w-full absolute z-10 bottom-0 rounded-b-lg ';
+    let heightClass = 'bg-gradient-to-t from-blue-500 to-blue-700 w-full absolute z-10 bottom-0 rounded-b-lg drop-shadow-xl ';
     let bottomClass = '';
     if (val === 0) {
       heightClass += 'h-[0%] hidden';
