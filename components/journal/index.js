@@ -109,8 +109,8 @@ export default function Journal (props) {
   }
 
   return (
-    <div className='fixed top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden md:p-4 bg-slate-500 dark:bg-slate-800 bg-opacity-75 dark:bg-opacity-80'>
-      <div className='absolute left-0 right-0 mx-auto w-full h-full md:w-[75%] lg:w-[800px] overflow-scroll'>
+    <div className='overflow-y-scroll md:overflow-y-hidden fixed w-full h-full bg-slate-500 bg-opacity-25 md:ml-[45px] lg:ml-[0px]'>
+      <div className='absolute top-[3vh] left-0 right-0 mx-auto h-full w-[95vw] sm:w-[75vw] md:w-[70vw] lg:w-[40vw] 2xl:w-[30vw]'>
         <div className='relative sm:pl-[75px] md:pl-0'>
           <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>
             <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4 relative'>
@@ -130,36 +130,35 @@ export default function Journal (props) {
                     showCal={showCal}
                     setShowCal={setShowCal}
                   />
-                  <button className='text-gray-400 hover:text-red-600  cursor-pointer w-[24px] h-[24px]' onClick={handleClose}>
+                  <button className='text-gray-400 hover:text-red-600 cursor-pointer w-[24px] h-[24px]' onClick={handleClose}>
                     <FontAwesomeIcon icon={faTimes} />
                   </button>
                 </div>
             </div>
-            <div className="sm:w-[400px] mx-auto">
-                {showCal && 
-                  <CalendarWidget
-                    className="absolute w-[350px] z-10 right-10 bg-white dark:bg-slate-900 dark:text-white rounded-lg p-2 drop-shadow-xl"
-                    value={selectedDate}
-                    onChange={(newDay) => {
-                      updateDate(newDay)
-                      setShowCal(false)
-                    }}
-                    maxDate={today}
-                    activeStartDate={activeStartDate}
-                    onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
-                  />
-                }
-            </div>
-                
 
             <div
               id='journal-entries'
-              className='w-full h-4/5 overflow-y-scroll scrollbar-hidden my-6'
+              className='overflow-y-hidden sm:overflow-y-scroll scrollbar-hidden my-6 md:h-[76vh] lg:h-[68vh] lg:pr-[15px]'
             >
+              <div className="md:w-[35vw] lg:w-[20vw] mx-auto">
+                {showCal &&
+                  <div className='flex flex-col'>
+                    <CalendarWidget
+                      className="bg-white dark:bg-slate-900 dark:text-white border-t"
+                      value={selectedDate}
+                      onChange={(newDay) => updateDate(newDay)}
+                      maxDate={today}
+                      activeStartDate={activeStartDate}
+                      onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
+                    />
+                    <button className='border-b border-t border-gray-300 mb-4 md:mb-[0px]' onClick={() => setShowCal(!showCal)}>^</button>
+                  </div>
+                }
+              </div>
               {metricList}
             </div>
 
-            <div id='journal-footer' className='flex justify-start mb-16'>
+            <div id='journal-footer' className='flex justify-start mb-3 pb-20 md:pb-[0px]'>
               <button
                 className='shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded'
                 type='button'

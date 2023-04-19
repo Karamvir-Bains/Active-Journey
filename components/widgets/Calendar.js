@@ -11,6 +11,7 @@ export default function Calendar (props) {
     selectedDate,
     updateDate,
     today,
+    oldestDay,
     activeStartDate,
     handleTodayClick,
     handleActiveStartDateChange,
@@ -46,6 +47,7 @@ export default function Calendar (props) {
           value={selectedDate}
           onChange={(newDay) => updateDate(newDay)}
           maxDate={today}
+          minDate={oldestDay}
           activeStartDate={activeStartDate}
           onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
         />
