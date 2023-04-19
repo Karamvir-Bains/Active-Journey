@@ -16,23 +16,7 @@ export default function Overview(props) {
   // Array for each metric sliced to range of days
   const createData = useCallback((water, sleep, energy, mood) => {
     let waterVals = water.user_metric_data.slice(-range);
-    // create date label array 
-    // if range over 15, only display first and last
-    // let labelVals;
-    // if (range > 15) {
-    //   labelVals = waterVals.map((v, i) => {
-    //     if (i === 0) {
-    //       return v.date.substring(5, 10);
-    //     } else if (i === (waterVals.length - 1)) {
-    //       return 'Today';
-    //     } else {
-    //       return '';
-    //     }
-    //   });
-    // } else {
     const labelVals = waterVals.map((val) =>  val.date.substring(5, 10));
-    // }
-    console.log('labelvals: ', labelVals);
 
     waterVals = waterVals.map(e => Math.floor((e.metric_value / 100) - 10));
     const sleepVals = sleep.user_metric_data
