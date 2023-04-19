@@ -47,9 +47,9 @@ export default function Alcohol(props) {
   }, []);
   return(
     <>
-      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Alcohol</h3>
-        <div className="p-4">
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-3 text-center">
+        <h3 className="font-bold text-xl text-blue-900 dark:text-white">Alcohol</h3>
+        <div className="text-center w-full h-full py-6">
           <canvas id='alcohol'></canvas>
         </div>
       </div>

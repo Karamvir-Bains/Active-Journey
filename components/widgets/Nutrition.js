@@ -16,7 +16,8 @@ export default function Nutrition(props) {
       datasets: [
         {
           data: [1, 9, 8, 9, 4, 4, 7, 10, 9, 8],
-          backgroundColor: gradient,
+          // backgroundColor: gradient,
+          backgroundColor: "#d97706",
           borderRadius: 15
         }
       ]
@@ -57,7 +58,7 @@ export default function Nutrition(props) {
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-6 mb-10 text-center">
         <h3 className="font-bold mb-2 text-xl text-blue-900 dark:text-white">Quality of Nutrition</h3>
-        <div className="text-center w-full h-5/6">
+        <div className="text-center w-full h-full py-6">
           <canvas id='nutritionChart'></canvas>
         </div>
       </div>
