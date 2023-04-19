@@ -8,13 +8,12 @@ import { format, subDays } from 'date-fns';
 export default function Sleep(props) {
   const darkMode = useTheme();
   const colours = darkMode === 'light' ? palette.light : palette.dark;
-
   const { 
     selectedDate,
     data } = useData();
 
-  const [sleep, setSleep] = useState(0);
-  const [sleepQuality, setSleepQuatlity] = useState(0);
+  const [sleep, setSleep] = useState(props.sleep.slice(-7).map(item => item.metric_value));
+  const [sleepQuality, setSleepQuatlity] = useState(props.sleepQuality.slice(-7).map(item => item.metric_value));
 
   const buildLabels = () => {
     return [
@@ -28,8 +27,11 @@ export default function Sleep(props) {
     ]
   }
 
-  //create chart and all options 
-  let options = {
+  //use data object to pass charts live data on refresh
+  useEffect(() => {
+    //create chart and all options 
+
+    let options = {
       type: 'line',
       data: {
         labels: buildLabels(),
@@ -56,9 +58,6 @@ export default function Sleep(props) {
         scales: { y: { display: false } }
       }
     };
-
-  //use data object to pass charts live data on refresh
-  useEffect(() => {
     const ctx = document.getElementById("sleep").getContext('2d');
     var gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
@@ -85,7 +84,7 @@ export default function Sleep(props) {
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Sleep vs Quality</h3>
+        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Sleep vs Quality</h3>
         <div className="px-12">
           <canvas id='sleep'></canvas>
         </div>
