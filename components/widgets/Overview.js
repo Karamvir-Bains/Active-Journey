@@ -14,7 +14,7 @@ export default function Overview(props) {
   }
 
   // Array for each metric sliced to range of days
-  const createData = useCallback((water, sleep, energy, mood) => {
+  const createData = useCallback((water, sleep, energy, activity) => {
     let waterVals = water.user_metric_data.slice(-range);
     const labelVals = waterVals.map((val) =>  val.date.substring(5, 10));
 
@@ -25,14 +25,14 @@ export default function Overview(props) {
     const energyVals = energy.user_metric_data
       .slice(-range)
       .map(e => e.metric_value);
-    const moodVals = mood.user_metric_data
+    const activityVals = activity.user_metric_data
       .slice(-range)
-      .map(e => (e.metric_value / 10));
+      .map(e => (e.metric_value / 60) * 10);
     return [
       waterVals,
       sleepVals,
       energyVals,
-      moodVals,
+      activityVals,
       labelVals
     ];
   }, [range]); 
@@ -79,9 +79,7 @@ export default function Overview(props) {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { 
-          y: { display: false }
-        },
+        scales: { y: { display: false } },
         plugins: { legend: { align: 'end' } }
       }
     });
