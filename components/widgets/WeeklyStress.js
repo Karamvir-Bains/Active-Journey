@@ -4,7 +4,7 @@ import { useData } from "../../store/DataContext";
 
 export default function WeeklyStress(props) {
   const { data } = useData();
-  const [stressAverage, setStressAverage] = useState(0);
+  const [ stressAverage, setStressAverage ] = useState(0);
 
   useEffect(() => {
     if (data && data[5] && data[5].user_metric_data) {
@@ -89,8 +89,9 @@ export default function WeeklyStress(props) {
     <>
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10">
         <h3 className="font-bold mb-1 text-xl text-blue-900">Weekly Stress</h3>
-        <div className="py-3">
+        <div className="py-9">
           <canvas id='activityChart'></canvas>
+          <p className="text-center pt-6">Clever text here</p>
         </div>
       </div>
     </>
