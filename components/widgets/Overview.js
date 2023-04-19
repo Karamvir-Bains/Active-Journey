@@ -14,11 +14,9 @@ export default function Overview(props) {
   }
 
   // Array for each metric sliced to range of days
-  // takes metric data in order of chart datasets
   const createData = useCallback((water, sleep, energy, mood) => {
-    const values = water.user_metric_data.slice(0, range);
-    const waterVals = values.map(e => Math.floor((e.metric_value / 100) - 10));
-      console.log('water: ', waterVals);
+    let waterVals = water.user_metric_data.slice(0, range);
+    waterVals = waterVals.map(e => Math.floor((e.metric_value / 100) - 10));
     const sleepVals = sleep.user_metric_data
       .slice(0, range)
       .map(e => e.metric_value);
@@ -28,11 +26,13 @@ export default function Overview(props) {
     const moodVals = mood.user_metric_data
       .slice(0, range)
       .map(e => e.metric_value);
+    const labels = Array.from({length: range}, (_, index) => index + 1);
     return [
       waterVals,
       sleepVals,
       energyVals,
-      moodVals
+      moodVals,
+      labels
     ];
   }, [range]); 
 
@@ -41,7 +41,7 @@ export default function Overview(props) {
     return new Chart(ctx, {
       type: 'line',
       data: {
-        labels: metricValueSets[0],
+        labels: metricValueSets[4],
         datasets: [{
           type: 'line',
           label: "Mood",
