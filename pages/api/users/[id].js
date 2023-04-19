@@ -15,7 +15,8 @@ export default async function handler(req, res) {
         email: true,
         layout: true,
         password: false,
-        dark_mode: true
+        dark_mode: true,
+        background: true
       },
     });
     return await res.status(200).json(user);
@@ -37,7 +38,8 @@ export default async function handler(req, res) {
         email: true,
         layout: true,
         password: false,
-        dark_mode: true
+        dark_mode: true,
+        background: true
       },
       
     });

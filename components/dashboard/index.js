@@ -43,9 +43,7 @@ export default function Dashboard (props) {
           />
         </div>
         <div key='calendar'>
-          <Calendar 
-            toggleJournal={props.toggleJournal}
-          />
+          <Calendar />
         </div>
         <div key='dailyWater'>
           <DailyWater

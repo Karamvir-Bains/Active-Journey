@@ -41,16 +41,25 @@ const defaultLayout = {
 
 export const palette = {
   'light': {
+    // Amber 500
     'energy': '#f59e0b',
     'sleep': '#14b8a6',
     'water': '#3b82f6',
-    'red': '#be123c',
+    'mood': '#be123c',
+    'social': '#0f766e',
+    'alcohol': '#fbbf24',
+    'border': '#000',
+    'label': '#555',
   },
   'dark': {
     'energy': '#f97316',
     'sleep': '#2dd4bf',
     'water': '#1e40af',
-    'red': '#e11d48',
+    'mood': '#ef4444',
+    'social': '#5eead4',
+    'alcohol': '#fbbf24',
+    'border': '#fff',
+    'label': '#555',
   }
 }
 

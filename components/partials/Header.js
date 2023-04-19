@@ -1,14 +1,12 @@
 import { faUser }from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import { useApplicationData } from '../../hooks/useApplicationData'
 
 export default function Header(props) {
-  const {user} = useApplicationData();
   return(
     <header className="px-3 dark:text-white">
       <h2 className="text-xl font-medium">
-        Hello {user.first_name}
+        Hello {props.firstName}
       </h2>
       <p>Welcome to ActiveJourney</p>
       <nav className="flex content-center bg-blue-100 dark:bg-slate-700 rounded-xl px-5 py-3 my-3">

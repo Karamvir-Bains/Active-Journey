@@ -1,11 +1,12 @@
-import { faPersonRunning, faPlus, faGear, faBell, faList, faChartLine, faRightFromBracket, faToggleOn, faToggleOff }from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPersonRunning, faPlus, faGear, faBell, faList, faChartLine, faRightFromBracket, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
-import { useTheme, useUpdateTheme } from '../../store/ThemeContext';
+// import { useTheme, useUpdateTheme } from '../../store/ThemeContext';
+import { useJournal, useUpdateJournal } from '../../store/JournalContext';
 
 export default function Sidebar(props) {
-  const darkMode = useTheme()
-  const toggleDarkMode = useUpdateTheme()
+  const journalOpen = useJournal();
+  const toggleJournal = useUpdateJournal();
   return(
     <aside id="section-sidebar" className="flex flex-shrink-0 sm:py-3 w-full h-[75px] sm:w-[75px]  sm:h-full fixed bottom-0 z-10 bg-white dark:bg-slate-900 dark:text-white  shadow-md">
       <div className="flex h-full w-full flex-row sm:flex-col">
@@ -41,7 +42,7 @@ export default function Sidebar(props) {
             </div>
             <span className="sr-only">Settings</span>
           </Link>
-          <div title="Open Wellness Journal" onClick={props.toggleJournal} className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 dark:hover:bg-orange-700 p-4 text-blue-900 dark:text-white">
+          <div title="Open Wellness Journal" onClick={toggleJournal} className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 dark:hover:bg-orange-700 p-4 text-blue-900 dark:text-white">
             <div className="h-4 w-4">
               <FontAwesomeIcon icon={faPlus} /> 
             </div>
@@ -53,11 +54,11 @@ export default function Sidebar(props) {
               <span className="sr-only">Logout</span>
             </div>
           </a>
-          <a onClick={toggleDarkMode} className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 dark:hover:bg-orange-700 p-4 text-blue-900 dark:text-white" >
-            { darkMode === 'dark' && 
+          <a onClick={props.toggleDarkMode} className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl px-4 font-medium hover:bg-blue-100 dark:hover:bg-orange-700 p-4 text-blue-900 dark:text-white" >
+            { props.darkMode === 'dark' && 
               <FontAwesomeIcon icon={faToggleOn} /> 
             }
-            { (darkMode === 'light' ) &&
+            { (props.darkMode === 'light' ) &&
               <FontAwesomeIcon icon={faToggleOff} />
             }   
           </a>

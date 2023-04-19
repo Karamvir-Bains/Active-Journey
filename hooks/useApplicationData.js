@@ -36,7 +36,5 @@ export function useApplicationData (initial) {
     user,
     setUser,
     formatDate,
-    journalOpen,
-    toggleJournal
   }
 }

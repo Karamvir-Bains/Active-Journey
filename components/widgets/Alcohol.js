@@ -1,7 +1,12 @@
 import { useEffect } from "react"
-import { Chart } from "chart.js/auto";
+import { Chart, Colors } from "chart.js/auto";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function Alcohol(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
+
   useEffect(() => {
     const ctx = document.getElementById("alcohol").getContext('2d');
     const labels = ["04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"];
@@ -16,9 +21,9 @@ export default function Alcohol(props) {
       datasets: [
         {
           data: [1, 0, 0, 2, 7, 4, 0],
-          backgroundColor: gradient,
+          backgroundColor: colours.alcohol,
           fill: true,
-          borderColor: 'rgb(75, 192, 192)',
+          borderColor: colours.alcohol,
           tension: 0.1
         }
       ]

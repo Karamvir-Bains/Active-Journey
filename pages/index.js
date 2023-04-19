@@ -3,13 +3,12 @@ import { PrismaClient } from '@prisma/client'
 import Layout from '../components/Layout'
 import Dashboard from '../components/dashboard'
 import { defaultLayout } from '../helpers/data'
-import { useApplicationData } from '../hooks/useApplicationData'
 import { updateLayout, parseLayout } from '../helpers/selectors'
 import { ThemeProvider } from '../store/ThemeContext';
+import { JournalProvider } from '../store/JournalContext'
 
 export default function Home (props) {
-  const { user, toggleJournal } = useApplicationData();
-  
+
   /**
    * Customize the Dashboard Layout
    */
@@ -19,27 +18,34 @@ export default function Home (props) {
 
   const handleLayoutChange = async layoutsObj => {
     setLayout(layoutsObj)
-    await updateLayout(user.id, { layout: layoutsObj })
+    await updateLayout(props.user.id, { layout: layoutsObj })
   }
 
   return (
-  <ThemeProvider>
-    <Layout title="Dashboard">
-      <Dashboard 
-        user={props.user}
-        layout={layout}
-        onLayoutChange={handleLayoutChange}
-        toggleJournal={toggleJournal}
-        entries={props.entries}
-        water={props.water}        
-        energy={props.energy}
-        mood={props.mood}
-        sleep={props.sleep}
-        sleepQuality={props.sleepQuality}
-        stress={props.stress}
-      />
-    </Layout>
-  </ThemeProvider>
+    <JournalProvider>
+      <ThemeProvider initial={props.user.dark_mode}>
+        <Layout
+          title="Dashboard"
+          background={props.user.background}
+          darkMode={props.user.dark_mode}
+          firstName={props.user.first_name}
+        >
+
+          <Dashboard 
+            user={props.user}
+            layout={layout}
+            onLayoutChange={handleLayoutChange}
+            entries={props.entries}
+            water={props.water}        
+            energy={props.energy}
+            mood={props.mood}
+            sleep={props.sleep}
+            sleepQuality={props.sleepQuality}
+            stress={props.stress}
+          />
+        </Layout>
+      </ThemeProvider>
+  </JournalProvider>
   )
 }
 
@@ -64,7 +70,9 @@ export async function getServerSideProps () {
       first_name: true,
       last_name: true,
       email: true,
-      layout: true
+      layout: true,
+      dark_mode: true,
+      background: true
     }
   })
 

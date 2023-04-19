@@ -3,18 +3,47 @@ import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import Footer from '../partials/Footer';
 import Journal from '../journal';
-import React, { useEffect, useState } from 'react';
-import { useApplicationData } from '../../hooks/useApplicationData';
+import React, { useState } from 'react';
 import { DataProvider } from '../../store/DataContext';
-import { useBackground } from '../../hooks/useBackground';
-import { useTheme, useUpdateTheme } from '../../store/ThemeContext';
+// import { useTheme, useUpdateTheme } from '../../store/ThemeContext';
+import { useJournal, useUpdateJournal } from '../../store/JournalContext';
+import { useTheme, useUpdateTheme } from '../../store/ThemeContext'
 
-export default function Layout({ children, title}) {
-  const { journalOpen, toggleJournal } = useApplicationData();
-  const darkMode = useTheme()
-  const toggleDarkMode = useUpdateTheme()
-  // const [ darkMode, toggleDarkMode ] = useDarkMode();
-  const [ background, toggleBackground] = useBackground();
+export async function updateDarkMode(id, value) {
+  let data = value;
+  if (data === '' || data === null) {
+    return;
+  }
+
+  try {
+    const userid = Number(id);
+    const res = await fetch(`/api/users/${userid}/updateDarkMode`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
+
+    console.log(res);
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+export default function Layout({ children, title, background, darkMode, firstName}) {
+  const theme = useTheme();
+  const setTheme = useUpdateTheme();
+  // const [theme, setTheme] = useState(darkMode || 'light');
+  const journalOpen = useJournal();
+  const toggleJournal = useUpdateJournal();
+
+  const handleTheme = () => {
+    const value = theme === 'light' ? 'dark' : 'light';
+    setTheme(value);
+    updateDarkMode(1, value).catch( (err) => {
+      console.lor(err);
+    });
+  }
 
   return(
     <>
@@ -25,26 +54,25 @@ export default function Layout({ children, title}) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <DataProvider>
-        <div className={darkMode}>
-          <div className='flex h-screen flex-col bg-white text-body dark:bg-dark-14 dark:text-dark-body {styles.main} '>
+        <div className={theme + ' ' + background}>
+          <div className='flex h-screen flex-col bg-white text-body dark:text-dark-body {styles.main} '>
             <div className='flex-grow overflow-auto'>
               <div className='flex flex-col order-2 sm:flex-row sm:order-1'>
-                <Sidebar 
-                  journalOpen={journalOpen}
-                  toggleJournal={toggleJournal}
+                <Sidebar
+                  darkMode={theme}
+                  toggleDarkMode={handleTheme}
                 />
                 <main
                   id='section-main'
                   className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
                 >
-                  <div className='flex h-full flex-col p-8 mb-6'>
-                    <Header pageTitle={title} />
-                    {React.Children.map(children, (child) => {
-                      return React.cloneElement(child, {
-                        toggleJournal: toggleJournal,
-                      });
-                    })}
-                      {/* {children} */}
+                  <div className='flex h-full flex-col p-8 mb-6 dark:bg-slate-950 dark:bg-opacity-60'>
+                    <Header 
+                      pageTitle={title}
+                      firstName={firstName}
+                    />
+                    
+                      {children}
                     <Footer />
                   </div>
                 </main>
@@ -60,28 +88,4 @@ export default function Layout({ children, title}) {
       </DataProvider>
     </>
   )
-}
-
-
-export async function getServerSideProps () {
-  const userid = 1
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userid
-    },
-    select: {
-      id: true,
-      first_name: true,
-      last_name: true,
-      email: true,
-      layout: true,
-      dark_mode: true,
-    }
-  })
-
-  return {
-    props: {
-      user,
-    }
-  }
 }

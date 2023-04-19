@@ -45,7 +45,7 @@ react-calendar__tile--now:hover {
   color: #666;
 }
 
-/* Water */
+/* Water Widget Animation */
 @keyframes moveWater {
   0% {
     translate: (0, 0);
@@ -105,4 +105,16 @@ react-calendar__tile--now:hover {
   width: 100%;
   position: absolute;
   z-index: 100;
+}
+
+/* Background */
+
+.sunset #section-main {
+  background-image: url('../public/sunset.jpg');
+  background-size: cover;
+}
+
+.mountains #section-main {
+  background-image: url('../public/mountains.png');
+  background-size: cover;
 }

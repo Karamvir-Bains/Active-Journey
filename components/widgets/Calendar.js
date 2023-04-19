@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CalendarWidget from 'react-calendar'
 import { formatDate } from '../../helpers/data';
 import { useData } from '../../store/DataContext';
+import { useJournal, useUpdateJournal } from '../../store/JournalContext';
 
 export default function Calendar (props) {
   const { 
@@ -15,9 +16,12 @@ export default function Calendar (props) {
     handleActiveStartDateChange,
   } = useData();
 
+  const journalOpen = useJournal();
+  const toggleJournal = useUpdateJournal();
+
   return (
     <>
-    <div className='overflow-scroll rounded-lg bg-blue-200 dark:bg-orange-400 shadow-sm w-full h-full p-6'>
+    <div className='overflow-scroll rounded-lg bg-blue-200 dark:bg-orange-400 shadow-sm w-full h-full lg:px-6 py-4'>
       <div className='flex justify-evenly content-center w-full'>
         <div className="w-[33%] md:w-[25%]">
             <button
@@ -31,7 +35,7 @@ export default function Calendar (props) {
           {formatDate(selectedDate)}
         </h3>
         <div className="w-[33%] md:w-[25%] align-stretch">
-          <button role="button" onClick={props.toggleJournal}
+          <button role="button" onClick={toggleJournal}
             className='flex flex-col justify-center content-center rounded-full bg-blue-800 hover:bg-blue-900 dark:bg-orange-700 dark:hover:bg-orange-800 py-2 px-3 text-white ml-auto'>
             <FontAwesomeIcon className='w-4 h-4' icon={faPlus} />
           </button>
