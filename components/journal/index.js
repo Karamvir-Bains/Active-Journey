@@ -28,8 +28,6 @@ export default function Journal (props) {
     const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1].id;
     const value = user_metric_data[data[index].user_metric_data.length - 1].metric_value;
 
-    console.log("Value: ", user_metric_data[data[index].user_metric_data.length - 1])
-
     // Render InputComponent if property is 'input'
     if (property === "input") {
       return (
