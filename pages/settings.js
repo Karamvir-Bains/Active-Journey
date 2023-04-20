@@ -27,7 +27,7 @@ export async function updateUser(id, user) {
 }
 
 export default function Settings (props) {
-  const [userBackground, setUserBackground] = useState(props.user.background);
+  const [userBackground, setUserBackground] = useState(props.user.background || 'none');
   const [firstName, setFirstName] = useState(props.user.first_name);
   const [lastName, setLastName]= useState(props.user.last_name);
   const [message, setMessage] = useState("");
@@ -39,7 +39,7 @@ export default function Settings (props) {
       last_name: lastName,
       background: userBackground
     }
-    console.log(user);
+
     updateUser(1, user).catch((err) => {
       console.lor(err);
     });
@@ -55,7 +55,7 @@ export default function Settings (props) {
           title="Settings"
           background={userBackground} 
           darkMode={props.user.dark_mode}
-          firstName={props.user.first_name}
+          firstName={firstName}
         >
           <section className='mx-3 p-6 md:p-8 bg-white dark:bg-slate-800 dark:text-white  rounded-lg'>
             <h2 className='text-xl text-blue-500 dark:text-white font-semibold mb-3'>

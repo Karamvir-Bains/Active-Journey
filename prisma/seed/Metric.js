@@ -28,6 +28,13 @@ async function seed() {
     },{
       name: "Sleep Quality",
       property: "scale",
+    },
+    {
+      name: "Social Interactions",
+      property: "scale"
+    }, {
+      name: "Quality of Nutrition",
+      property: "scale"
     }
   ];
 

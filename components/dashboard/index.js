@@ -74,7 +74,7 @@ export default function Dashboard (props) {
         </div>
         <div key='social'>
           <Social
-            entries={props.entries}
+            social={props.social}
             title='Quality of Social Interactions'
             desc='Past 30 days'
           />
@@ -88,7 +88,7 @@ export default function Dashboard (props) {
         </div>
         <div key='nutrition'>
           <Nutrition 
-            entries={props.entries}
+            nutrition={props.nutrition}
           />
         </div>
       </ResponsiveGridLayout>

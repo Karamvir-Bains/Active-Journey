@@ -1,15 +1,21 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Chart, Colors } from "chart.js/auto";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
+import { buildLabels } from "../../helpers/selectors";
+import { useData } from "../../store/DataContext";
 
 export default function Alcohol(props) {
   const darkMode = useTheme();
   const colours = darkMode === 'light' ? palette.light : palette.dark;
+  const [alcohol, setAlcohol] = useState(props.alcohol);
+
+  const { 
+    selectedDate,
+    data } = useData();
 
   useEffect(() => {
     const ctx = document.getElementById("alcohol").getContext('2d');
-    const labels = ["04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"];
 
     var gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
@@ -17,7 +23,7 @@ export default function Alcohol(props) {
     gradient.addColorStop(1, 'rgba(199, 223, 255, 1)')
 
     const data = {
-      labels: labels,
+      labels: buildLabels(selectedDate, 7),
       datasets: [
         {
           data: [1, 0, 0, 2, 7, 4, 0],
