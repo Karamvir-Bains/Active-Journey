@@ -11,7 +11,7 @@ export
 const defaultLayout = {
   lg: [
     { i: "overview", x: 0, y: 0, w: 8, h: 2, static: false},
-    { i: "calendar", x: 9, y: 0, w: 4, h: 2, static: true},
+    { i: "calendar", x: 9, y: 0, w: 4, h: 2, static: false},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
     { i: "activityGoal", x: 3, y: 7, w: 3, h: 2, static: false},
     { i: "stress", x: 6, y: 7, w: 3, h: 2, static: false},
@@ -22,8 +22,8 @@ const defaultLayout = {
     { i: "nutrition", x: 0, y: 11, w: 6, h: 3, static: false}
   ],
   sm: [
-    { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
-    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: true},
+    { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: false},
+    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: false},
     { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
     { i: "activityGoal", x: 4, y: 0, w: 3, h: 2, static: false},
     { i: "stress", x: 0, y: 0, w: 3, h: 2, static: false},
@@ -34,6 +34,35 @@ const defaultLayout = {
     { i: "nutrition", x: 0, y: 0, w: 12, h: 3, static: false}
   ]
 }
+
+/**
+ * Colour Palette for Charts
+ */
+
+export const palette = {
+  'light': {
+    // Amber 500
+    'energy': '#f59e0b',
+    'sleep': '#14b8a6',
+    'water': '#3b82f6',
+    'mood': '#be123c',
+    'social': '#0f766e',
+    'alcohol': '#fbbf24',
+    'border': '#000',
+    'label': '#555',
+  },
+  'dark': {
+    'energy': '#f97316',
+    'sleep': '#2dd4bf',
+    'water': '#1e40af',
+    'mood': '#ef4444',
+    'social': '#5eead4',
+    'alcohol': '#fbbf24',
+    'border': '#fff',
+    'label': '#555',
+  }
+}
+
 
 /**
  * 

@@ -1,92 +1,101 @@
-import React, { useState, useEffect } from "react";
-import dynamic from 'next/dynamic';
+import { useEffect, useState } from "react"
+import { Chart } from "chart.js/auto";
 import { useData } from "../../store/DataContext";
-const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-export default function WeeklyStress() {
+export default function WeeklyStress(props) {
+  const { data } = useData();
+  const [ stressAverage, setStressAverage ] = useState(0);
 
-    
-    const { data } = useData();
-    const [stress, setStress] = useState(0);
-    const [date, setDate] = useState(0);
+  useEffect(() => {
+    if (data && data[5] && data[5].user_metric_data) {
+      let avgStress = data[5].user_metric_data
+        .slice(-7)
+        .reduce((total, val) => total + val.metric_value, 0);
+      avgStress = (avgStress / 7 * 10);
+      setStressAverage(avgStress);
+    }
 
-    const [options, setOptions] = useState({
-      chart: {
-          height: 350,
-          type: "radialBar",
-        },
-        series: [stress],
-        labels: [date],
-        colors: ["#BFDBFE"],
-        plotOptions: {
-          radialBar: {
-            startAngle: -90,
-            endAngle: 90,
-            track: {
-              background: '#333',
-              startAngle: -90,
-              endAngle: 90,
-            },
-            dataLabels: {
-              name: {
-                show: true,
-              },
-              value: {
-                color: "#111",
-                fontSize: "30px",
-                show: true
-              },
-            }
-          }
-        },
-        fill: {
-          type: "gradient",
-          gradient: {
-            shade: "dark",
-            type: "horizontal",
-            gradientToColors: ["#87D4F9"],
-            stops: [0, 100]
-          }
-        },
-        stroke: {
-          lineCap: "butt"
-        },
+    const ctx = document.getElementById('activityChart').getContext('2d');
+
+    const chartData = {
+      datasets: [{
+        label: 'Average Stress for Past Week',
+        data: [25, 50, 25],
+        borderWidth: 0,
+        cutout: '60%',
+        circumference: 180,
+        rotation: 270,
+        backgroundColor: [
+          'rgba(76, 187, 23)',
+          'rgba(255, 195, 0)',
+          'rgba(144, 12, 63)'
+        ],
+        needleValue: stressAverage
+      }]
+    };
+
+    // Needle plugin block
+    const gaugeNeedle = {
+      id: 'gaugeNeedle',
+      afterDatasetsDraw(chart) {
+        const { ctx, data, chartArea: { width, height } } = chart;
+        ctx.save();
+
+        // Calculate needle angle
+        const needleValue = data.datasets[0].needleValue;
+        const dataTotal = data.datasets[0].data.reduce((a, b) => a + b, 0);
+        const angle = Math.PI + (1 / dataTotal * needleValue * Math.PI);
+        const cx = width / 2;
+        const cy = chart._metasets[0].data[0].y;
+        const offsetTop = ctx.canvas.offsetTop;
+
+        // Draw needle
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(0, -2);
+        ctx.lineTo(height - offsetTop -30, 0);
+        ctx.lineTo(0, 2);
+        ctx.fillStyle = '#444';
+        ctx.fill();
+
+        // Draw needle dot
+        ctx.translate(-cx, -cy);
+        ctx.beginPath();
+        ctx.arc(cx, cy, 5, 0, 10);
+        ctx.fill();
+        ctx.restore();
+      }
+    };
+
+    const activityChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: chartData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 1.5,
+        hover: {mode: null},
+        legend: { display: false },
+        plugins: { tooltip: { enabled: false } }
+      },
+      plugins: [gaugeNeedle]
     });
 
-    useEffect(() => {
-      if (data && data[5] && data[5].user_metric_data) {
-        const lastSevenValues = data[5].user_metric_data.slice(-7);
-        const sum = lastSevenValues.reduce((acc, curr) => acc + curr.metric_value, 0);
-        const average = sum / lastSevenValues.length;
-        setStress(Number(average.toFixed(2)));
+    return () => {
+      activityChart.destroy()
+    }
+  }, [data, stressAverage]);
 
-        const metricDate = data[5].user_metric_data[data[5].user_metric_data.length - 1].date;
-        const date = new Date(metricDate);
-        const optionsTimezone = { month: '2-digit', day: '2-digit', timeZone: 'etc/UTC' };
-        
-        const newDate = date.toLocaleDateString('en-US',optionsTimezone);
-        setDate(newDate);
-
-        setOptions({
-               ...options,
-               series: [Number(average.toFixed(2))],
-               labels: [newDate],
-               });
-        
-      }
-    }, [data]);
-      
-    return(
-      <>
-        <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-          <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Weekly Stress</h3>
-          <div className="px-12">
-          <ApexCharts options={options} series={options.series} type="radialBar" height={400} />
-          </div>
+  return(
+    <>
+      <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 dark:bg-slate-800 dark:text-white">
+        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
+        <div className="">
+          <canvas id='activityChart'></canvas>
+          {/* <p className="text-center pt-6">Clever text here</p> */}
         </div>
-      </>
-    )
-  }
-
-
-
+      </div>
+    </>
+  )
+};

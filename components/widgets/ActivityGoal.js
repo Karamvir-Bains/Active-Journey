@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { useData } from "../../store/DataContext";
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-export default function ActivityGoal() {
+export default function ActivityGoal(props) {
   const { data } = useData();
   const goal = 60;
   const [progressPercentage, setProgressPercentage] = useState(0);
@@ -40,14 +40,13 @@ export default function ActivityGoal() {
       });
     }
   }, [data]);
-  
 
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Activity Goal</h3>
+        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Activity Goal</h3>
         <p className="text-center">{ progressPercentage === 100 ? "Congrats you hit your goal!" : "" }</p>
-        <div className="px-6">
+        <div className="px-3 w-full">
           <ApexCharts options={options} series={options.series} type="radialBar" height={260} />
         </div>
       </div>

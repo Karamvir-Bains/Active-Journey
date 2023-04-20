@@ -94,8 +94,8 @@ export default function Sleep(props) {
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Sleep vs Quality</h3>
-        <div className="px-12">
+        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Sleep vs Quality</h3>
+        <div className="text-center w-full h-full py-4">
           <canvas id='sleep'></canvas>
         </div>
       </div>

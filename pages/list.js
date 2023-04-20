@@ -3,8 +3,10 @@ import { format } from 'date-fns'
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import { PrismaClient } from '@prisma/client'
+import { ThemeProvider } from '../store/ThemeContext';
+import { JournalProvider } from '../store/JournalContext';
 
-export default function Settings (props) {
+export default function List (props) {
   const entries = props.entries.map((entry, idx) => {
     const formatDate = format(new Date(entry.date), 'MMMM d,  yyyy')
     return (
@@ -19,23 +21,31 @@ export default function Settings (props) {
     )
   });
   return (
-    <Layout title="Journal List View">
-      <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto'>
-        <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
-          <thead>
-            <tr className='bg-blue-900 text-white'>
-              <th className='text-left p-2 border border-slate-200'>Day</th>
-              <th className='text-left p-2 border border-slate-200'>Metric</th>
-              <th className='text-left p-2 border border-slate-200'>Value</th>
-            </tr>
-          </thead>
-          <tbody>{entries}</tbody>
-        </table>
-      </section>
-    </Layout>
+  <JournalProvider>
+    <ThemeProvider initial={props.user.dark_mode}>
+      <Layout 
+        title="Journal List View" 
+        background={props.user.background} 
+        darkMode={props.user.dark_mode}
+        firstName={props.user.first_name}
+      >
+        <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto h-[100vh]'>
+          <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
+            <thead>
+              <tr className='bg-blue-900 dark:bg-orange-800 text-white'>
+                <th className='text-left p-2 border border-slate-200'>Day</th>
+                <th className='text-left p-2 border border-slate-200'>Metric</th>
+                <th className='text-left p-2 border border-slate-200'>Value</th>
+              </tr>
+            </thead>
+            <tbody>{entries}</tbody>
+          </table>
+        </section>
+      </Layout>
+    </ThemeProvider>
+  </JournalProvider>
   )
 }
-
 
 export async function getServerSideProps () {
   const prisma = new PrismaClient()
@@ -49,7 +59,9 @@ export async function getServerSideProps () {
       first_name: true,
       last_name: true,
       email: true,
-      layout: true
+      layout: true,
+      background: true,
+      dark_mode: true
     }
   })
 
@@ -60,7 +72,7 @@ export async function getServerSideProps () {
       user_id: 1,
       date: {
         lte: new Date(),
-        gte: new Date(new Date().setDate(today.getDate() - 30))
+        gte: new Date(new Date().setDate(today.getDate() - 15))
       }
     },
     include: {

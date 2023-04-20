@@ -8,6 +8,7 @@ export function useData() {
 
 export function DataProvider({ children }) {
   const today = new Date();
+  const [oldestDay, setOldestDay] = useState(new Date())
   const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState(today);
@@ -23,6 +24,19 @@ export function DataProvider({ children }) {
     }
     fetchData();
   }, [selectedDate]);
+
+
+  useEffect(() => {
+    async function getOldestDay() {
+      const res = await fetch(`/api/oldestDay`);
+      const { date } = await res.json();
+      const localDate = new Date(date);
+      const offset = localDate.getTimezoneOffset() * 60 * 1000;
+      const adjustOffset = new Date(localDate.getTime() + offset);
+      setOldestDay(adjustOffset);
+    }
+    getOldestDay();
+  }, []);
 
   function updateData(data) {
     setData(data);
@@ -49,6 +63,7 @@ export function DataProvider({ children }) {
       selectedDate, 
       updateDate, 
       today,
+      oldestDay,
       activeStartDate,
       handleTodayClick,
       handleActiveStartDateChange,

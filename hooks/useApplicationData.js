@@ -18,11 +18,9 @@ export function useApplicationData (initial) {
 
   useEffect(() => {  
     Promise.all([
-      //axios.get(`/api/users/${user.id}/metrics/${String(formatDate)}`),
       axios.get(`/api/users/${user.id}`),
     ])
       .then(all => {
-        //setData(all[0].data)
         setUser(all[0].data);
       })
       .catch(err => {
@@ -31,14 +29,13 @@ export function useApplicationData (initial) {
       });
   }, []);
 
-  const toggleJournal = async () => {
+  const toggleJournal = () => {
     setJournalOpen(!journalOpen);
   };
 
   return {
     user,
     setUser,
-    journalOpen,
-    toggleJournal,
+    formatDate,
   }
 }

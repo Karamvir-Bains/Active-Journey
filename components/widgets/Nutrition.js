@@ -3,10 +3,10 @@ import { Chart } from "chart.js/auto";
 
 export default function Nutrition(props) {
   useEffect(() => {
-    var ctx = document.getElementById('nutritionChart').getContext('2d');
+    const ctx = document.getElementById('nutritionChart').getContext('2d');
     const labels = ["04/05", "04//06", "04/07", "04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"];
 
-    var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
     gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
     gradient.addColorStop(1, 'rgba(199, 223, 255, 1)');
@@ -16,7 +16,8 @@ export default function Nutrition(props) {
       datasets: [
         {
           data: [1, 9, 8, 9, 4, 4, 7, 10, 9, 8],
-          backgroundColor: gradient,
+          // backgroundColor: gradient,
+          backgroundColor: "#d97706",
           borderRadius: 15
         }
       ]
@@ -56,8 +57,8 @@ export default function Nutrition(props) {
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-2 text-xl text-blue-900 dark:text-blue-500">Quality of Nutrition</h3>
-        <div className="text-center w-full h-5/6">
+        <h3 className="font-bold mb-2 text-xl text-blue-900 dark:text-white">Quality of Nutrition</h3>
+        <div className="text-center w-full h-full py-6">
           <canvas id='nutritionChart'></canvas>
         </div>
       </div>

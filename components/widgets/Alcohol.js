@@ -1,7 +1,12 @@
 import { useEffect } from "react"
-import { Chart } from "chart.js/auto";
+import { Chart, Colors } from "chart.js/auto";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function Alcohol(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
+
   useEffect(() => {
     const ctx = document.getElementById("alcohol").getContext('2d');
     const labels = ["04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"];
@@ -16,9 +21,9 @@ export default function Alcohol(props) {
       datasets: [
         {
           data: [1, 0, 0, 2, 7, 4, 0],
-          backgroundColor: gradient,
+          backgroundColor: colours.alcohol,
           fill: true,
-          borderColor: 'rgb(75, 192, 192)',
+          borderColor: colours.alcohol,
           tension: 0.1
         }
       ]
@@ -42,9 +47,9 @@ export default function Alcohol(props) {
   }, []);
   return(
     <>
-      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Alcohol</h3>
-        <div className="px-12">
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-3 text-center">
+        <h3 className="font-bold text-xl text-blue-900 dark:text-white">Alcohol</h3>
+        <div className="text-center w-full h-full py-6">
           <canvas id='alcohol'></canvas>
         </div>
       </div>
