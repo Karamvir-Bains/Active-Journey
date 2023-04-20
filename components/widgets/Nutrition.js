@@ -60,12 +60,12 @@ export default function Nutrition(props) {
 
     /** Change chart colours on darkMode change */
     if (darkMode == 'light') {
-      nutritionChart.data.datasets[0].backgroundColor = palette.light.sleep;
+      nutritionChart.data.datasets[0].backgroundColor = palette.light.nutrition;
       nutritionChart.options.scales.x.ticks.color = palette.light.label;
       nutritionChart.options.scales.y.ticks.color = palette.light.label;
       nutritionChart.update();  
     } else if (darkMode == 'dark') {
-      nutritionChart.data.datasets[0].backgroundColor = palette.dark.energy;
+      nutritionChart.data.datasets[0].backgroundColor = palette.dark.nutrition;
       nutritionChart.options.scales.x.ticks.color = palette.dark.label;
       nutritionChart.options.scales.y.ticks.color = palette.dark.label;
       nutritionChart.update();  

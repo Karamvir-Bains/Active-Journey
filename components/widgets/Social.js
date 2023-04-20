@@ -53,10 +53,23 @@ export default function Social(props) {
       setSocial(data[7].user_metric_data.slice(-30).map(item => item.metric_value));
     }
 
+    /** Change chart colours on darkMode change */
+    if (darkMode == 'light') {
+      socialChart.data.datasets[0].backgroundColor = palette.light.social;
+      socialChart.options.scales.x.ticks.color = palette.light.label;
+      socialChart.options.scales.y.ticks.color = palette.light.label;
+      socialChart.update();  
+    } else if (darkMode == 'dark') {
+      socialChart.data.datasets[0].backgroundColor = palette.dark.social;
+      socialChart.options.scales.x.ticks.color = palette.dark.label;
+      socialChart.options.scales.y.ticks.color = palette.dark.label;
+      socialChart.update();  
+    }
+
     return () => {
       socialChart.destroy()
     }
-  }, [data]);
+  }, [data, darkMode]);
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
