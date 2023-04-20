@@ -46,20 +46,22 @@ export const palette = {
     'sleep': '#14b8a6',
     'water': '#3b82f6',
     'mood': '#be123c',
-    'social': '#0f766e',
+    'nutrition': '#15803d',
+    'social': '#86198f',
     'alcohol': '#fbbf24',
     'border': '#000',
-    'label': '#555',
+    'label': '#333',
   },
   'dark': {
     'energy': '#f97316',
     'sleep': '#2dd4bf',
     'water': '#1e40af',
     'mood': '#ef4444',
-    'social': '#5eead4',
+    'nutrition': '#84cc16',
+    'social': '#86198f',
     'alcohol': '#fbbf24',
     'border': '#fff',
-    'label': '#555',
+    'label': '#ddd',
   }
 }
 

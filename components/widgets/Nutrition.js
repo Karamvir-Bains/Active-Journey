@@ -1,59 +1,80 @@
-import { useEffect } from "react"
-import { Chart } from "chart.js/auto";
+import { useState, useEffect } from "react"
+import { Chart, Colors } from "chart.js/auto";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
+import { useData } from "../../store/DataContext";
+import { buildLabels } from "../../helpers/selectors";
 
 export default function Nutrition(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
+  const { 
+    selectedDate,
+    data } = useData();
+  const [nutrition, setNutrition] = useState(props.nutrition.map(item => item.metric_value).reverse());
+
   useEffect(() => {
     const ctx = document.getElementById('nutritionChart').getContext('2d');
-    const labels = ["04/05", "04//06", "04/07", "04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"];
-
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
-    gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
-    gradient.addColorStop(1, 'rgba(199, 223, 255, 1)');
-    
-    const data = {
-      labels: labels,
+    const chartData = {
+      labels: buildLabels(selectedDate, 10),
       datasets: [
         {
-          data: [1, 9, 8, 9, 4, 4, 7, 10, 9, 8],
-          // backgroundColor: gradient,
-          backgroundColor: "#d97706",
-          borderRadius: 15
+          data: [...nutrition],
+          backgroundColor: colours.nutrition,
+          borderRadius: 10
         }
       ]
     };
 
+    const options = { 
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: false }
+      },
+      scales: {
+        y: {
+          ticks: { color: 'green', beginAtZero: true }
+        },
+        x: {
+          ticks: { color: 'red', beginAtZero: true }
+        }
+      }
+    }
+
     const nutritionChart = new Chart(ctx, {
       type: 'bar',
-      data: data,
-      options: { 
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          title: { display: false }
-        },
-        scales: {
-          x: {
-            ticks: {
-              callback: function (value, index) {
-                if (index === 9) {
-                  const today = labels.slice(-1)[0];
-                  return today;
-                } else {
-                  return labels[value];
-                }
-              }  
-            }
-          }
-        },
-      },
+      data: chartData,
+      options
     });
+
+    if (data && data[8]) {
+      if (data[8].user_metric_data) {
+        const newData = data[8].user_metric_data.map(item => item.metric_value).slice(-10);
+        nutritionChart.data.datasets[0].data = [...newData];
+        nutritionChart.update();
+        setNutrition(data[8].user_metric_data.map(item => item.metric_value));
+      }
+    }
+
+    /** Change chart colours on darkMode change */
+    if (darkMode == 'light') {
+      nutritionChart.data.datasets[0].backgroundColor = palette.light.nutrition;
+      nutritionChart.options.scales.x.ticks.color = palette.light.label;
+      nutritionChart.options.scales.y.ticks.color = palette.light.label;
+      nutritionChart.update();  
+    } else if (darkMode == 'dark') {
+      nutritionChart.data.datasets[0].backgroundColor = palette.dark.nutrition;
+      nutritionChart.options.scales.x.ticks.color = palette.dark.label;
+      nutritionChart.options.scales.y.ticks.color = palette.dark.label;
+      nutritionChart.update();  
+    }
 
     return () => {
       nutritionChart.destroy()
     }
-  }, []);
+  }, [data, darkMode]);
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-6 mb-10 text-center">

@@ -22,7 +22,7 @@ export default function Calendar (props) {
 
   return (
     <>
-    <div className='overflow-scroll rounded-lg bg-blue-200 dark:bg-orange-400 shadow-sm w-full h-full lg:px-6 py-4'>
+    <div className='overflow-scroll rounded-lg bg-blue-200 dark:bg-orange-400 shadow-sm w-full h-full p-3 lg:px-6 py-4'>
       <div className='flex justify-evenly content-center w-full'>
         <div className="w-[33%] md:w-[25%]">
             <button

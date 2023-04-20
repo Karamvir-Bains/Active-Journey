@@ -3,18 +3,27 @@ import Image from 'next/image'
 import { PrismaClient } from '@prisma/client'
 import { ThemeProvider } from '../store/ThemeContext';
 import { JournalProvider } from '../store/JournalContext';
+import WaterNotification from '../components/notifications/water';
+import SocialNotification from '../components/notifications/social';
 
-export default function Settings (props) {
+export default function Notifications (props) {
   return (
   <JournalProvider>
     <ThemeProvider initial={props.user.dark_mode}>
-      <Layout title="Notifications" background={props.user.background}  darkMode={props.user.dark_mode}>
+      <Layout 
+        title="Notifications"
+        background={props.user.background}
+        darkMode={props.user.dark_mode}
+        firstName={props.user.first_name}
+      >
         <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 md:p-10'>
-          <ul className="list-disc ml-6">
-            <li>You have not entered any metrics for the last week</li>
-            <li>You&rsquo;ve reached your goal of 8 glasses of water per day 20 out of 30 days this month!</li>
-            <li>You havent logged enough activity this week. Try going for a walk today.</li>
-          </ul>
+          <WaterNotification
+            metrics={props.metrics[0]}
+          />
+          {/* Change to [7] once we have social data seeded */}
+          <SocialNotification
+            metrics={props.metrics[7]}
+          />
         </section>
       </Layout>
     </ThemeProvider>
@@ -26,7 +35,7 @@ export default function Settings (props) {
 export async function getServerSideProps () {
   const prisma = new PrismaClient()
 
-  const user = await prisma.user.findUnique({
+  let user = await prisma.user.findUnique({
     where: {
       id: 1
     },
@@ -41,7 +50,29 @@ export async function getServerSideProps () {
     }
   })
 
+  const date = new Date();
+
+  // Start of day 90 days ago in UTC
+  const gte = new Date(new Date(date).toISOString().slice(0, 10) + "T00:00:00.000Z");
+  gte.setUTCDate(gte.getUTCDate() - 90);
+
+  // End of day in UTC
+  const lt = new Date(new Date(date).toISOString().slice(0, 10) + "T23:59:59.999Z");
+
+  let metrics = await prisma.metric.findMany({
+    include: {
+      user_metric_data: {
+        where: { date: { gte, lt } }
+      }
+    }
+  });
+
+  user = JSON.parse(JSON.stringify(user));
+  metrics = JSON.parse(JSON.stringify(metrics));
+
+
   return {
-    props: { user }
+    props: { user, metrics }
   }
+
 }
