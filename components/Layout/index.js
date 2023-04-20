@@ -22,8 +22,6 @@ export async function updateDarkMode(id, value) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
-
-    console.log(res);
   }
   catch (err) {
     console.log(err);

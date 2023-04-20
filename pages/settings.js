@@ -19,7 +19,6 @@ export async function updateUser(id, user) {
     });
 
     const jsonData = await response.json();
-    console.log(jsonData);
   }
   catch (err) {
     console.log(err);
