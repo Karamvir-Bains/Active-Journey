@@ -32,6 +32,9 @@ async function seed() {
     {
       name: "Social Interactions",
       property: "scale"
+    }, {
+      name: "Quality of Nutrition",
+      property: "scale"
     }
   ];
 

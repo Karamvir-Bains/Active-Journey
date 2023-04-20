@@ -7,7 +7,6 @@ import WaterNotification from '../components/notifications/water';
 import SocialNotification from '../components/notifications/social';
 
 export default function Notifications (props) {
-  console.log(props.metrics);
   return (
   <JournalProvider>
     <ThemeProvider initial={props.user.dark_mode}>

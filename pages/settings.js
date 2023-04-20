@@ -39,7 +39,7 @@ export default function Settings (props) {
       last_name: lastName,
       background: userBackground
     }
-    console.log(user);
+
     updateUser(1, user).catch((err) => {
       console.lor(err);
     });

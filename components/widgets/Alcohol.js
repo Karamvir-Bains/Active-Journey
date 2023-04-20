@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Chart, Colors } from "chart.js/auto";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
@@ -8,6 +8,8 @@ import { useData } from "../../store/DataContext";
 export default function Alcohol(props) {
   const darkMode = useTheme();
   const colours = darkMode === 'light' ? palette.light : palette.dark;
+  const [alcohol, setAlcohol] = useState(props.alcohol);
+
   const { 
     selectedDate,
     data } = useData();

@@ -88,7 +88,7 @@ export default function Dashboard (props) {
         </div>
         <div key='nutrition'>
           <Nutrition 
-            entries={props.entries}
+            nutrition={props.nutrition}
           />
         </div>
       </ResponsiveGridLayout>
