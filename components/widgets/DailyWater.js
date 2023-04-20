@@ -19,7 +19,7 @@ export default function DailyWater(props) {
   let val = convertMlToCups(milliliters);
 
   const calcGlassHeight = (val) => {
-    let heightClass = 'bg-gradient-to-t from-blue-500 to-blue-700 w-full absolute z-10 bottom-0 rounded-b-lg ';
+    let heightClass = 'bg-gradient-to-t from-blue-500 to-blue-700 w-full absolute z-10 bottom-0 rounded-b-lg drop-shadow-xl ';
     let bottomClass = '';
     if (val === 0) {
       heightClass += 'h-[0%] hidden';
@@ -61,7 +61,7 @@ export default function DailyWater(props) {
   return(
     <div className="overflow-scroll rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
       <h3 className="text-center font-bold mb-3 text-xl text-blue-900 dark:text-white">Daily Water Intake</h3>
-      <div id="waterCup" className="mx-auto bg-blue-100 h-[65%] w-[50%] relative rounded-b-lg drop-shadow-sm">
+      <div id="waterCup" className="mx-auto bg-blue-100 dark:bg-white h-[65%] w-[50%] relative rounded-b-lg drop-shadow-sm">
         <div className="handle"></div>
         <div id="glass drop-shadow-2xl"></div>
         <div id="wave-1" className={getBottomClass}></div>

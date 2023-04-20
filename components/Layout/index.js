@@ -66,7 +66,7 @@ export default function Layout({ children, title, background, darkMode, firstNam
                   id='section-main'
                   className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
                 >
-                  <div className='flex h-full flex-col p-8 mb-6 dark:bg-slate-950 dark:bg-opacity-60'>
+                  <div className='flex h-full flex-col p-8 mb-6 bg-white bg-opacity-30 dark:bg-slate-950 dark:bg-opacity-50'>
                     <Header 
                       pageTitle={title}
                       firstName={firstName}

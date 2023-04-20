@@ -1,6 +1,9 @@
-import { useState, useEffect, useCallback} from "react"
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
+import { useState, useEffect, useRef } from "react"
 import { useData } from "../../store/DataContext";
 import { Chart } from "chart.js/auto";
+import { buildLabels } from '../../helpers/selectors';
 
 export default function Sleep(props) {
 
@@ -95,7 +98,7 @@ export default function Sleep(props) {
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
         <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Sleep vs Quality</h3>
-        <div className="text-center w-full h-full py-4">
+        <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
           <canvas id='sleep'></canvas>
         </div>
       </div>

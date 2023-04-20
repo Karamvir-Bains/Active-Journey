@@ -6,6 +6,10 @@ export default function WeeklyStress(props) {
   const { data } = useData();
   const [ stressAverage, setStressAverage ] = useState(0);
 
+  const formatVal = (val) => {
+    return Math.round(Number(val));
+  }
+
   useEffect(() => {
     if (data && data[5] && data[5].user_metric_data) {
       let avgStress = data[5].user_metric_data
@@ -88,12 +92,14 @@ export default function WeeklyStress(props) {
   }, [data, stressAverage]);
 
   return(
-    <>
+    <>    
       <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 dark:bg-slate-800 dark:text-white">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
-        <div className="">
-          <canvas id='activityChart'></canvas>
-          {/* <p className="text-center pt-6">Clever text here</p> */}
+        <h3 className="text-center font-bold mb-1 text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
+        <div className="w-full h-[75%] flex flex-col mx-auto">
+          <canvas id='activityChart'></canvas> 
+          <p className="mx-auto text-center">
+            Your Weekly Stress is at {formatVal(stressAverage)}%
+          </p>
         </div>
       </div>
     </>

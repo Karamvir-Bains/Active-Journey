@@ -2,8 +2,12 @@ import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
 import ButtonGroup from "../partials/ButtonGroup";
 import { useData } from "../../store/DataContext";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function Overview(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
   const { data } = useData();
 
   // Date range navigation
@@ -87,7 +91,6 @@ export default function Overview(props) {
 
   useEffect(() => {
     if (data && data[0] && data[0].user_metric_data) {
-      // console.log('data: ', data);
       const metricValueSets = createData(data[0], data[1], data[3], data[2]);
 
       const overviewChart = createChart(metricValueSets);

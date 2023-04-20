@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
 import { useData } from "../../store/DataContext";
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function ActivityGoal(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
   const { data } = useData();
   const goal = 60;
   const [progressPercentage, setProgressPercentage] = useState(0);
@@ -13,15 +17,15 @@ export default function ActivityGoal(props) {
       type: 'radialBar',
     },
     series: [progressPercentage],
-    colors: ["#BFDBFE"],
+    colors: ['#888'],
     labels: ['Progress'],
     fill: {
       type: "gradient",
       gradient: {
         shade: "dark",
         type: "horizontal",
-        gradientToColors: ["#87D4F9"],
-        stops: [0, 100]
+        gradientToColors: [colours.energy, colours.mood],
+        stops: [0, 50, 100]
       }
     },
   });
