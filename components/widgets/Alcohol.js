@@ -14,51 +14,49 @@ export default function Alcohol(props) {
     selectedDate,
     data } = useData();
 
+
   useEffect(() => {
-    if (data && data.length !== 0) {
-        const newAlcoholdata = data[9].user_metric_data.map(item => item.metric_value).slice(-7);
-        setAlcohol(newAlcoholdata);
-      
-        const ctx = document.getElementById("alcohol").getContext('2d');
-        const chartData = {
-          labels: buildLabels(selectedDate, 7),
-          datasets: [
-            {
-              data: alcohol,
-              backgroundColor: colours.alcohol,
-              fill: true,
-              borderColor: colours.alcohol,
-              tension: 0.1
-            }
-          ]
-        };
+    const ctx = document.getElementById("alcohol").getContext('2d');
 
-        var alcoholChart = new Chart(ctx, {
-          type: 'line',
-          data: chartData,
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              title: { display: false }
-            }
-          }
-        });
-
-        return () => {
-          alcoholChart.destroy()
-        }
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: false }
+      }
     }
-    // var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    // gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
-    // gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
-    // gradient.addColorStop(1, 'rgba(199, 223, 255, 1)')
 
-    // return () => {
-    //   alcoholChart.destroy()
-    // }
+    const chartData = {
+      labels: buildLabels(selectedDate, 7),
+      datasets: [{
+        data: alcohol,
+        backgroundColor: colours.alcohol,
+        fill: true,
+        borderColor: colours.alcohol,
+        tension: 0.1,
+      }]
+    }
+
+    const alcoholChart = new Chart(ctx, {
+      type: 'line',
+      data: alcohol,
+      options: options,
+      data: chartData
+    });
+
+    if (data && data.length !== 0) {
+      const newData = data[9].user_metric_data.map(item => item.metric_value).slice(-7);
+      alcoholChart.data.datasets[0].data = [...newData];
+      alcoholChart.update();
+      setAlcohol(data[9].user_metric_data.map(item => item.metric_value).slice(-7));
+    }
+
+    return () => {
+      alcoholChart.destroy()
+    }
   }, [data]);
+
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-3 text-center">

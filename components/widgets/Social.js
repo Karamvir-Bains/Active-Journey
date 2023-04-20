@@ -4,18 +4,18 @@ import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
 import { buildLabels } from "../../helpers/selectors";
 import { useData } from "../../store/DataContext";
-import { format, subDays } from 'date-fns';
 
 export default function Social(props) {
   const darkMode = useTheme();
   const colours = darkMode === 'light' ? palette.light : palette.dark;
+  // Set it to server side props on initial load
+  const [social, setSocial] = useState(props.social.map(item => item.metric_value).reverse());  
+
   const { 
     selectedDate,
     data 
   } = useData();
 
-  // Set it to server side props on initial load
-  const [social, setSocial] = useState(props.social.map(item => item.metric_value));  
 
   useEffect(() => {
     const ctx = document.getElementById("social").getContext('2d');
@@ -29,23 +29,28 @@ export default function Social(props) {
       }
     };
 
+    const chartData = {
+      labels: buildLabels(selectedDate, 30),
+      datasets: [{
+        data: social,
+        backgroundColor: colours.social,
+        fill: true,
+        tension: 0.378
+      }]
+    }
+
     const socialChart = new Chart(ctx, {
       type: 'line',
       data: data,
       options: options,
-      data: {
-        labels: buildLabels(selectedDate, 30),
-        datasets: [{
-          data: social,
-          backgroundColor: colours.social,
-          fill: true,
-          tension: 0.378
-        }]
-      },
+      data: chartData
     });
 
-    if (data && data.length != 0) {
-      // setSocial(data[7].user_metric_data.slice(-7).map(item => item.metric_value));
+    if (data && data.length && data[7]) {
+      const newData = data[7].user_metric_data.slice(-30).map(item => item.metric_value);
+      socialChart.data.datasets[0].data = [...newData];
+      socialChart.update();
+      setSocial(data[7].user_metric_data.slice(-30).map(item => item.metric_value));
     }
 
     return () => {
