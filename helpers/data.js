@@ -49,7 +49,7 @@ export const palette = {
     'social': '#86198f',
     'alcohol': '#fbbf24',
     'border': '#000',
-    'label': '#555',
+    'label': '#333',
   },
   'dark': {
     'energy': '#f97316',
@@ -59,7 +59,7 @@ export const palette = {
     'social': '#86198f',
     'alcohol': '#fbbf24',
     'border': '#fff',
-    'label': '#555',
+    'label': '#ddd',
   }
 }
 

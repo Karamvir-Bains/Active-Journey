@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Chart } from "chart.js/auto";
+import { Chart, Colors } from "chart.js/auto";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
 import { useData } from "../../store/DataContext";
@@ -33,6 +33,14 @@ export default function Nutrition(props) {
         legend: { display: false },
         title: { display: false }
       },
+      scales: {
+        y: {
+          ticks: { color: 'green', beginAtZero: true }
+        },
+        x: {
+          ticks: { color: 'red', beginAtZero: true }
+        }
+      }
     }
 
     const nutritionChart = new Chart(ctx, {
@@ -50,10 +58,23 @@ export default function Nutrition(props) {
       }
     }
 
+    /** Change chart colours on darkMode change */
+    if (darkMode == 'light') {
+      nutritionChart.data.datasets[0].backgroundColor = palette.light.sleep;
+      nutritionChart.options.scales.x.ticks.color = palette.light.label;
+      nutritionChart.options.scales.y.ticks.color = palette.light.label;
+      nutritionChart.update();  
+    } else if (darkMode == 'dark') {
+      nutritionChart.data.datasets[0].backgroundColor = palette.dark.energy;
+      nutritionChart.options.scales.x.ticks.color = palette.dark.label;
+      nutritionChart.options.scales.y.ticks.color = palette.dark.label;
+      nutritionChart.update();  
+    }
+
     return () => {
       nutritionChart.destroy()
     }
-  }, [data]);
+  }, [data, darkMode]);
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-6 mb-10 text-center">
