@@ -38,7 +38,8 @@ async function seed() {
     },
     {
       name: "Alcohol",
-      property: "drinks"
+      property: "input",
+      unit: "drinks"
     }
   ];
 
