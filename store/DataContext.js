@@ -16,6 +16,9 @@ export function DataProvider({ children }) {
     async function fetchData() {
       const res = await fetch(`/api/userData?date=${selectedDate.toLocaleString()}`);
       const { metrics } = await res.json();
+
+      //console.log(metrics, "metrics");
+      
       setData(metrics);
     }
     fetchData();

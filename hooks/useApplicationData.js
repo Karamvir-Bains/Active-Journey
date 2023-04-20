@@ -12,17 +12,18 @@ import { format } from 'date-fns';
 
 export function useApplicationData (initial) {
   const [user, setUser] = useState({id: 1});
+  //const [data, setData] = useState({});
   const [journalOpen, setJournalOpen] = useState(false);
   let formatDate = format(new Date(), 'yyyy-MM-dd');
 
   useEffect(() => {  
     Promise.all([
-      axios.get(`/api/users/${user.id}/metrics/${String(formatDate)}`),
+      //axios.get(`/api/users/${user.id}/metrics/${String(formatDate)}`),
       axios.get(`/api/users/${user.id}`),
     ])
       .then(all => {
-        setData(all[0].data)
-        setUser(all[1].data);
+        //setData(all[0].data)
+        setUser(all[0].data);
       })
       .catch(err => {
         console.log("Error Message: ", err);

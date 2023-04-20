@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
-
+import { useData } from "../../store/DataContext";
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-class CircleChart extends React.Component {
-  constructor(props) {
-    super(props);
+export default function WeeklyStress() {
 
-    const stressVal = props.stress.map(entry => entry.metric_value * 10).slice(0, 7);
+    
+    const { data } = useData();
+    const [stress, setStress] = useState(0);
+    const [date, setDate] = useState(0);
 
-    this.state = {
-      options: {
-        chart: {
+    const [options, setOptions] = useState({
+      chart: {
           height: 350,
           type: "radialBar",
         },
-        series: stressVal,
-        labels: ["04/08", "04/09", "04/10", "04/11", "04/12", "04/13", "04/14"],
+        series: [stress],
+        labels: [date],
         colors: ["#BFDBFE"],
         plotOptions: {
           radialBar: {
@@ -51,22 +51,42 @@ class CircleChart extends React.Component {
         stroke: {
           lineCap: "butt"
         },
-      },
-    };
-  }
+    });
 
-  render() {
+    useEffect(() => {
+      if (data && data[5] && data[5].user_metric_data) {
+        const lastSevenValues = data[5].user_metric_data.slice(-7);
+        const sum = lastSevenValues.reduce((acc, curr) => acc + curr.metric_value, 0);
+        const average = sum / lastSevenValues.length;
+        setStress(Number(average.toFixed(2)));
+
+        const metricDate = data[5].user_metric_data[data[5].user_metric_data.length - 1].date;
+        const date = new Date(metricDate);
+        const optionsTimezone = { month: '2-digit', day: '2-digit', timeZone: 'etc/UTC' };
+        
+        const newDate = date.toLocaleDateString('en-US',optionsTimezone);
+        setDate(newDate);
+
+        setOptions({
+               ...options,
+               series: [Number(average.toFixed(2))],
+               labels: [newDate],
+               });
+        
+      }
+    }, [data]);
+      
     return(
       <>
         <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
           <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-blue-500">Weekly Stress</h3>
           <div className="px-12">
-          <ApexCharts options={this.state.options} series={this.state.options.series} type="radialBar" height={400} />
+          <ApexCharts options={options} series={options.series} type="radialBar" height={400} />
           </div>
         </div>
       </>
     )
   }
-}
 
-export default CircleChart;
+
+

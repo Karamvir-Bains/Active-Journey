@@ -10,7 +10,7 @@ import Sleep from "../widgets/Sleep";
 import Alcohol from "../widgets/Alcohol";
 import Social from "../widgets/Social";
 import RadialChart from "../widgets/ActivityGoal";
-import CircleChart from "../widgets/WeeklyStress";
+import WeeklyStress from "../widgets/WeeklyStress";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -31,7 +31,7 @@ export default function Dashboard(props) {
         onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
         isDraggable={true}
         isRearrangeable={true}
-        isResizable={false}
+        isResizable={true}
       >
         <div key="overview">
           <Overview 
@@ -54,7 +54,7 @@ export default function Dashboard(props) {
           <RadialChart />
         </div>
         <div key="stress">
-          <CircleChart 
+          <WeeklyStress 
             stress={props.stress} 
             entries={props.entries} 
             title="Stress" 
@@ -65,9 +65,6 @@ export default function Dashboard(props) {
         </div>
         <div key="sleep">
           <Sleep 
-            sleep={props.sleep} 
-            sleepQuality={props.sleepQuality} 
-            entries={props.entries}
             title="Sleep Quality vs Hours" 
             desc="Past 7 days" />
         </div>
