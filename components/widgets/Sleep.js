@@ -14,9 +14,22 @@ export default function Sleep(props) {
 
   const [sleep, setSleep] = useState(props.sleep.map(item => item.metric_value));
   const [sleepQuality, setSleepQuatlity] = useState(props.sleepQuality.map(item => item.metric_value));
-  let options = {
-    type: 'line',
-    data: {
+  
+
+  //use data object to pass charts live data on refresh
+  useEffect(() => {
+    //create chart and all options     
+    const ctx = document.getElementById("sleep").getContext('2d');
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: { 
+        y: { 
+          display: false 
+        },
+      }
+    }
+    const chartData = {
       labels: buildLabels(selectedDate, 7),
       datasets: [{
         type: 'line',
@@ -34,30 +47,14 @@ export default function Sleep(props) {
         backgroundColor: colours.sleep,
         fill: true
       }]
-    },
-    option: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: { 
-        y: { 
-          display: false 
-        },
-      }
-    }
-  };
+    };
+    const sleepChart = new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+      options
+    })
 
-  //use data object to pass charts live data on refresh
-  useEffect(() => {
-    //create chart and all options     
-    const ctx = document.getElementById("sleep").getContext('2d');
-    var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
-    gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
-    gradient.addColorStop(1, 'rgba(199, 223, 255, 1)');
-
-    const sleepChart = new Chart(ctx, options)
-
-    if (data && data.length != 0) {
+    if (data && data.length && data[1]) {
       const lastSevenValues = data[1].user_metric_data.slice(-7);
       const sleepValues = lastSevenValues.map(item => item.metric_value);
       const lastSevenValuesQuality = data[6].user_metric_data.slice(-7);
@@ -65,6 +62,9 @@ export default function Sleep(props) {
       
       setSleep(sleepValues);
       setSleepQuatlity(qualityValues);
+      sleepChart.data.datasets[0].data = [...sleepValues];
+      sleepChart.data.datasets[1].data = [...qualityValues];
+      sleepChart.update();
     }  
     
     return () => {

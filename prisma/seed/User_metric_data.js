@@ -36,7 +36,8 @@ async function seed() {
       { metric_id: 6 },
       { metric_id: 7 },
       { metric_id: 8 },
-      { metric_id: 9 }
+      { metric_id: 9 },
+      { metric_id: 10 },
     ];
 
     for (let metric of metrics) {
@@ -74,6 +75,10 @@ async function seed() {
 
       if (metric.metric_id === 9) {
         await createMockEntry(9, 9, 1, date);
+      }
+
+      if (metric.metric_id === 10) {
+        await createMockEntry(10, 15, 0, date);
       }
     }
   }
