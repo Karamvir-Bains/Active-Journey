@@ -35,6 +35,10 @@ async function seed() {
     }, {
       name: "Quality of Nutrition",
       property: "scale"
+    },
+    {
+      name: "Alcohol",
+      property: "drinks"
     }
   ];
 

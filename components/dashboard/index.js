@@ -81,7 +81,7 @@ export default function Dashboard (props) {
         </div>
         <div key='alcohol'>
           <Alcohol
-            entries={props.entries}
+            alcohol={props.alcohol}
             title='Alcohol Intake'
             desc='Past 7 days'
           />

@@ -8,49 +8,57 @@ import { useData } from "../../store/DataContext";
 export default function Alcohol(props) {
   const darkMode = useTheme();
   const colours = darkMode === 'light' ? palette.light : palette.dark;
-  const [alcohol, setAlcohol] = useState(props.alcohol);
+  const [alcohol, setAlcohol] = useState(props.alcohol.map(item => item.metric_value).reverse());
 
   const { 
     selectedDate,
     data } = useData();
 
   useEffect(() => {
-    const ctx = document.getElementById("alcohol").getContext('2d');
+    if (data && data.length !== 0) {
+        const newAlcoholdata = data[9].user_metric_data.map(item => item.metric_value).slice(-7);
+        setAlcohol(newAlcoholdata);
+      
+        const ctx = document.getElementById("alcohol").getContext('2d');
+        const chartData = {
+          labels: buildLabels(selectedDate, 7),
+          datasets: [
+            {
+              data: alcohol,
+              backgroundColor: colours.alcohol,
+              fill: true,
+              borderColor: colours.alcohol,
+              tension: 0.1
+            }
+          ]
+        };
 
-    var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
-    gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
-    gradient.addColorStop(1, 'rgba(199, 223, 255, 1)')
+        var alcoholChart = new Chart(ctx, {
+          type: 'line',
+          data: chartData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              title: { display: false }
+            }
+          }
+        });
 
-    const data = {
-      labels: buildLabels(selectedDate, 7),
-      datasets: [
-        {
-          data: [1, 0, 0, 2, 7, 4, 0],
-          backgroundColor: colours.alcohol,
-          fill: true,
-          borderColor: colours.alcohol,
-          tension: 0.1
+        return () => {
+          alcoholChart.destroy()
         }
-      ]
-    };
-    var alcoholChart = new Chart(ctx, {
-      type: 'line',
-      data: data,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          title: { display: false }
-        }
-      }
-    });
-
-    return () => {
-      alcoholChart.destroy()
     }
-  }, []);
+    // var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    // gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
+    // gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
+    // gradient.addColorStop(1, 'rgba(199, 223, 255, 1)')
+
+    // return () => {
+    //   alcoholChart.destroy()
+    // }
+  }, [data]);
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-3 text-center">

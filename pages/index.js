@@ -39,6 +39,7 @@ export default function Home (props) {
             stress={props.stress}
             social={props.social}
             nutrition={props.nutrition}
+            alcohol={props.alcohol}
           />
         </Layout>
       </ThemeProvider>
@@ -172,11 +173,29 @@ export async function getServerSideProps () {
     take: 10
   })
 
+  let alcohol = await prisma.User_metric_data.findMany({
+    where: { 
+      user_id: 1,
+      metric_id: 10,
+      date: {
+        lte: lteVal
+      },
+    },
+    orderBy: {
+      date: 'desc',
+    },
+    include: {
+      metrics: true
+    },
+    take: 7
+  })
+
   dailyWater = JSON.parse(JSON.stringify(dailyWater))
   sleep = JSON.parse(JSON.stringify(sleep))
   sleepQuality = JSON.parse(JSON.stringify(sleepQuality))
   social = JSON.parse(JSON.stringify(social))
   nutrition = JSON.parse(JSON.stringify(nutrition))
+  alcohol = JSON.parse(JSON.stringify(alcohol))
   entries = JSON.parse(JSON.stringify(entries))
 
   return {
@@ -189,7 +208,8 @@ export async function getServerSideProps () {
       stress,
       sleepQuality,
       social,
-      nutrition
+      nutrition,
+      alcohol
     }
   }
 }

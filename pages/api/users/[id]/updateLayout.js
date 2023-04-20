@@ -3,7 +3,6 @@ import prisma from '../../../../lib/prisma';
 
 export default async function handler(req, res) { 
   const id = Number(req.query.id);
-  console.log(JSON.stringify(req.body.layout));
   if (req.method === 'PUT') {
     const updateLayout = await prisma.user.update({
       data: {
