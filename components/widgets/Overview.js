@@ -48,7 +48,7 @@ export default function Overview(props) {
       data: {
         labels: metricValueSets[4],
         datasets: [{
-          type: 'line',
+          type: 'bar',
           label: "Energy Level",
           data: metricValueSets[2],
           borderWidth: 0,

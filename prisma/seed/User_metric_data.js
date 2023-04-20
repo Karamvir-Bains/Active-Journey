@@ -2,16 +2,53 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-async function createMockEntry(id, max, min, date) {
+const sleep = { id: 2, min: 4, max: 10 };
+const energy = { id: 4, min: 3, max: 10 };
+
+async function createCorrelatedEntry(date) {
+  let sleepValue = Math.floor(Math.random() * (sleep.max - sleep.min + 1)) + sleep.min;
+  let energyValue = 0;
+
+  if (sleepValue >= 7.5 && sleepValue <= 8) {
+    energyValue = Math.floor(Math.random() * 2) + 9; // between 9-10
+
+  } else if (sleepValue >= 7 && sleepValue < 7.5) {
+    energyValue = Math.floor(Math.random() * 2) + 8; // between 8-9
+
+  } else if (sleepValue > 8 && sleepValue < 9.5) {
+    energyValue = Math.floor(Math.random() * 2) + 7; // between 7-8
+
+  } else if (sleepValue >= 9.5) {
+    energyValue = Math.floor(Math.random() * 2) + 5; // between 5-6
+
+  } else {
+    energyValue = Math.floor(Math.random() * (sleepValue - sleep.min + 1)) + 3; // proportional to sleepValue
+    const randomAdjustment = Math.random() < 0.5 ? -1 : 1; // randomly add or subtract 1
+    energyValue += randomAdjustment;
+  }
+
+  await createUserMetricData(date, sleep.id, sleepValue, 9, 1);
+  await createUserMetricData(date, energy.id, energyValue, 9, 1);
+}
+
+
+
+
+
+async function createEntry(id, max, min, date) {
   // generate random value within range of metric
   const value = Math.floor(Math.random() * (max - min + 1)) + min;
+  await createUserMetricData(date, id, value, 9, 1);
+}
+
+async function createUserMetricData(date, metric_id, metric_value, goal_value, user_id) {
   await prisma.User_metric_data.create({
     data: {
       date,
-      metric_value: value,
-      goal_value: 9,
-      user_id: 1,
-      metric_id: id
+      metric_value,
+      goal_value,
+      user_id,
+      metric_id
     },
   });
 }
@@ -27,55 +64,22 @@ async function seed() {
     // Add the number of days to the UTC timestamp
     const date = new Date(utcTimestamp.getTime() - i * 24 * 60 * 60 * 1000);
 
-    const metrics = [
-      { metric_id: 1 },
-      { metric_id: 2 },
-      { metric_id: 3 },
-      { metric_id: 4 },
-      { metric_id: 5 },
-      { metric_id: 6 },
-      { metric_id: 7 },
-      { metric_id: 8 },
-      { metric_id: 9 }
-    ];
+    // Water
+    await createEntry(1, 2000, 1500, date);
+    // Exercise
+    await createEntry(3, 60, 30, date);
+    // Mood
+    await createEntry(5, 10, 5, date);
+    // Stress
+    await createEntry(6, 7, 3, date);
+    // Sleep Quality
+    await createEntry(7, 10, 5, date);
+    // Social Interactions
+    await createEntry(8, 10, 1, date);
+    // Quality of Nutrition
+    await createEntry(9, 9, 1, date);
 
-    for (let metric of metrics) {
-      if (metric.metric_id === 1) {
-        await createMockEntry(1, 2000, 1500, date);
-      }
-
-      if (metric.metric_id === 2) {
-        await createMockEntry(2, 9, 7, date);
-      }
-
-      if (metric.metric_id === 3) {
-        await createMockEntry(3, 60, 30, date);
-      }
-
-      if (metric.metric_id === 4) {
-        await createMockEntry(4, 10, 5, date);
-      }
-
-      if (metric.metric_id === 5) {
-        await createMockEntry(5, 10, 5, date);
-      }
-
-      if (metric.metric_id === 6) {
-        await createMockEntry(6, 7, 3, date);
-      }
-
-      if (metric.metric_id === 7) {
-        await createMockEntry(7, 10, 5, date);
-      }
-
-      if (metric.metric_id === 8) {
-        await createMockEntry(8, 10, 1, date);
-      }
-
-      if (metric.metric_id === 9) {
-        await createMockEntry(9, 9, 1, date);
-      }
-    }
+    createCorrelatedEntry(date);
   }
 };
 
