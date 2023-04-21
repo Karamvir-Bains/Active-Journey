@@ -1,11 +1,13 @@
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useCallback } from "react"
 import { useData } from "../../store/DataContext";
 import { Chart } from "chart.js/auto";
-import { buildLabels } from '../../helpers/selectors';
 
 export default function Sleep(props) {
+  //declare colours values
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
 
   const { selectedDate = new Date() , data } = useData();
   
@@ -26,7 +28,7 @@ export default function Sleep(props) {
       labelsFormatted.push(newDate);
     };
 
-    console.log(labelsFormatted, "lables");
+    //console.log(labelsFormatted, "lables");
 
     const sleepValues = lastSevenValues.map(item => item.metric_value);
 
@@ -51,31 +53,33 @@ export default function Sleep(props) {
       gradient.addColorStop(0, 'rgba(152, 194, 250, 1)');
       gradient.addColorStop(0.5 , 'rgba(178, 208, 247, 1)');
       gradient.addColorStop(1, 'rgba(199, 223, 255, 1)');
+      const chartLabels = ["Sleep Duration", "Sleep Quality"];
       return new Chart(ctx, {
         type: 'line',
         data: {
           labels: metricValueSets[0],
           datasets: [{
             type: 'line',
-            label: "Sleep Duration",
+            label: chartLabels[0],
             data: metricValueSets[1],
-            borderColor: "#000305",
+            borderColor: colours.alcohol,
             pointRadius: 0,
             fill: true,
             borderDash: [5, 5],
           }, 
           {
             type: "line",
-            label: "Sleep Quality",
+            label: chartLabels[1],
             data: metricValueSets[2],
-            backgroundColor: gradient,
+            backgroundColor: colours.sleep,
             fill: true
           }]
         },
-        option: {
+        options: {
           responsive: true,
           maintainAspectRatio: false,
-          scales: { y: { display: false } }
+          scales: { y: { display: true} },
+          legend: true,
         }
       });
     }, []);
@@ -88,17 +92,34 @@ export default function Sleep(props) {
 
       const sleepChart = createChart(metricValueSets);
 
+      if (darkMode == 'light') {
+        sleepChart.data.datasets[0].borderColor = palette.light.alcohol;
+        sleepChart.data.datasets[1].backgroundColor = palette.light.sleep;
+        sleepChart.options.scales.x.ticks.color = palette.light.label;
+        sleepChart.options.scales.y.ticks.color = palette.light.label;
+        sleepChart.options.plugins.legend.labels.color = palette.light.label;
+        sleepChart.update();  
+      } else if (darkMode == 'dark') {
+        sleepChart.data.datasets[0].borderColor = palette.dark.label;
+        sleepChart.data.datasets[1].backgroundColor = palette.dark.sleep;
+        sleepChart.options.scales.x.ticks.color = palette.dark.label;
+        sleepChart.options.scales.y.ticks.color = palette.dark.label;
+        sleepChart.options.plugins.legend.labels.color = palette.dark.label;
+        sleepChart.update();  
+      }
+
       return () => {
         sleepChart.destroy()
       }
     }
-  }, [selectedDate, data]);
+
+  }, [selectedDate, data, darkMode]);
 
   return(
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
         <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Sleep vs Quality</h3>
-        <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
+        <div className="text-center w-full h-full py-4">
           <canvas id='sleep'></canvas>
         </div>
       </div>
