@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PrismaClient } from '@prisma/client'
 import Layout from '../components/Layout'
 import Dashboard from '../components/dashboard'
@@ -13,8 +13,11 @@ export default function Home (props) {
    * Customize the Dashboard Layout
    */
   const [layout, setLayout] = useState(
-    parseLayout(props.user.layout) ? parseLayout(props.user.layout) : defaultLayout
+    props.user.layout ? parseLayout(props.user.layout) : defaultLayout
   )
+  useEffect(() => {
+    setLayout( props.user.layout ? parseLayout(props.user.layout) : defaultLayout);
+  }, [])
 
   const handleLayoutChange = async layoutsObj => {
     setLayout(layoutsObj)
@@ -76,23 +79,6 @@ export async function getServerSideProps () {
 
   const now = Date.now()
   const lteVal = new Date(now).toISOString()
-
-  let dailyWater = await prisma.User_metric_data.findMany({
-    where: {
-      user_id: userid,
-      metric_id: 1,
-      date: {
-        lte: lteVal
-      },
-    },
-    orderBy: {
-      date: 'desc',
-    },
-    include: {
-      metrics: true
-    },
-    take: 1
-  })
 
   let today = await fetchSingleMetric({ date: lteVal })
   let water = await fetchSingleMetric({ metric_id: 1 })
@@ -156,46 +142,9 @@ export async function getServerSideProps () {
     take: 30
   })
 
-  let nutrition = await prisma.User_metric_data.findMany({
-    where: { 
-      user_id: 1,
-      metric_id: 9,
-      date: {
-        lte: lteVal
-      },
-    },
-    orderBy: {
-      date: 'desc',
-    },
-    include: {
-      metrics: true
-    },
-    take: 10
-  })
-
-  let alcohol = await prisma.User_metric_data.findMany({
-    where: { 
-      user_id: 1,
-      metric_id: 10,
-      date: {
-        lte: lteVal
-      },
-    },
-    orderBy: {
-      date: 'desc',
-    },
-    include: {
-      metrics: true
-    },
-    take: 7
-  })
-
-  dailyWater = JSON.parse(JSON.stringify(dailyWater))
   sleep = JSON.parse(JSON.stringify(sleep))
   sleepQuality = JSON.parse(JSON.stringify(sleepQuality))
   social = JSON.parse(JSON.stringify(social))
-  nutrition = JSON.parse(JSON.stringify(nutrition))
-  alcohol = JSON.parse(JSON.stringify(alcohol))
   entries = JSON.parse(JSON.stringify(entries))
 
   return {
@@ -204,12 +153,9 @@ export async function getServerSideProps () {
       sleep,
       energy,
       mood,
-      dailyWater,
       stress,
       sleepQuality,
       social,
-      nutrition,
-      alcohol
     }
   }
 }

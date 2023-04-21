@@ -21,12 +21,16 @@ export default function Dashboard (props) {
         className='layout'
         layouts={props.layout}
         breakpoints={{
-          lg: 1024,
+          xl: 1024,
+          lg: 768,
+          md: 640,
           sm: 0
         }}
         cols={{
+          xl: 12,
           lg: 12,
-          sm: 6
+          md: 6,
+          sm: 1
         }}
         onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
         isDraggable={true}
@@ -46,22 +50,20 @@ export default function Dashboard (props) {
           <Calendar />
         </div>
         <div key='dailyWater'>
-          <DailyWater
-          />
+          <DailyWater />
         </div>
         <div key="activityGoal">
           <RadialChart />
         </div>
         <div key="stress">
-            <WeeklyStress 
-              stress={props.stress} 
-              entries={props.entries} 
-              title="Stress" 
-              desc="Past 7 days" />
+          <WeeklyStress 
+            stress={props.stress} 
+            entries={props.entries} 
+            title="Stress" 
+            desc="Past 7 days" />
         </div>
         <div key='mood'>
-          <AvgMood 
-          />
+          <AvgMood />
         </div>
         <div key='sleep'>
           <Sleep
@@ -80,16 +82,10 @@ export default function Dashboard (props) {
           />
         </div>
         <div key='alcohol'>
-          <Alcohol
-            alcohol={props.alcohol}
-            title='Alcohol Intake'
-            desc='Past 7 days'
-          />
+          <Alcohol />
         </div>
         <div key='nutrition'>
-          <Nutrition 
-            nutrition={props.nutrition}
-          />
+          <Nutrition />
         </div>
       </ResponsiveGridLayout>
     </div>
