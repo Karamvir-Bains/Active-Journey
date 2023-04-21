@@ -65,7 +65,7 @@ async function seed() {
     const date = new Date(utcTimestamp.getTime() - i * 24 * 60 * 60 * 1000);
 
     // Water
-    await createEntry(1, 2000, 1500, date);
+    await createEntry(1, 8, 1, date);
     // Exercise
     await createEntry(3, 60, 30, date);
     // Mood

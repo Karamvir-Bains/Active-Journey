@@ -3,20 +3,14 @@ import { useData } from "../../store/DataContext";
 
 export default function DailyWater(props) {
   const { data } = useData();
-  const [milliliters, setMilliliters] = useState(0);
+  const [cups, setCups] = useState(0);
 
   useEffect(() => {
     if (data && data[0] && data[0].user_metric_data) {
       const newMetricValue = data[0].user_metric_data[data[0].user_metric_data.length - 1].metric_value;
-      setMilliliters(newMetricValue);
+      setCups(newMetricValue);
     }
   }, [data]);
-
-  const convertMlToCups = (val) => {
-    return Math.round(val / 250);
-  }
-
-  let val = convertMlToCups(milliliters);
 
   const calcGlassHeight = (val) => {
     let heightClass = 'bg-gradient-to-t from-blue-500 to-blue-700 w-full absolute z-10 bottom-0 rounded-b-lg drop-shadow-xl ';
@@ -55,8 +49,8 @@ export default function DailyWater(props) {
     };
   }
 
-  const getGlassClass = calcGlassHeight(val).heightClass;
-  const getBottomClass = calcGlassHeight(val).bottomClass;
+  const getGlassClass = calcGlassHeight(cups).heightClass;
+  const getBottomClass = calcGlassHeight(cups).bottomClass;
 
   return(
     <div className="overflow-scroll rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
@@ -72,8 +66,7 @@ export default function DailyWater(props) {
         </div>
       </div>
       <div className="font-medium text-xl text-center my-3">
-        {val} / 8 cups<br />
-         ({milliliters}ml)
+        {cups} / 8 cups<br />
       </div>
     </div>
   )

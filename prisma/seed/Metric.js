@@ -5,9 +5,9 @@ const prisma = new PrismaClient();
 async function seed() {
   const metrics = [
     {
-      name: "Water",
+      name: "Cups of water",
       property: "input",
-      unit: "mL",
+      unit: "cups",
     },{
       name: "Sleep",
       property: "input",
