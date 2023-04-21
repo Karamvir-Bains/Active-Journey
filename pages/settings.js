@@ -1,5 +1,5 @@
-import Layout from '../components/Layout'
-import { PrismaClient } from '@prisma/client'
+import Layout from '../components/Layout';
+import prisma from '../lib/prisma';
 import { useState } from 'react';
 import { ThemeProvider } from '../store/ThemeContext';
 import { JournalProvider } from '../store/JournalContext';
@@ -110,8 +110,6 @@ export default function Settings (props) {
 }
 
 export async function getServerSideProps () {
-  const prisma = new PrismaClient()
-
   let user = await prisma.user.findUnique({
     where: {
       id: 1

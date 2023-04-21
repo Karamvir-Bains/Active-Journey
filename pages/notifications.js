@@ -1,6 +1,6 @@
-import Layout from '../components/Layout'
-import Image from 'next/image'
-import { PrismaClient } from '@prisma/client'
+import Layout from '../components/Layout';
+import Image from 'next/image';
+import prisma from '../lib/prisma';
 import { ThemeProvider } from '../store/ThemeContext';
 import { JournalProvider } from '../store/JournalContext';
 import WaterNotification from '../components/notifications/water';
@@ -33,8 +33,6 @@ export default function Notifications (props) {
 }
 
 export async function getServerSideProps () {
-  const prisma = new PrismaClient()
-
   let user = await prisma.user.findUnique({
     where: {
       id: 1

@@ -63,9 +63,11 @@ async function seed() {
   }
 }
 
-seed().catch(e => {
-  console.log(e);
-  process.exit(1)
-}).finally(() => {
-  prisma.$disconnect
-})
+seed()
+  .catch(e => {
+    console.log(e);
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

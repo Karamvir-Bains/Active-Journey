@@ -84,7 +84,7 @@ async function seed() {
 };
 
 seed()
-  .catch((e) => {
+  .catch(e => {
     console.log(e);
     process.exit(1);
   })

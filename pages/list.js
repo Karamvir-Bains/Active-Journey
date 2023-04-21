@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
-import { format } from 'date-fns'
-import Layout from '../components/Layout'
-import Image from 'next/image'
-import { PrismaClient } from '@prisma/client'
+import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import Layout from '../components/Layout';
+import Image from 'next/image';
+import prisma from '../lib/prisma';
 import { ThemeProvider } from '../store/ThemeContext';
 import { JournalProvider } from '../store/JournalContext';
 
@@ -48,8 +48,6 @@ export default function List (props) {
 }
 
 export async function getServerSideProps () {
-  const prisma = new PrismaClient()
-
   const user = await prisma.user.findUnique({
     where: {
       id: 1

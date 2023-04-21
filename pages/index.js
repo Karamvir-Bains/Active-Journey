@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { PrismaClient } from '@prisma/client'
-import Layout from '../components/Layout'
-import Dashboard from '../components/dashboard'
-import { defaultLayout } from '../helpers/data'
-import { updateLayout, parseLayout } from '../helpers/selectors'
+import { useState } from 'react';
+import prisma from '../lib/prisma';
+import Layout from '../components/Layout';
+import Dashboard from '../components/dashboard';
+import { defaultLayout } from '../helpers/data';
+import { updateLayout, parseLayout } from '../helpers/selectors';
 import { ThemeProvider } from '../store/ThemeContext';
-import { JournalProvider } from '../store/JournalContext'
+import { JournalProvider } from '../store/JournalContext';
 
 export default function Home (props) {
 
@@ -45,9 +45,6 @@ export default function Home (props) {
   </JournalProvider>
   )
 }
-
-/* Data Fetching */
-const prisma = new PrismaClient()
 
 // Fetch all entries by metric
 async function fetchSingleMetric (condition) {
