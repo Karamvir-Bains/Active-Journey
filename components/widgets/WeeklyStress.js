@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
 import { useData } from "../../store/DataContext";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function WeeklyStress(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
   const { data } = useData();
   const [ stressAverage, setStressAverage ] = useState(0);
 
@@ -11,6 +15,7 @@ export default function WeeklyStress(props) {
   }
 
   useEffect(() => {
+
     if (data && data[5] && data[5].user_metric_data) {
       let avgStress = data[5].user_metric_data
         .slice(-7)
@@ -30,9 +35,9 @@ export default function WeeklyStress(props) {
         circumference: 180,
         rotation: 270,
         backgroundColor: [
-          'rgba(76, 187, 23)',
-          'rgba(255, 195, 0)',
-          'rgba(144, 12, 63)'
+          colours.low,
+          colours.medium,
+          colours.high
         ],
         needleValue: stressAverage
       }]
@@ -86,10 +91,26 @@ export default function WeeklyStress(props) {
       plugins: [gaugeNeedle]
     });
 
+    if (darkMode == 'light') {
+      //console.log("LIGHT")
+      //console.log(activityChart.plugins,"activityChart.plugins");
+      //console.log(activityChart.plugins.gaugeNeedle, 'activityChart.plugins.gaugeNeedle')
+      activityChart.update();  
+    } else if (darkMode == 'dark') {
+      //console.log("DARK");
+      //console.log(activityChart.plugins,"activityChart.plugins");
+      //console.log(activityChart.plugins.gaugeNeedle, 'activityChart.plugins.gaugeNeedle')
+      //activityChart.data.datasets[0].backgroundColor = palette.dark.sleep;
+      //activityChart.options.scales.x.ticks.color = palette.dark.label;
+      //activityChart.options.scales.y.ticks.color = palette.dark.label;
+      //activityChart.options.plugins.legend.labels.color = palette.dark.label;
+      //activityChart.update();  
+    }
+
     return () => {
       activityChart.destroy()
     }
-  }, [data, stressAverage]);
+  }, [data, stressAverage, darkMode]);
 
   return(
     <>    
