@@ -22,9 +22,13 @@ export default function Journal (props) {
   } = useData();
   const [showCal, setShowCal] = useState(false);
 
+  // Sort data based on journal_order property
+  const sortedData = [...data].sort((a, b) => a.journal_order - b.journal_order);
+
   //Render a list of metrics
-  const metricList = data.map((metric, index) => {
-    const { id, name, property, unit, user_metric_data } = metric;
+  const metricList = sortedData.map((metric, index) => {
+    const { id, name, property, unit, journal_order, user_metric_data } = metric;
+    console.log(journal_order);
 
     const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1]?.id;
     const value = user_metric_data[data[index].user_metric_data.length - 1]?.metric_value;
