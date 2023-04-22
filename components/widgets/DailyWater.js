@@ -61,7 +61,7 @@ export default function DailyWater(props) {
   return(
     <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
       <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Daily Water Intake</h3>
-      <div id="waterCup" className="mx-auto bg-blue-100 dark:bg-white h-[60%] w-[50%] relative rounded-b-lg drop-shadow-sm mt-6">
+      <div id="waterCup" className="mx-auto bg-blue-100 dark:bg-white h-[60%] w-[50%] max-w-[200px] relative rounded-b-lg drop-shadow-sm mt-6">
         <div className="handle"></div>
         <div id="glass drop-shadow-2xl"></div>
         <div id="wave-1" className={getBottomClass}></div>
