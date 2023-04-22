@@ -42,26 +42,36 @@ const defaultLayout = {
 export const palette = {
   'light': {
     // Amber 500
-    'energy': '#f59e0b',
-    'sleep': '#14b8a6',
+    'energy': '#bbb9ed',
+    'sleep': '#71d1bd',
     'water': '#3b82f6',
     'mood': '#be123c',
-    'nutrition': '#15803d',
-    'social': '#86198f',
-    'alcohol': '#fbbf24',
+    'nutrition': '#fbbf24',
+    'social': '#fcc7f2',
+    'alcohol': '#8b5cf6',
     'border': '#000',
     'label': '#333',
+    'low': '#84cc16',
+    'medium': '#fef08a',
+    'high': '#f87171',
+    'needle': '#aaa',
+    'activity': '#0ecb81'
   },
   'dark': {
     'energy': '#f97316',
-    'sleep': '#2dd4bf',
-    'water': '#1e40af',
+    'sleep': '#71d1bd',
+    'water': '#7971d1',
     'mood': '#ef4444',
     'nutrition': '#84cc16',
-    'social': '#86198f',
+    'social': '#eb7138',
     'alcohol': '#fbbf24',
     'border': '#fff',
     'label': '#ddd',
+    'low': '#84cc16',
+    'medium': '#fef08a',
+    'high': '#f87171',
+    'needle': '#aaa',
+    'activity': '#f6465d'
   }
 }
 
