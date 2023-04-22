@@ -114,6 +114,8 @@ export default function Dashboard (props) {
             social={props.social}
             title='Quality of Social Interactions'
             desc='Past 30 days'
+            zoom={zoomSocial}
+            onChange={handleZoomSocial}
           />
         </div>
         <div key='alcohol'>
