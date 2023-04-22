@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 
 export function useApplicationData (initial) {
   const [user, setUser] = useState({id: 1});
+  //const [data, setData] = useState({});
   const [journalOpen, setJournalOpen] = useState(false);
   let formatDate = format(new Date(), 'yyyy-MM-dd');
 

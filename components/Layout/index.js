@@ -23,7 +23,7 @@ export async function updateDarkMode(id, value) {
         body: JSON.stringify(data),
     });
 
-    console.log(res);
+    //console.log(res);
   }
   catch (err) {
     console.log(err);
@@ -41,7 +41,7 @@ export default function Layout({ children, title, background, darkMode, firstNam
     const value = theme === 'light' ? 'dark' : 'light';
     setTheme(value);
     updateDarkMode(1, value).catch( (err) => {
-      console.lor(err);
+      console.log(err);
     });
   }
 

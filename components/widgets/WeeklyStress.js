@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
 import { useData } from "../../store/DataContext";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function WeeklyStress(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
   const { data } = useData();
   const [ stressAverage, setStressAverage ] = useState(0);
 
@@ -11,6 +15,7 @@ export default function WeeklyStress(props) {
   }
 
   useEffect(() => {
+
     if (data && data[5] && data[5].user_metric_data) {
       let avgStress = data[5].user_metric_data
         .slice(-7)
@@ -30,9 +35,9 @@ export default function WeeklyStress(props) {
         circumference: 180,
         rotation: 270,
         backgroundColor: [
-          'rgba(76, 187, 23)',
-          'rgba(255, 195, 0)',
-          'rgba(144, 12, 63)'
+          colours.low,
+          colours.medium,
+          colours.high
         ],
         needleValue: stressAverage
       }]
@@ -60,7 +65,7 @@ export default function WeeklyStress(props) {
         ctx.moveTo(0, -2);
         ctx.lineTo(height - offsetTop -30, 0);
         ctx.lineTo(0, 2);
-        ctx.fillStyle = '#444';
+        ctx.fillStyle = colours.needle;
         ctx.fill();
 
         // Draw needle dot
@@ -89,7 +94,7 @@ export default function WeeklyStress(props) {
     return () => {
       activityChart.destroy()
     }
-  }, [data, stressAverage]);
+  }, [data, stressAverage, darkMode]);
 
   return(
     <>    
