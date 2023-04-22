@@ -1,3 +1,4 @@
+import {useCallback} from 'react';
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
 import { useState, useEffect, useRef } from "react"
@@ -25,8 +26,6 @@ export default function Sleep(props) {
       const newDate = date.toLocaleDateString('en-US',optionsTimezone);
       labelsFormatted.push(newDate);
     };
-
-    console.log(labelsFormatted, "lables");
 
     const sleepValues = lastSevenValues.map(item => item.metric_value);
 
