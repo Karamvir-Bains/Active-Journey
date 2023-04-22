@@ -58,7 +58,8 @@ export default function Overview(props) {
           borderColor: colours.energy,
           backgroundColor: 'rgba(245, 217, 61, 0.4)',
           fill: 'origin',
-          tension: 0.3
+          tension: 0.3,
+          yAxisID: 'energy-y-axis'
         }, {
           type: 'line',
           label: "Activity",
@@ -67,26 +68,47 @@ export default function Overview(props) {
           pointRadius: 0,
           backgroundColor: "transparent",
           fill: true,
-          tension: 0.3
+          tension: 0.3,
+          yAxisID: 'activity-y-axis'
         }, {
           type: 'bar',
           label: "Water Intake",
           data: metricValueSets[0],
           borderColor: colours.water,
           borderRadius: 4,
-          backgroundColor: colours.water
+          backgroundColor: colours.water,
+          yAxisID: 'water-y-axis'
         }, {
           type: 'bar',
           label: "Sleep",
           data: metricValueSets[1],
           borderRadius: 4,
-          backgroundColor: colours.sleep
+          backgroundColor: colours.sleep,
+          yAxisID: 'sleep-y-axis'
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { y: { display: false } },
+        scales: { 
+          "energy-y-axis": {
+            position: 'left',
+            display: false,
+            max: 10,
+          },
+          "activity-y-axis": {
+            position: 'left',
+            display: false,
+          },
+          "water-y-axis": {
+            position: 'left',
+            display: false,
+          },
+          "sleep-y-axis": {
+            position: 'left',
+            display: false,
+          },
+        },
         plugins: { legend: { align: 'end', labels:{ color: colours.label } } }}
     });
   }, []);
