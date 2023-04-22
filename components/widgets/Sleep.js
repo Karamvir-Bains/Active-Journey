@@ -12,8 +12,8 @@ export default function Sleep(props) {
     selectedDate,
     data } = useData();
 
-  const [sleep, setSleep] = useState(props.sleep.map(item => item.metric_value));
-  const [sleepQuality, setSleepQuatlity] = useState(props.sleepQuality.map(item => item.metric_value));
+  const [sleep, setSleep] = useState([]);
+  const [sleepQuality, setSleepQuatlity] = useState([]);
   
 
   //use data object to pass charts live data on refresh
