@@ -7,6 +7,7 @@ export default function ButtonGroup(props) {
 
   const buttons = props.ranges.map(rangeVal => {
     const selected = (rangeVal === props.rangeState);
+    console.log('setSelected, selected? ', selected);
     return (
       <Button 
         key={rangeVal}
@@ -18,7 +19,7 @@ export default function ButtonGroup(props) {
   });
 
   return (
-    <div className="inline-flex rounded-md shadow-sm border border-grey-200">
+    <div className="inline-flex rounded-md shadow-sm border dark:border-0">
       {buttons}
     </div>
   )
