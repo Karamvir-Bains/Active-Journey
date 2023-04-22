@@ -22,7 +22,8 @@ export default function Overview(props) {
     let waterVals = water.user_metric_data.slice(-range);
     const labelVals = waterVals.map((val) =>  val.date.substring(5, 10));
 
-    waterVals = waterVals.map(e => Math.floor((e.metric_value / 100) - 10));
+    waterVals = waterVals.map(e => e.metric_value);
+
     const sleepVals = sleep.user_metric_data
       .slice(-range)
       .map(e => e.metric_value);
@@ -32,6 +33,7 @@ export default function Overview(props) {
     const activityVals = activity.user_metric_data
       .slice(-range)
       .map(e => (e.metric_value / 60) * 10);
+
     return [
       waterVals,
       sleepVals,
