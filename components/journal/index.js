@@ -24,9 +24,9 @@ export default function Journal (props) {
   //Render a list of metrics
   const metricList = data.map((metric, index) => {
     const { id, name, property, unit, user_metric_data } = metric;
-    // user_metric_data id and value
-    const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1].id;
-    const value = user_metric_data[data[index].user_metric_data.length - 1].metric_value;
+
+    const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1]?.id;
+    const value = user_metric_data[data[index].user_metric_data.length - 1]?.metric_value;
 
     // Render InputComponent if property is 'input'
     if (property === "input") {
