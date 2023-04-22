@@ -77,9 +77,9 @@ export const createMetricsObject = (id, days,entries) => {
 export const buildLabels = (date, days) => {
   let array = [];
   for (let i = days - 1; i > 0; i--) {
-    array.push(format(subDays(date, i), 'MMM dd'))
+    array.push(format(subDays(date, i), 'MMM d'))
   }
 
-  array.push(format(date, 'MMM dd'));
+  array.push(format(date, 'MMM d'));
   return array;
 }

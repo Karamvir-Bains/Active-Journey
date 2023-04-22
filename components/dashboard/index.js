@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -15,18 +16,54 @@ import WeeklyStress from "../widgets/WeeklyStress";
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
 export default function Dashboard (props) {
+  const [zoomSleep, setZoomSleep] = useState(false);
+  const [zoomSocial, setZoomSocial] = useState(false);
+
+  const handleZoomSleep = () => {
+    console.log("Clicked");
+    setZoomSleep(prev => !prev);
+  }
+
+  const handleZoomSocial = () => {
+    console.log("Clicked");
+    setZoomSocial(prev => !prev);
+  }
+
   return (
     <div className='relative'>
+    {zoomSleep && 
+      <div className='md:mx-3'>
+        <Sleep
+          zoom={zoomSleep}
+          onChange={handleZoomSleep}
+        />
+      </div>
+    }
+
+    {zoomSocial && 
+      <div className='mx-3'>
+        <Social
+          zoom={zoomSocial}
+          onChange={handleZoomSocial}
+        />
+      </div>
+    }
+
+    {!zoomSleep && !zoomSocial && 
       <ResponsiveGridLayout
         className='layout'
         layouts={props.layout}
         breakpoints={{
-          lg: 1024,
+          xl: 1024,
+          lg: 768,
+          md: 640,
           sm: 0
         }}
         cols={{
+          xl: 12,
           lg: 12,
-          sm: 6
+          md: 6,
+          sm: 1
         }}
         onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
         isDraggable={true}
@@ -77,11 +114,13 @@ export default function Dashboard (props) {
             social={props.social}
             title='Quality of Social Interactions'
             desc='Past 30 days'
+            zoom={zoomSocial}
+            onChange={handleZoomSocial}
           />
         </div>
         <div key='alcohol'>
           <Alcohol
-            entries={props.entries}
+            alcohol={props.alcohol}
             title='Alcohol Intake'
             desc='Past 7 days'
           />
@@ -92,6 +131,7 @@ export default function Dashboard (props) {
           />
         </div>
       </ResponsiveGridLayout>
-    </div>
-  )
-}
+      }
+      </div>
+    )
+  }

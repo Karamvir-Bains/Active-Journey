@@ -31,10 +31,6 @@ async function createCorrelatedEntry(date) {
   await createUserMetricData(date, energy.id, energyValue, 9, 1);
 }
 
-
-
-
-
 async function createEntry(id, max, min, date) {
   // generate random value within range of metric
   const value = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -79,7 +75,7 @@ async function seed() {
     // Quality of Nutrition
     await createEntry(9, 9, 1, date);
 
-    createCorrelatedEntry(date);
+    await createMockEntry(10, 15, 0, date);
   }
 };
 

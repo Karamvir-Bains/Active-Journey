@@ -1,35 +1,59 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client')
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 const layoutConfig = {
+  xl: [
+    { w: 8, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
+    { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: true },
+    { w: 3, h: 2, x: 0, y: 2, i: 'dailyWater', moved: false, static: false },
+    { w: 3, h: 2, x: 3, y: 2, i: 'activityGoal', moved: false, static: false },
+    { w: 3, h: 2, x: 6, y: 2, i: 'stress', moved: false, static: false },
+    { w: 3, h: 2, x: 9, y: 2, i: 'mood', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 4, i: 'sleep', moved: false, static: false },
+    { w: 6, h: 2, x: 6, y: 4, i: 'social', moved: false, static: false },
+    { w: 6, h: 2, x: 6, y: 6, i: 'alcohol', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 6, i: 'nutrition', moved: false, static: false }
+  ],
   lg: [
-    { i: "overview", x: 0, y: 0, w: 8, h: 2, static: true},
-    { i: "calendar", x: 9, y: 0, w: 4, h: 2, static: true},
-    { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
-    { i: "activityGoal", x: 3, y: 7, w: 3, h: 2, static: false},
-    { i: "stress", x: 6, y: 7, w: 3, h: 2, static: false},
-    { i: "mood", x: 9, y: 7, w: 3, h: 2, static: false},
-    { i: "sleep", x: 0, y: 9, w: 3, h: 2, static: false},
-    { i: "social", x: 3, y: 9, w: 3, h: 2, static: false},
-    { i: "alcohol", x: 6, y: 9, w: 6, h: 2, static: false},
-    { i: "nutrition", x: 0,  y: 11, w: 6, h: 2, static: false}
+    { w: 7, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
+    { w: 5, h: 2, x: 7, y: 0, i: 'calendar', moved: false, static: true },
+    { w: 6, h: 2, x: 0, y: 2, i: 'dailyWater', moved: false, static: false },
+    { w: 6, h: 2, x: 6, y: 2, i: 'activityGoal', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 4, i: 'stress', moved: false, static: false },
+    { w: 6, h: 2, x: 6, y: 4, i: 'mood', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 6, i: 'sleep', moved: false, static: false },
+    { w: 6, h: 2, x: 6, y: 6, i: 'social', moved: false, static: false },
+    { w: 6, h: 2, x: 6, y: 8, i: 'alcohol', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 8, i: 'nutrition', moved: false, static: false }
+  ],
+  md: [
+    { w: 6, h: 2, x: 0, y: 2, i: 'overview', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 0, i: 'calendar', moved: false, static: true },
+    { w: 6, h: 2, x: 0, y: 4, i: 'dailyWater', moved: false, static: false },
+    { w: 6, h: 2, x: 4, y: 4, i: 'activityGoal', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 6, i: 'stress', moved: false, static: false },
+    { w: 6, h: 2, x: 4, y: 6, i: 'mood', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 8, i: 'sleep', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 10, i: 'social', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 12, i: 'alcohol', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 14, i: 'nutrition', moved: false, static: false }
   ],
   sm: [
-    { i: "calendar", x: 0, y: 0, w: 6, h: 2, static: true},
-    { i: "overview", x: 3, y: 0, w: 6, h: 2, static: true},
-    { i: "dailyWater", x: 0, y: 0, w: 3, h: 2, static: false},
-    { i: "activityGoal", x: 4, y: 0, w: 3, h: 2, static: false},
-    { i: "stress", x: 0, y: 0, w: 3, h: 2, static: false},
-    { i: "mood", x: 3, y: 0, w: 3, h: 2, static: false},
-    { i: "sleep", x: 0, y: 0, w: 6, h: 2, static: false},
-    { i: "social", x: 3, y: 0, w: 6, h: 2, static: false},
-    { i: "alcohol", x: 0, y: 0, w: 6, h: 2, static: false},
-    { i: "nutrition", x: 0,  y: 0, w: 12, h: 3, static: false}
+    { w: 1, h: 2, x: 0, y: 2, i: 'overview', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 0, i: 'calendar', moved: false, static: true },
+    { w: 1, h: 2, x: 0, y: 4, i: 'dailyWater', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 6, i: 'activityGoal', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 8, i: 'stress', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 10, i: 'mood', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 12, i: 'sleep', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 14, i: 'social', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 16, i: 'alcohol', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 18, i: 'nutrition', moved: false, static: false }
   ]
 }
 
-async function seed() {
+async function seed () {
   const users = [
     {
       first_name: 'Jane',
@@ -38,17 +62,18 @@ async function seed() {
       password: '12345',
       layout: JSON.stringify(layoutConfig),
       dark_mode: 'light',
-      background: null,
-    }, {
+      background: null
+    },
+    {
       first_name: 'Bluey',
       last_name: 'Heeler',
       email: 'bluey@heeler.aus',
       password: '54321',
       layout: JSON.stringify(layoutConfig),
       dark_mode: 'light',
-      background: null,
+      background: null
     }
-  ];
+  ]
 
   for (let user of users) {
     await prisma.User.create({
@@ -58,16 +83,16 @@ async function seed() {
         email: user.email,
         password: user.password,
         layout: user.layout
-      },
-    });
+      }
+    })
   }
 }
 
 seed()
   .catch(e => {
-    console.log(e);
+    console.log(e)
     process.exit(1)
   })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .finally(() => {
+    prisma.$disconnect
+  })

@@ -53,14 +53,15 @@ export default function Overview(props) {
           data: metricValueSets[2],
           borderWidth: 0,
           pointRadius: 0,
-          backgroundColor: "rgba(255,192,77, 0.5)",
-          fill: true,
+          borderColor: colours.energy,
+          backgroundColor: 'rgba(245, 217, 61, 0.4)',
+          fill: 'origin',
           tension: 0.3
         }, {
           type: 'line',
           label: "Activity",
           data: metricValueSets[3],
-          borderColor: "#c45850",
+          borderColor: colours.activity,
           pointRadius: 0,
           backgroundColor: "transparent",
           fill: true,
@@ -69,38 +70,54 @@ export default function Overview(props) {
           type: 'bar',
           label: "Water Intake",
           data: metricValueSets[0],
-          borderColor: "#3e95cd",
+          borderColor: colours.water,
           borderRadius: 4,
-          backgroundColor: "#3e95cd"
+          backgroundColor: colours.water
         }, {
           type: 'bar',
           label: "Sleep",
           data: metricValueSets[1],
           borderRadius: 4,
-          backgroundColor: "#71d1bd"
+          backgroundColor: colours.sleep
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         scales: { y: { display: false } },
-        plugins: { legend: { align: 'end' } }
-      }
+        plugins: { legend: { align: 'end', labels:{ color: colours.label } } }}
     });
   }, []);
 
   useEffect(() => {
+
     if (data && data[0] && data[0].user_metric_data) {
       const metricValueSets = createData(data[0], data[1], data[3], data[2]);
 
       const overviewChart = createChart(metricValueSets);
+
+      if (darkMode == 'light') {
+        overviewChart.data.datasets[1].borderColor = palette.light.activity;
+        overviewChart.data.datasets[2].borderColor = palette.light.water;
+        overviewChart.data.datasets[2].backgroundColor = palette.dark.water;
+        overviewChart.options.scales.x.ticks.color = palette.light.label;
+        overviewChart.options.plugins.legend.labels.color = palette.light.label;
+        overviewChart.update();  
+      } else if (darkMode == 'dark') {
+        overviewChart.data.datasets[1].borderColor = palette.dark.activity;
+        overviewChart.data.datasets[2].borderColor = palette.dark.water;
+        overviewChart.data.datasets[2].backgroundColor = palette.dark.water;
+        overviewChart.options.scales.x.ticks.color = palette.dark.label;
+        overviewChart.options.plugins.legend.labels.color = palette.dark.label;
+        overviewChart.update();  
+      }
 
       return () => {
         overviewChart.destroy()
       }
     }
     
-}, [range, data]);
+}, [range, data ,darkMode]);
 
   return (
     <>
@@ -113,7 +130,7 @@ export default function Overview(props) {
           />
           <span className="text-xs">&nbsp;days</span>
         </div>
-        <div className="absolute top-4 right-3 bottom-2 left-3 z-0">
+        <div className="absolute top-10 xl:top-4 right-3 bottom-2 left-3 z-1">
           <canvas id='overviewChart'></canvas>
         </div>
       </div>

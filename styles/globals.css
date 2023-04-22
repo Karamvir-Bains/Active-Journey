@@ -62,7 +62,7 @@ react-calendar__tile--now:hover {
     background-position: 0 0;
   }
   50% {
-    background-position: 30% 10%;
+    background-position: 70% 30%;
   }
 }
 
@@ -72,7 +72,7 @@ react-calendar__tile--now:hover {
     background-position: 0 0;
   }
   50% {
-    background-position: 50% 5%;
+    background-position: 50% 50%;
   }
 }
 

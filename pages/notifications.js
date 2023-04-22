@@ -20,7 +20,6 @@ export default function Notifications (props) {
           <WaterNotification
             metrics={props.metrics[0]}
           />
-          {/* Change to [7] once we have social data seeded */}
           <SocialNotification
             metrics={props.metrics[7]}
           />

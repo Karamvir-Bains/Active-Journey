@@ -17,43 +17,62 @@ export default function ActivityGoal(props) {
       type: 'radialBar',
     },
     series: [progressPercentage],
-    colors: ['#888'],
-    labels: ['Progress'],
-    fill: {
-      type: "gradient",
-      gradient: {
-        shade: "dark",
-        type: "horizontal",
-        gradientToColors: [colours.energy, colours.mood],
-        stops: [0, 50, 100]
-      }
+    colors: [colours.activity],
+    plotOptions:{
+      radialBar:{
+      dataLabels: {
+        name: {
+         offsetY: -10,
+         color: colours.label,
+         fontSize: "13px"
+        },
+        value: {
+         color: colours.label,
+         fontSize: "30px",
+         show:true
+        } 
+    },},
     },
+   labels: ["Progress"]
   });
 
   useEffect(() => {
+
     if (data && data[2] && data[2].user_metric_data) {
       const newMetricValue = data[2].user_metric_data[data[2].user_metric_data.length - 1].metric_value;
-  
+
       let newProgressPercentage = Math.floor((newMetricValue / goal) * 100);
       newProgressPercentage = Math.min(newProgressPercentage, 100);
       setProgressPercentage(newProgressPercentage);
-  
-      setOptions({
-        ...options,
-        series: [newProgressPercentage],
-      });
-    }
-  }, [data]);
 
-  return(
+      if (darkMode == 'light') {
+        setOptions(prev => ({
+          ...prev,
+          series: [newProgressPercentage],
+          colors: [palette.light.activity],
+          plotOptions: {...prev.plotOptions, radialBar: {...prev.plotOptions.radialBar, dataLabels: {...prev.plotOptions.radialBar.dataLabels, name: {...prev.plotOptions.radialBar.dataLabels.name, color: palette.light.label }, value: {...prev.plotOptions.radialBar.dataLabels.value, color: palette.light.label } } } },
+        }));
+      } else if (darkMode == 'dark') {
+        console.log("darkMode");
+        setOptions(prev => ({
+          ...prev,
+          series: [newProgressPercentage],
+          colors: [palette.dark.activity],
+          plotOptions: {...prev.plotOptions, radialBar: {...prev.plotOptions.radialBar, dataLabels: {...prev.plotOptions.radialBar.dataLabels, name: {...prev.plotOptions.radialBar.dataLabels.name, color: palette.dark.label }, value: {...prev.plotOptions.radialBar.dataLabels.value, color: palette.dark.label } } } },
+        }));
+      };
+    }
+  }, [data, darkMode]);
+
+  return (
     <>
-      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Activity Goal</h3>
-        <p className="text-center">{ progressPercentage === 100 ? "Congrats you hit your goal!" : "" }</p>
-        <div className="px-3 w-full">
-          <ApexCharts options={options} series={options.series} type="radialBar" height={260} />
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
+        <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Activity Goal</h3>
+        <p className="text-center">{progressPercentage === 100 ? "Congrats you hit your goal!" : ""}</p>
+        <div className="w-full h-full">
+          <ApexCharts options={options} series={options.series} colors={options.colors}type="radialBar" height={275} />
         </div>
       </div>
     </>
-  )
+  );
 }

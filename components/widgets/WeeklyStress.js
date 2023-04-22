@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
 import { useData } from "../../store/DataContext";
+import { useTheme } from '../../store/ThemeContext';
+import { palette } from "../../helpers/data";
 
 export default function WeeklyStress(props) {
+  const darkMode = useTheme();
+  const colours = darkMode === 'light' ? palette.light : palette.dark;
   const { data } = useData();
   const [ stressAverage, setStressAverage ] = useState(0);
 
@@ -11,6 +15,7 @@ export default function WeeklyStress(props) {
   }
 
   useEffect(() => {
+
     if (data && data[5] && data[5].user_metric_data) {
       let avgStress = data[5].user_metric_data
         .slice(-7)
@@ -30,9 +35,9 @@ export default function WeeklyStress(props) {
         circumference: 180,
         rotation: 270,
         backgroundColor: [
-          'rgba(76, 187, 23)',
-          'rgba(255, 195, 0)',
-          'rgba(144, 12, 63)'
+          colours.low,
+          colours.medium,
+          colours.high
         ],
         needleValue: stressAverage
       }]
@@ -60,7 +65,7 @@ export default function WeeklyStress(props) {
         ctx.moveTo(0, -2);
         ctx.lineTo(height - offsetTop -30, 0);
         ctx.lineTo(0, 2);
-        ctx.fillStyle = '#444';
+        ctx.fillStyle = colours.needle;
         ctx.fill();
 
         // Draw needle dot
@@ -89,12 +94,12 @@ export default function WeeklyStress(props) {
     return () => {
       activityChart.destroy()
     }
-  }, [data, stressAverage]);
+  }, [data, stressAverage, darkMode]);
 
   return(
     <>    
-      <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 dark:bg-slate-800 dark:text-white">
-        <h3 className="text-center font-bold mb-1 text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
+        <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
         <div className="w-full h-[75%] flex flex-col mx-auto">
           <canvas id='activityChart'></canvas> 
           <p className="mx-auto text-center">
