@@ -65,7 +65,7 @@ export default function WeeklyStress(props) {
         ctx.moveTo(0, -2);
         ctx.lineTo(height - offsetTop -30, 0);
         ctx.lineTo(0, 2);
-        ctx.fillStyle = '#444';
+        ctx.fillStyle = colours.needle;
         ctx.fill();
 
         // Draw needle dot
@@ -90,22 +90,6 @@ export default function WeeklyStress(props) {
       },
       plugins: [gaugeNeedle]
     });
-
-    if (darkMode == 'light') {
-      //console.log("LIGHT")
-      //console.log(activityChart.plugins,"activityChart.plugins");
-      //console.log(activityChart.plugins.gaugeNeedle, 'activityChart.plugins.gaugeNeedle')
-      activityChart.update();  
-    } else if (darkMode == 'dark') {
-      //console.log("DARK");
-      //console.log(activityChart.plugins,"activityChart.plugins");
-      //console.log(activityChart.plugins.gaugeNeedle, 'activityChart.plugins.gaugeNeedle')
-      //activityChart.data.datasets[0].backgroundColor = palette.dark.sleep;
-      //activityChart.options.scales.x.ticks.color = palette.dark.label;
-      //activityChart.options.scales.y.ticks.color = palette.dark.label;
-      //activityChart.options.plugins.legend.labels.color = palette.dark.label;
-      //activityChart.update();  
-    }
 
     return () => {
       activityChart.destroy()
