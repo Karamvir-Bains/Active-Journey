@@ -50,31 +50,24 @@ export default function Overview(props) {
       data: {
         labels: metricValueSets[4],
         datasets: [{
-          type: 'bar',
+          type: 'line',
           label: "Energy Level",
           data: metricValueSets[2],
-          borderWidth: 0,
-          pointRadius: 0,
           borderColor: colours.energy,
-          backgroundColor: 'rgba(245, 217, 61, 0.4)',
-          fill: 'origin',
+          backgroundColor: "transparent",
           tension: 0.3,
           yAxisID: 'energy-y-axis'
         }, {
-          type: 'line',
+          type: 'bar',
           label: "Activity",
           data: metricValueSets[3],
-          borderColor: colours.activity,
-          pointRadius: 0,
-          backgroundColor: "transparent",
-          fill: true,
-          tension: 0.3,
+          borderRadius: 4,
+          backgroundColor: colours.activity,
           yAxisID: 'activity-y-axis'
         }, {
           type: 'bar',
           label: "Water Intake",
           data: metricValueSets[0],
-          borderColor: colours.water,
           borderRadius: 4,
           backgroundColor: colours.water,
           yAxisID: 'water-y-axis'
@@ -94,7 +87,7 @@ export default function Overview(props) {
           "energy-y-axis": {
             position: 'left',
             display: false,
-            max: 10,
+            max: 11,
           },
           "activity-y-axis": {
             position: 'left',
