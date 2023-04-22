@@ -4,16 +4,15 @@ import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
 import { buildLabels } from "../../helpers/selectors";
 import { useData } from "../../store/DataContext";
+import ZoomButton from "../partials/ZoomButton";
 
 export default function Social(props) {
   const darkMode = useTheme();
   const colours = darkMode === 'light' ? palette.light : palette.dark;  
-
   const { 
     selectedDate,
     data 
   } = useData();
-
 
   useEffect(() => {
     if (data && data.length && data[7]) {
@@ -79,8 +78,12 @@ export default function Social(props) {
 
   return(
     <>
-      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 mb-10 text-center">
-        <h3 className="font-bold mb-1 text-xl text-blue-900 dark:text-white">Quality of Social Interactions</h3>
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-2 md:p-6 text-center relative">
+        <h3 className="font-bold mb-1 text-md md:text-xl text-blue-900 dark:text-white">Quality of Social Interactions</h3>
+        <ZoomButton
+          zoom={props.zoom}
+          onChange={props.onChange}
+        />
         <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
           <canvas id='social'></canvas>
         </div>

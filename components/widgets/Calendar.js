@@ -32,7 +32,7 @@ export default function Calendar (props) {
             Today
           </button>
         </div>
-        <h3 className='w-[33%] sm:w-[50%] flex flex-col justify-self-center justify-center content-center text-blue-950 dark:text-slate-950 text-lg font-bold text-center text-[1rem]'>
+        <h3 className='w-[33%] sm:w-[50%] flex flex-col justify-self-center justify-center content-center text-blue-950 dark:text-slate-950 text-md md:text-lg font-bold text-center text-[1rem]'>
           {formatDate(selectedDate)}
         </h3>
         <div className="w-[33%] md:w-[25%] align-stretch">

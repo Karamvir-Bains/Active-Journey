@@ -9,9 +9,9 @@ import { format } from 'date-fns';
  */
 export 
 const defaultLayout = {
-  lg: [
+  xl: [
     { w: 8, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
-    { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: false },
+    { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: true },
     { w: 3, h: 2, x: 0, y: 2, i: 'dailyWater', moved: false, static: false },
     { w: 3, h: 2, x: 3, y: 2, i: 'activityGoal', moved: false, static: false },
     { w: 3, h: 2, x: 6, y: 2, i: 'stress', moved: false, static: false },
@@ -21,21 +21,9 @@ const defaultLayout = {
     { w: 6, h: 2, x: 6, y: 6, i: 'alcohol', moved: false, static: false },
     { w: 6, h: 2, x: 0, y: 6, i: 'nutrition', moved: false, static: false }
   ],
-  sm: [
-    { w: 1, h: 2, x: 0, y: 2, i: 'overview', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 0, i: 'calendar', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 4, i: 'dailyWater', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 6, i: 'activityGoal', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 8, i: 'stress', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 10, i: 'mood', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 12, i: 'sleep', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 14, i: 'social', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 16, i: 'alcohol', moved: false, static: false },
-    { w: 1, h: 3, x: 0, y: 18, i: 'nutrition', moved: false, static: false }
-  ],
-  xl: [
-    { w: 8, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
-    { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: false },
+  lg: [
+    { w: 7, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
+    { w: 5, h: 2, x: 7, y: 0, i: 'calendar', moved: false, static: true },
     { w: 3, h: 2, x: 0, y: 2, i: 'dailyWater', moved: false, static: false },
     { w: 3, h: 2, x: 3, y: 2, i: 'activityGoal', moved: false, static: false },
     { w: 3, h: 2, x: 6, y: 2, i: 'stress', moved: false, static: false },
@@ -46,8 +34,8 @@ const defaultLayout = {
     { w: 6, h: 2, x: 0, y: 6, i: 'nutrition', moved: false, static: false }
   ],
   md: [
-    { w: 6, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
-    { w: 4, h: 2, x: 2, y: 2, i: 'calendar', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 2, i: 'overview', moved: false, static: false },
+    { w: 6, h: 2, x: 0, y: 0, i: 'calendar', moved: false, static: true },
     { w: 3, h: 2, x: 0, y: 4, i: 'dailyWater', moved: false, static: false },
     { w: 3, h: 2, x: 3, y: 4, i: 'activityGoal', moved: false, static: false },
     { w: 3, h: 2, x: 0, y: 6, i: 'stress', moved: false, static: false },
@@ -56,7 +44,19 @@ const defaultLayout = {
     { w: 6, h: 2, x: 0, y: 10, i: 'social', moved: false, static: false },
     { w: 6, h: 2, x: 0, y: 12, i: 'alcohol', moved: false, static: false },
     { w: 6, h: 2, x: 0, y: 14, i: 'nutrition', moved: false, static: false }
-  ]
+  ],
+  sm: [
+    { w: 1, h: 2, x: 0, y: 2, i: 'overview', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 0, i: 'calendar', moved: false, static: true },
+    { w: 1, h: 2, x: 0, y: 4, i: 'dailyWater', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 6, i: 'activityGoal', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 8, i: 'stress', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 10, i: 'mood', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 12, i: 'sleep', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 14, i: 'social', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 16, i: 'alcohol', moved: false, static: false },
+    { w: 1, h: 3, x: 0, y: 18, i: 'nutrition', moved: false, static: false }
+  ],
 }
 
 /**

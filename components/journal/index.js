@@ -111,17 +111,17 @@ export default function Journal (props) {
     <div className='overflow-y-scroll md:overflow-y-hidden fixed w-full h-full bg-slate-500 bg-opacity-70 dark:bg-slate-900 dark:bg-opacity-70 md:ml-[45px] lg:ml-[0px]'>
       <div className='absolute top-[3vh] left-0 right-0 mx-auto h-full w-[95vw] sm:w-[75vw] md:w-[70vw] lg:w-[40vw] 2xl:w-[30vw]'>
         <div className='relative sm:pl-[75px] md:pl-0'>
-          <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg py-6 px-10 shadow-md'>
+          <section className='flex flex-col justify-center bg-white dark:bg-slate-800 dark:text-white rounded-lg p-4 md:py-6 md:px-10 shadow-md'>
             <div id='journal-header' className='flex justify-between w-full border-b-2 pb-4 relative'>
                 <div className="w-[33%] flex">
                   <button
                     onClick={handleTodayClick}
-                    className='flex flex-col justify-center content-center rounded-full text-blue-900 dark:text-white bg-blue-100 dark:bg-orange-700 hover:bg-blue-50 dark:hover:bg-orange-600 py-1 px-5 mr-auto'
+                    className='flex flex-col justify-center rounded-full text-blue-900 dark:text-white bg-blue-100 dark:bg-orange-700 hover:bg-blue-50 dark:hover:bg-orange-600 py-1 px-5 mr-auto text-sm md:text-md'
                   >
                     Today
                   </button>
                 </div>
-                <h3 className='w-[33%] text-blue-950 dark:text-white text-lg text-center font-bold whitespace-nowrap self-center'>
+                <h3 className='md:w-[33%] text-blue-950 dark:text-white text-sm md:text-lg text-center font-bold whitespace-nowrap self-center'>
                   {formatDate(selectedDate)}
                 </h3>
                 <div className='w-[33%] text-right flex justify-end content-center flex-wrap-reverse'>
@@ -129,8 +129,8 @@ export default function Journal (props) {
                     showCal={showCal}
                     setShowCal={setShowCal}
                   />
-                  <button className='text-gray-400 hover:text-red-600 cursor-pointer w-[24px] h-[24px]' onClick={handleClose}>
-                    <FontAwesomeIcon icon={faTimes} />
+                  <button className='text-gray-400 hover:text-red-600 cursor-pointer ' onClick={handleClose}>
+                    <FontAwesomeIcon className='w-[24px] h-[24px]' icon={faTimes} />
                   </button>
                 </div>
             </div>

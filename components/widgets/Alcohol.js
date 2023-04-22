@@ -64,11 +64,11 @@ export default function Alcohol(props) {
         alcoholChart.destroy()
       }
     }
-  }, [data]);
+  }, [data, darkMode]);
 
   return (
-    <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white shadow-sm w-full h-full p-3 text-center">
-      <h3 className="font-bold text-xl text-blue-900 dark:text-white">Alcohol</h3>
+    <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-2 md:p-6 text-center">
+      <h3 className="font-bold mb-1 text-md md:text-xl text-blue-900 dark:text-white">Alcohol</h3>
       <div className="text-center w-full h-full py-6">
         <canvas id='alcohol'></canvas>
       </div>

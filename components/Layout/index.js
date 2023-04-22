@@ -64,14 +64,13 @@ export default function Layout({ children, title, background, darkMode, firstNam
                 />
                 <main
                   id='section-main'
-                  className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
+                  className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen md:ml-[75px]'
                 >
-                  <div className='flex h-full flex-col p-8 mb-6 bg-white bg-opacity-30 dark:bg-slate-950 dark:bg-opacity-50'>
+                  <div className='flex h-full flex-col p-2 mb-4 md:p-8 md:mb-6 bg-white bg-opacity-30 dark:bg-slate-950 dark:bg-opacity-50 min-h-[100vh]'>
                     <Header 
                       pageTitle={title}
                       firstName={firstName}
                     />
-                    
                       {children}
                     <Footer />
                   </div>

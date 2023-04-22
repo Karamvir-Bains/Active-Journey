@@ -46,6 +46,9 @@ export default function Settings (props) {
     setMessage(
       "Saved"
     )
+    setTimeout(() => {
+      setMessage('');
+    }, 2500);
   }
 
   return (
@@ -67,10 +70,10 @@ export default function Settings (props) {
                 {message}
                 </div>
               )}
-              <div className='my-6 flex'>
-                <label className='w-[33%] self-center font-bold text-blue-900 dark:text-orange-100' htmlFor="first">First name:</label>
+              <div className='my-6 flex flex-col md:flex-row'>
+                <label className='md:w-[33%] md:self-center font-bold text-blue-900 dark:text-orange-100' htmlFor="first">First name:</label>
                 <input
-                  className='border-2 p-3 w-full dark:bg-slate-700'
+                  className='border-2 p-1 md:p-3 w-full dark:bg-slate-700'
                   type="text"
                   id="first"
                   name="first"
@@ -78,17 +81,17 @@ export default function Settings (props) {
                   onChange={(e) => setFirstName(e.target.value) }
                 />
               </div>
-              <div className='my-6 flex content-stretch'>
-                <label className='w-[33%] self-center font-bold text-blue-900 dark:text-orange-100' htmlFor="last">Last name:</label>
-                <input className='border-2 p-3 w-full dark:bg-slate-700' type="text" id="last" name="last"
+              <div className='my-6 flex flex-col md:flex-row content-stretch'>
+                <label className='md:w-[33%] md:self-center font-bold text-blue-900 dark:text-orange-100' htmlFor="last">Last name:</label>
+                <input className='border-2 p-1 md:p-3 w-full dark:bg-slate-700' type="text" id="last" name="last"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value) }
                 />
               </div>
-              <div className='flex my-6'>
-                <label className='w-[33%] self-center font-bold text-blue-900 dark:text-orange-100'
+              <div className='flex flex-col md:flex-row my-6'>
+                <label className='md:w-[33%] md:self-center font-bold text-blue-900 dark:text-orange-100'
                 htmlFor="background">Set a background image:</label>
-                <select className='border-2 p-3 w-full dark:bg-slate-700'    
+                <select className='border-2 p-1 md:p-3 w-full dark:bg-slate-700'    
                   name="background" 
                   id="background"
                   value={userBackground}
@@ -100,7 +103,7 @@ export default function Settings (props) {
                 </select>
               </div>
               
-              <button className='bg-blue-800 hover:bg-blue-700 dark:bg-orange-700 dark:hover:bg-orange-600 text-white px-4 py-3 rounded-lg text-lg font-md' type="submit" onClick={handleSave}>Save Settings</button>
+              <button className='shadow bg-blue-800 hover:bg-blue-700 dark:bg-orange-700 dark:hover:bg-orange-800 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded' type="submit" onClick={handleSave}>Save Settings</button>
             </form>
             
           </section>

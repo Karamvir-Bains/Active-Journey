@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default function Header(props) {
   return(
     <header className="px-3 dark:text-white">
-      <h2 className="text-xl font-medium">
+      <h2 className="text-lg md:text-xl font-medium">
         Hello {props.firstName}
       </h2>
       <p>Welcome to ActiveJourney</p>

@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 const layoutConfig = {
   lg: [
     { w: 8, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
-    { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: false },
+    { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: true },
     { w: 3, h: 2, x: 0, y: 2, i: 'dailyWater', moved: false, static: false },
     { w: 3, h: 2, x: 3, y: 2, i: 'activityGoal', moved: false, static: false },
     { w: 3, h: 2, x: 6, y: 2, i: 'stress', moved: false, static: false },
@@ -17,7 +17,7 @@ const layoutConfig = {
   ],
   sm: [
     { w: 1, h: 2, x: 0, y: 2, i: 'overview', moved: false, static: false },
-    { w: 1, h: 2, x: 0, y: 0, i: 'calendar', moved: false, static: false },
+    { w: 1, h: 2, x: 0, y: 0, i: 'calendar', moved: false, static: true },
     { w: 1, h: 2, x: 0, y: 4, i: 'dailyWater', moved: false, static: false },
     { w: 1, h: 2, x: 0, y: 6, i: 'activityGoal', moved: false, static: false },
     { w: 1, h: 2, x: 0, y: 8, i: 'stress', moved: false, static: false },
@@ -29,7 +29,7 @@ const layoutConfig = {
   ],
   xl: [
     { w: 8, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
-    { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: false },
+    { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: true },
     { w: 3, h: 2, x: 0, y: 2, i: 'dailyWater', moved: false, static: false },
     { w: 3, h: 2, x: 3, y: 2, i: 'activityGoal', moved: false, static: false },
     { w: 3, h: 2, x: 6, y: 2, i: 'stress', moved: false, static: false },
@@ -41,7 +41,7 @@ const layoutConfig = {
   ],
   md: [
     { w: 6, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
-    { w: 4, h: 2, x: 2, y: 2, i: 'calendar', moved: false, static: false },
+    { w: 4, h: 2, x: 2, y: 2, i: 'calendar', moved: false, static: true },
     { w: 3, h: 2, x: 0, y: 4, i: 'dailyWater', moved: false, static: false },
     { w: 3, h: 2, x: 3, y: 4, i: 'activityGoal', moved: false, static: false },
     { w: 3, h: 2, x: 0, y: 6, i: 'stress', moved: false, static: false },
