@@ -8,12 +8,11 @@ import { ThemeProvider } from '../store/ThemeContext';
 import { JournalProvider } from '../store/JournalContext'
 
 export default function Home (props) {
-
   /**
    * Customize the Dashboard Layout
    */
   const [layout, setLayout] = useState(
-    parseLayout(props.user.layout) ? parseLayout(props.user.layout) : defaultLayout
+    props.user !== null ? parseLayout(props.user.layout) : defaultLayout
   )
 
   const handleLayoutChange = async layoutsObj => {
@@ -23,7 +22,7 @@ export default function Home (props) {
 
   return (
     <JournalProvider>
-      <ThemeProvider initial={props.user.dark_mode}>
+      <ThemeProvider initial={props.user !== null ? props.user.dark_mode : 'light'}>
         <Layout
           title="Dashboard"
           background={props.user.background}

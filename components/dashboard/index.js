@@ -21,12 +21,16 @@ export default function Dashboard (props) {
         className='layout'
         layouts={props.layout}
         breakpoints={{
-          lg: 1024,
+          xl: 1024,
+          lg: 768,
+          md: 640,
           sm: 0
         }}
         cols={{
+          xl: 12,
           lg: 12,
-          sm: 6
+          md: 6,
+          sm: 1
         }}
         onLayoutChange={(e, layoutsObj) => props.onLayoutChange(layoutsObj)}
         isDraggable={true}
