@@ -64,7 +64,6 @@ export const defaultLayout = {
 
 export const palette = {
   'light': {
-    // Amber 500
     'energy': '#bbb9ed',
     'sleep': '#71d1bd',
     'water': '#3b82f6',

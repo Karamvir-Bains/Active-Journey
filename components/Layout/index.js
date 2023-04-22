@@ -5,7 +5,6 @@ import Footer from '../partials/Footer';
 import Journal from '../journal';
 import React, { useState } from 'react';
 import { DataProvider } from '../../store/DataContext';
-// import { useTheme, useUpdateTheme } from '../../store/ThemeContext';
 import { useJournal, useUpdateJournal } from '../../store/JournalContext';
 import { useTheme, useUpdateTheme } from '../../store/ThemeContext'
 
@@ -23,7 +22,6 @@ export async function updateDarkMode(id, value) {
         body: JSON.stringify(data),
     });
 
-    //console.log(res);
   }
   catch (err) {
     console.log(err);
@@ -33,7 +31,6 @@ export async function updateDarkMode(id, value) {
 export default function Layout({ children, title, background, darkMode, firstName}) {
   const theme = useTheme();
   const setTheme = useUpdateTheme();
-  // const [theme, setTheme] = useState(darkMode || 'light');
   const journalOpen = useJournal();
   const toggleJournal = useUpdateJournal();
 
