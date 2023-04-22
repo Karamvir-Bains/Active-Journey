@@ -7,10 +7,10 @@ import { JournalProvider } from '../store/JournalContext';
 export default function Profile(props) {
   return (
     <JournalProvider>
-      <ThemeProvider initial={props.user.dark_mode}>
+      <ThemeProvider initial={props.user.dark_mode !== null ? props.user.dark_mode : 'light'}>
         <Layout 
           title="Profile" 
-          background={props.user.background} 
+          background={props.user.background !== null ? props.user.background : 'none'} 
           darkMode={props.user.dark_mode}
           firstName={props.user.first_name}
         > 

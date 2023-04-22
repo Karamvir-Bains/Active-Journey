@@ -8,15 +8,15 @@ import { ThemeProvider } from '../store/ThemeContext';
 import { JournalProvider } from '../store/JournalContext'
 
 export default function Home (props) {
-
   /**
    * Customize the Dashboard Layout
    */
-  const [layout, setLayout] = useState(
-    props.user.layout ? parseLayout(props.user.layout) : defaultLayout
-  )
+  const [layout, setLayout] = useState( props.user.layout ? parseLayout(props.user.layout) : defaultLayout );
+
   useEffect(() => {
-    setLayout( props.user.layout ? parseLayout(props.user.layout) : defaultLayout);
+    if (props.user.layout) {
+      setLayout( parseLayout(props.user.layout));
+    }
   }, [])
 
   const handleLayoutChange = async layoutsObj => {
@@ -26,7 +26,7 @@ export default function Home (props) {
 
   return (
     <JournalProvider>
-      <ThemeProvider initial={props.user.dark_mode}>
+      <ThemeProvider initial={props.user !== null ? props.user.dark_mode : 'light'}>
         <Layout
           title="Dashboard"
           background={props.user.background}

@@ -7,8 +7,7 @@ import { format } from 'date-fns';
  * not yet customized their dashboard
  * 
  */
-export 
-const defaultLayout = {
+export const defaultLayout = {
   xl: [
     { w: 8, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
     { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: true },
@@ -55,7 +54,7 @@ const defaultLayout = {
     { w: 1, h: 2, x: 0, y: 12, i: 'sleep', moved: false, static: false },
     { w: 1, h: 2, x: 0, y: 14, i: 'social', moved: false, static: false },
     { w: 1, h: 2, x: 0, y: 16, i: 'alcohol', moved: false, static: false },
-    { w: 1, h: 3, x: 0, y: 18, i: 'nutrition', moved: false, static: false }
+    { w: 1, h: 2, x: 0, y: 18, i: 'nutrition', moved: false, static: false }
   ],
 }
 
@@ -65,27 +64,36 @@ const defaultLayout = {
 
 export const palette = {
   'light': {
-    // Amber 500
-    'energy': '#f59e0b',
-    'sleep': '#14b8a6',
+    'energy': '#bbb9ed',
+    'sleep': '#71d1bd',
     'water': '#3b82f6',
     'mood': '#be123c',
-    'nutrition': '#15803d',
-    'social': '#86198f',
-    'alcohol': '#fbbf24',
+    'nutrition': '#fbbf24',
+    'social': '#fcc7f2',
+    'alcohol': '#8b5cf6',
     'border': '#000',
     'label': '#333',
+    'low': '#84cc16',
+    'medium': '#fef08a',
+    'high': '#f87171',
+    'needle': '#aaa',
+    'activity': '#0ecb81'
   },
   'dark': {
     'energy': '#f97316',
-    'sleep': '#2dd4bf',
-    'water': '#1e40af',
+    'sleep': '#71d1bd',
+    'water': '#7971d1',
     'mood': '#ef4444',
     'nutrition': '#84cc16',
-    'social': '#86198f',
+    'social': '#eb7138',
     'alcohol': '#fbbf24',
     'border': '#fff',
     'label': '#ddd',
+    'low': '#84cc16',
+    'medium': '#fef08a',
+    'high': '#f87171',
+    'needle': '#aaa',
+    'activity': '#f6465d'
   }
 }
 

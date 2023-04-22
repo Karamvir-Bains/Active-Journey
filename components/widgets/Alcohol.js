@@ -47,13 +47,12 @@ export default function Alcohol(props) {
       alcoholChart.data.datasets[0].data = [...newData];
       alcoholChart.update();
 
-      /** Change chart colours on darkMode change */
-      if (darkMode === 'light') {
+      if (darkMode == 'light') {
         alcoholChart.data.datasets[0].backgroundColor = palette.light.alcohol;
         alcoholChart.options.scales.x.ticks.color = palette.light.label;
         alcoholChart.options.scales.y.ticks.color = palette.light.label;
         alcoholChart.update();  
-      } else if (darkMode === 'dark') {
+      } else if (darkMode == 'dark') {
         alcoholChart.data.datasets[0].backgroundColor = palette.dark.alcohol;
         alcoholChart.options.scales.x.ticks.color = palette.dark.label;
         alcoholChart.options.scales.y.ticks.color = palette.dark.label;
@@ -65,6 +64,7 @@ export default function Alcohol(props) {
       }
     }
   }, [data, darkMode]);
+
 
   return (
     <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-2 md:p-6 text-center">
