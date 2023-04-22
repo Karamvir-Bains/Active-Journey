@@ -75,7 +75,7 @@ async function seed() {
     // Quality of Nutrition
     await createEntry(9, 9, 1, date);
 
-    await createMockEntry(10, 15, 0, date);
+    await createEntry(10, 15, 0, date);
   }
 };
 
