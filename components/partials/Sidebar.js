@@ -36,10 +36,6 @@ export default function Sidebar(props) {
             <FontAwesomeIcon className='w-[24px] h-[24px]'icon={faPlus} /> 
             <span className="sr-only">Add Journal Entry</span>
           </div>
-          <a className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl font-medium hover:bg-blue-100 dark:hover:bg-orange-700 p-2 md:p-4 text-blue-900 dark:text-white">
-              <FontAwesomeIcon className='w-[24px] h-[24px]'icon={faRightFromBracket} /> 
-              <span className="sr-only">Logout</span>
-          </a>
           <a onClick={props.toggleDarkMode} className="focus:outline-none group m-0 flex justify-center min-h-4 w-full cursor-pointer items-center rounded-xl font-medium hover:bg-blue-100 dark:hover:bg-orange-700 p-1 md:p-4 text-blue-900 dark:text-white">
             { props.darkMode === 'dark' && 
               <FontAwesomeIcon className='w-[24px] h-[24px]' icon={faToggleOn} /> 

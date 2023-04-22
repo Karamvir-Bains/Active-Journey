@@ -75,8 +75,8 @@ export default function Nutrition(props) {
   }, [data, darkMode]);
   return(
     <>
-      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-2 md:p-6 text-center">
-      <h3 className="font-bold mb-1 md:text-xl text-blue-900 dark:text-white">Quality of Nutrition</h3>
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
+      <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Quality of Nutrition</h3>
         <div className="text-center w-full h-full pb-8 md:pb-8">
           <canvas id='nutritionChart'></canvas>
         </div>

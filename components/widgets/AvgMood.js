@@ -21,8 +21,8 @@ export default function AvgMood(props) {
 
   return(
     <>
-    <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-2 md:p-6 text-center">
-      <h3 className="font-bold mb-1 text-md md:text-xl text-blue-900 dark:text-white">Average Mood</h3>
+    <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
+      <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Average Mood</h3>
       <p className="font-bold">Last 7 Days: {avgMood}/10</p>
       <div className="overflow-hidden px-6 py-3 w-[80%] h-[auto] max-h-[75%] flex flex-col mx-auto">
         {/* ! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. */}

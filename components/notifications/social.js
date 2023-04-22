@@ -6,8 +6,8 @@ export default function SocialNotification(props) {
   const [message, setMessage] = useState(`In the past 90 days, you logged ${count} days with a rating of less than 5/10 for social interactions.`);
 
   return (
-    <section className='mb-8'>
-      <h3 className='font-bold text-md md:text-xl mb-4'>Social Interactions</h3>
+    <section className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
+      <h3 className='font-bold text-lg md:text-xl mb-4'>Social Interactions</h3>
       {count > 0 && 
         <div className="p-4 bg-blue-200 dark:bg-slate-800 bg-opacity-50 rounded-xl mb-4"> 
         {message}
