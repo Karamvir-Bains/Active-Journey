@@ -18,25 +18,25 @@ export default function DailyWater(props) {
     if (val === 0) {
       heightClass += 'h-[0%] hidden';
       bottomClass += 'hidden';
-    } else if (val === 1) {
+    } else if (val <= 1) {
       heightClass += 'h-[10%]';
       bottomClass += 'bottom-[10%]';
-    } else if (val === 2) {
+    } else if (val <= 2) {
       heightClass += 'h-[20%]';
       bottomClass += 'bottom-[20%]';
-    } else if (val === 3) {
+    } else if (val <= 3) {
       heightClass += 'h-[30%]';
       bottomClass += 'bottom-[30%]';
-    } else if (val === 4) {
+    } else if (val <= 4) {
       heightClass += 'h-[40%]';
       bottomClass += 'bottom-[40%]';
-    } else if (val === 5) {
+    } else if (val <= 5) {
       heightClass += 'h-[50%]';
       bottomClass += 'bottom-[50%]';
-    } else if (val === 6) {
+    } else if (val <= 6) {
       heightClass += 'h-[61%]';
       bottomClass += 'bottom-[60%]';
-    } else if (val === 7) {
+    } else if (val <= 7) {
       heightClass += 'h-[71%]';
       bottomClass += 'bottom-[70%]';
     } else if (val > 7) {
