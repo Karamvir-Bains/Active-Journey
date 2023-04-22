@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-const layoutConfig = export const defaultLayout = {
+const layoutConfig = {
   xl: [
     { w: 8, h: 2, x: 0, y: 0, i: 'overview', moved: false, static: false },
     { w: 4, h: 2, x: 8, y: 0, i: 'calendar', moved: false, static: true },
