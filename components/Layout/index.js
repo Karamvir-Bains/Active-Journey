@@ -5,7 +5,6 @@ import Footer from '../partials/Footer';
 import Journal from '../journal';
 import React, { useState } from 'react';
 import { DataProvider } from '../../store/DataContext';
-// import { useTheme, useUpdateTheme } from '../../store/ThemeContext';
 import { useJournal, useUpdateJournal } from '../../store/JournalContext';
 import { useTheme, useUpdateTheme } from '../../store/ThemeContext'
 
@@ -23,7 +22,6 @@ export async function updateDarkMode(id, value) {
         body: JSON.stringify(data),
     });
 
-    //console.log(res);
   }
   catch (err) {
     console.log(err);
@@ -33,7 +31,6 @@ export async function updateDarkMode(id, value) {
 export default function Layout({ children, title, background, darkMode, firstName}) {
   const theme = useTheme();
   const setTheme = useUpdateTheme();
-  // const [theme, setTheme] = useState(darkMode || 'light');
   const journalOpen = useJournal();
   const toggleJournal = useUpdateJournal();
 
@@ -64,14 +61,13 @@ export default function Layout({ children, title, background, darkMode, firstNam
                 />
                 <main
                   id='section-main'
-                  className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen sm:ml-[75px]'
+                  className='bg-slate-100 dark:bg-slate-950 relative w-full h-auto min-h-screen md:ml-[75px]'
                 >
-                  <div className='flex h-full flex-col p-8 mb-6 bg-white bg-opacity-30 dark:bg-slate-950 dark:bg-opacity-50'>
+                  <div className='flex h-full flex-col p-2 mb-4 md:p-8 md:mb-6 bg-white bg-opacity-30 dark:bg-slate-950 dark:bg-opacity-50 min-h-[100vh]'>
                     <Header 
                       pageTitle={title}
                       firstName={firstName}
                     />
-                    
                       {children}
                     <Footer />
                   </div>

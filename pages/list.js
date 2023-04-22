@@ -17,6 +17,14 @@ export default function List (props) {
           {entry.metric_value}&nbsp;
           {entry.metrics.unit}
         </td>
+        <td className='p-2 border border-slate-200'>
+          {entry.goal_value}&nbsp;
+          {entry.metrics.name != 'Water' && entry.metrics.unit}
+          {!entry.metrics.unit && 
+            <>/ 10 rating</>}
+          {entry.metrics.name == 'Water' && 
+          <>cups</>}
+        </td>
       </tr>
     )
   });
@@ -29,17 +37,20 @@ export default function List (props) {
         darkMode={props.user.dark_mode}
         firstName={props.user.first_name}
       >
-        <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6 overflow-auto h-[100vh]'>
-          <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
-            <thead>
-              <tr className='bg-blue-900 dark:bg-orange-800 text-white'>
-                <th className='text-left p-2 border border-slate-200'>Day</th>
-                <th className='text-left p-2 border border-slate-200'>Metric</th>
-                <th className='text-left p-2 border border-slate-200'>Value</th>
-              </tr>
-            </thead>
-            <tbody>{entries}</tbody>
-          </table>
+        <section className='mx-3 bg-white dark:bg-slate-900 dark:text-white  rounded-lg p-6'>
+          <div className='overflow-auto h-[90vh] border border-slate-300'>
+            <table className='table-fixed border-collapse border border-slate-300 w-full mb-4 text-sm sm:text-base'>
+              <thead>
+                <tr className=''>
+                  <th className='sticky top-0 text-left p-2 bg-blue-900 dark:bg-orange-800 text-white border border-slate-300'>Day</th>
+                  <th className='sticky top-0 text-left p-2 border border-slate-200 bg-blue-900 dark:bg-orange-800 text-white'>Metric</th>
+                  <th className='sticky top-0 text-left p-2 border border-slate-200 bg-blue-900 dark:bg-orange-800 text-white border border-slate-300'>Value</th>
+                  <th className='sticky top-0 text-left p-2 border border-slate-200 bg-blue-900 dark:bg-orange-800 text-white border border-slate-300'>Goal</th>
+                </tr>
+              </thead>
+              <tbody>{entries}</tbody>
+            </table>
+          </div>
         </section>
       </Layout>
     </ThemeProvider>

@@ -28,8 +28,6 @@ export default function Sleep(props) {
       labelsFormatted.push(newDate);
     };
 
-    //console.log(labelsFormatted, "lables");
-
     const sleepValues = lastSevenValues.map(item => item.metric_value);
 
     const qualityValues = lastSevenValuesQuality.map(item => item.metric_value);
@@ -39,7 +37,7 @@ export default function Sleep(props) {
         sleepValues, 
         qualityValues
       ] 
-    }else {
+    } else {
       return {
         labels: [],
         sleepValues: [],

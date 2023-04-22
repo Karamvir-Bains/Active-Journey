@@ -98,8 +98,8 @@ export default function WeeklyStress(props) {
 
   return(
     <>    
-      <div className="rounded-lg bg-white shadow-sm w-full h-full p-6 mb-10 dark:bg-slate-800 dark:text-white">
-        <h3 className="text-center font-bold mb-1 text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
+        <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Weekly Stress</h3>
         <div className="w-full h-[75%] flex flex-col mx-auto">
           <canvas id='activityChart'></canvas> 
           <p className="mx-auto text-center">

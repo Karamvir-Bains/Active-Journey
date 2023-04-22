@@ -6,7 +6,6 @@ import Head from 'next/head'
 import Sidebar from '../components/partials/Sidebar'
 import Journal from '../components/journal'
 import Footer from '../components/partials/Footer'
-import { useApplicationData } from '../hooks/useApplicationData'
 
 export default function App ({ Component, pageProps }) {  
   return (

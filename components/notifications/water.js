@@ -8,7 +8,7 @@ export default function WaterNotification(props) {
 
   return (
     <section className='mb-8'>
-      <h3 className='font-bold text-xl mb-4'>Water</h3>      
+      <h3 className='font-bold text-md md:text-xl mb-2 md:mb-4'>Water</h3>      
         {count > 0 &&
           <p className="p-4 bg-blue-200 dark:bg-slate-800 bg-opacity-50 rounded-xl mb-4">
             {message}

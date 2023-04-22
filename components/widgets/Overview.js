@@ -130,7 +130,7 @@ export default function Overview(props) {
           />
           <span className="text-xs">&nbsp;days</span>
         </div>
-        <div className="absolute top-4 right-3 bottom-2 left-3 z-0">
+        <div className="absolute top-10 xl:top-4 right-3 bottom-2 left-3 z-1">
           <canvas id='overviewChart'></canvas>
         </div>
       </div>

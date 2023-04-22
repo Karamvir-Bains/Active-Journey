@@ -19,7 +19,7 @@ export default function DailyWater(props) {
   let val = convertMlToCups(milliliters);
 
   const calcGlassHeight = (val) => {
-    let heightClass = 'bg-gradient-to-t from-blue-500 to-blue-700 w-full absolute z-10 bottom-0 rounded-b-lg drop-shadow-xl ';
+    let heightClass = 'bg-gradient-to-t from-blue-500 to-blue-700 w-full absolute z-10 bottom-0 rounded-b-lg ';
     let bottomClass = '';
     if (val === 0) {
       heightClass += 'h-[0%] hidden';
@@ -40,13 +40,13 @@ export default function DailyWater(props) {
       heightClass += 'h-[50%]';
       bottomClass += 'bottom-[50%]';
     } else if (val === 6) {
-      heightClass += 'h-[60%]';
+      heightClass += 'h-[61%]';
       bottomClass += 'bottom-[60%]';
     } else if (val === 7) {
-      heightClass += 'h-[70%]';
+      heightClass += 'h-[71%]';
       bottomClass += 'bottom-[70%]';
     } else if (val > 7) {
-      heightClass += 'h-[80%]';
+      heightClass += 'h-[81%]';
       bottomClass += 'bottom-[80%]';
     }
     return {
@@ -59,9 +59,9 @@ export default function DailyWater(props) {
   const getBottomClass = calcGlassHeight(val).bottomClass;
 
   return(
-    <div className="overflow-scroll rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-6 flex flex-col justify-start content-center">
-      <h3 className="text-center font-bold mb-3 text-xl text-blue-900 dark:text-white">Daily Water Intake</h3>
-      <div id="waterCup" className="mx-auto bg-blue-100 dark:bg-white h-[65%] w-[50%] relative rounded-b-lg drop-shadow-sm">
+    <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
+      <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Daily Water Intake</h3>
+      <div id="waterCup" className="mx-auto bg-blue-100 dark:bg-white h-[60%] w-[50%] max-w-[200px] relative rounded-b-lg drop-shadow-sm mt-6">
         <div className="handle"></div>
         <div id="glass drop-shadow-2xl"></div>
         <div id="wave-1" className={getBottomClass}></div>
@@ -71,9 +71,8 @@ export default function DailyWater(props) {
           id="water" className={getGlassClass}>
         </div>
       </div>
-      <div className="font-medium text-xl text-center my-3">
-        {val} / 8 cups<br />
-         ({milliliters}ml)
+      <div className="font-medium text-md md:text-lg text-center my-3">
+        {val} / 8 cups ({milliliters}ml)
       </div>
     </div>
   )
