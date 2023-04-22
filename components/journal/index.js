@@ -15,6 +15,7 @@ export default function Journal (props) {
     selectedDate,
     updateDate,
     today,
+    oldestDay,
     activeStartDate,
     handleTodayClick,
     handleActiveStartDateChange,
@@ -146,6 +147,7 @@ export default function Journal (props) {
                       value={selectedDate}
                       onChange={(newDay) => updateDate(newDay)}
                       maxDate={today}
+                      minDate={oldestDay}
                       activeStartDate={activeStartDate}
                       onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
                     />
