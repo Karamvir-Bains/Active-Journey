@@ -52,10 +52,24 @@ export default function Alcohol(props) {
       setAlcohol(data[9].user_metric_data.map(item => item.metric_value).slice(-7));
     }
 
+    if (darkMode == 'light') {
+      //console.log("LIGHT")
+      alcoholChart.data.datasets[0].backgroundColor = palette.light.alcohol;
+      alcoholChart.options.scales.x.ticks.color = palette.light.label;
+      alcoholChart.options.scales.y.ticks.color = palette.light.label;
+      alcoholChart.update();  
+    } else if (darkMode == 'dark') {
+      //console.log("dark")
+      alcoholChart.data.datasets[0].backgroundColor = palette.dark.alcohol;
+      alcoholChart.options.scales.x.ticks.color = palette.dark.label;
+      alcoholChart.options.scales.y.ticks.color = palette.dark.label;
+      alcoholChart.update();  
+    }
+
     return () => {
       alcoholChart.destroy()
     }
-  }, [data]);
+  }, [data, darkMode]);
 
   return(
     <>
