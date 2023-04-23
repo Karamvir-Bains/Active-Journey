@@ -67,10 +67,16 @@ export default function ActivityGoal(props) {
   return (
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
-        <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Activity Goal</h3>
-        <p className="text-center">{progressPercentage === 100 ? "Congrats you hit your goal!" : ""}</p>
+        <div>
+          <h3 class="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Activity Goal</h3>
+          {progressPercentage === 100 &&
+            <p class="text-center absolute inset-x-0">
+              Congrats you hit your goal!
+            </p>
+          }
+        </div>
         <div className="w-full h-full">
-          <ApexCharts options={options} series={options.series} colors={options.colors}type="radialBar" height={275} />
+          <ApexCharts options={options} series={options.series} colors={options.colors}type="radialBar" height={"100%"} />
         </div>
       </div>
     </>
