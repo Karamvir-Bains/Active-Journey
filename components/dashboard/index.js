@@ -54,12 +54,14 @@ export default function Dashboard (props) {
         className='layout'
         layouts={props.layout}
         breakpoints={{
+          xxl: 1280,
           xl: 1024,
           lg: 768,
           md: 640,
           sm: 0
         }}
         cols={{
+          xxl: 12,
           xl: 12,
           lg: 12,
           md: 6,
