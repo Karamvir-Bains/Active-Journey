@@ -56,7 +56,6 @@ export default function ActivityGoal(props) {
           plotOptions: {...prev.plotOptions, radialBar: {...prev.plotOptions.radialBar, dataLabels: {...prev.plotOptions.radialBar.dataLabels, name: {...prev.plotOptions.radialBar.dataLabels.name, color: palette.light.label }, value: {...prev.plotOptions.radialBar.dataLabels.value, color: palette.light.label } } } },
         }));
       } else if (darkMode == 'dark') {
-        console.log("darkMode");
         setOptions(prev => ({
           ...prev,
           series: [newProgressPercentage],
@@ -71,13 +70,13 @@ export default function ActivityGoal(props) {
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
         <div>
-          <h3 class="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Activity Goal</h3>
+          <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Activity Goal</h3>
           {progressPercentage === 100 ?
-            <p class="text-center absolute inset-x-0">
+            <p className="text-center absolute inset-x-0">
               Congrats you hit your goal!
             </p>
             :
-            <p class="text-center absolute inset-x-0">
+            <p className="text-center absolute inset-x-0">
               {progress}/{goal} mins
             </p>
           }
