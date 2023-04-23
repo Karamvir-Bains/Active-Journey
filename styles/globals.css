@@ -49,6 +49,11 @@ react-calendar__tile--now:hover {
   text-align: center;
 }
 
+.react-resizable-handle-se {
+  width: 30px !important;
+  height: 30px !important;
+}
+
 /* Water Widget Animation */
 @keyframes moveWater {
   0% {
