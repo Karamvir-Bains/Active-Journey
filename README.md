@@ -1,74 +1,68 @@
+# Active Journey
+Active Journey is a wellness tracking app that helps users monitor and improve their health by tracking various health metrics such as water intake, exercise, sleep, and mood. The app provides a personalized dashboard where users can save daily data for each metric and track the impacts of those metircs on each other over time. A unique feature of Active Journey is the ability to visualize correlations between multiple metrics through interactive charts and graphs, providing insights into the connections between their different lifestyle patterns. With its user-friendly interface and powerful tracking and visualization features, Active Journey is a powerful tool for anyone looking to make better data-driven decisions about their wellness.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+![AJ Dashboard](/public/aj-dashboard.png)
+![AJ Journal UI](/public/aj-journal-ui.png)
+![Dark Mode Dashboard](/public/aj-dark-mode.png)
+
+## Features
+* Users can create an account and log in to their personalized dashboard.
+* Users can record and track their daily water intake, exercise, sleep, and mood.
+* Users can set goals for each of these metrics and track their progress over time.
+* Users can visualize their progress through a series of charts and graphs.
+* Users can receive reminders to log their metrics throughout the day.
+
+## Technologies Used
+* React
+* Next.js
+* Prisma
+* SQL Lite
+* Tailwind
+* Chart.js
+* Apex Charts
+* Responsive Grid Layout
+
 ## Getting Started
+1. Clone this repository.
+2. Install the necessary dependencies using `npm install`.
+3. Create your .env file:
+Copy `.env.example` to `.env`
+4. Set-up Database:
+```
+npx prisma generate
 
-Create your .env file:
-Copy .env.example to .env
+npx prisma db push
 
-Install project dependencies:
-`npm install`
+npx prisma migrate dev
 
-Set-up Database:
-`npx prisma generate`
+npx prisma studio
+```
+4. Start the development server:
 
-db push uses the same engine as Prisma Migrate to synchronize your Prisma schema with your database schema. The db push command:
-`npx prisma db push`
-
-Run Database migration:
-`npx prisma migrate dev`
-
-Start the Database Studio in the browser:
-`npx prisma studio`
-
-Then, run the development server:
-
-```bash
+```
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```
+5. Navigate to http://localhost:3000 in your web browser.
+
+
+### Working with Prisma and the Database
+
+1. Create your dev database:
+```
+npx prisma generate
+```
+2. `db push` uses the same engine as Prisma Migrate to synchronize your Prisma schema with your database schema. 
+```
+npx prisma db push
+```
+3. Run Database migration
+```
+npx prisma migrate dev
+```
+4. Start the Database Studio in the browser:
+```
+npx prisma studio
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-
-## Working with Prisma and the Database
-
-Create your dev database:
-`npx prisma generate`
-
-db push uses the same engine as Prisma Migrate to synchronize your Prisma schema with your database schema. The db push command:
-`npx prisma db push`
-
-Run Database migration:
-`npx prisma migrate dev`
-
-Start the Database Studio in the browser:
-`npx prisma studio`
-
-Start your application:
-`npm run dev`
