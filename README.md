@@ -1,5 +1,7 @@
 # Active Journey
-Active Journey is a wellness tracking app that helps users monitor and improve their health by tracking various health metrics such as water intake, exercise, sleep, and mood. The app provides a personalized dashboard where users can save daily data for each metric and track the impacts of those metircs on each other over time. A unique feature of Active Journey is the ability to visualize correlations between multiple metrics through interactive charts and graphs, providing insights into the connections between their different lifestyle patterns. With its user-friendly interface and powerful tracking and visualization features, Active Journey is a powerful tool for anyone looking to make better data-driven decisions about their wellness.
+Active Journey is a wellness tracking app that helps users monitor and improve their health by tracking various health metrics such as water intake, exercise, sleep, and mood. The app provides a personalized dashboard where users can save daily data for each metric and track the impacts of those metircs on each other over time. 
+
+A unique feature of Active Journey is the ability to visualize correlations between multiple metrics through interactive charts and graphs, providing insights into the connections between their different lifestyle patterns. With its user-friendly interface and powerful tracking and visualization features, Active Journey is a powerful tool for anyone looking to make better data-driven decisions about their wellness.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -29,7 +31,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 2. Install the necessary dependencies using `npm install`.
 3. Create your .env file:
 Copy `.env.example` to `.env`
-4. Set-up Database:
+4. Set-up the database:
 ```
 npx prisma generate
 
@@ -39,30 +41,14 @@ npx prisma migrate dev
 
 npx prisma studio
 ```
-4. Start the development server:
-
+5. Start the development server:
 ```
 npm run dev
 ```
-5. Navigate to http://localhost:3000 in your web browser.
-
+6. Navigate to http://localhost:3000 in your web browser.
 
 ### Working with Prisma and the Database
 
-1. Create your dev database:
-```
-npx prisma generate
-```
-2. `db push` uses the same engine as Prisma Migrate to synchronize your Prisma schema with your database schema. 
-```
-npx prisma db push
-```
-3. Run Database migration
-```
-npx prisma migrate dev
-```
-4. Start the Database Studio in the browser:
-```
-npx prisma studio
-```
+After initially setting up the database you will only need to delete your `dev.db` file from your `prisma` directory and then run `npx prisma migrate dev` when updating the database. 
 
+`db push` uses the same engine as Prisma Migrate to synchronize your Prisma schema with your database schema.
