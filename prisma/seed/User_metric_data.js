@@ -75,7 +75,7 @@ async function seed() {
     // Quality of Nutrition
     await createEntry(9, 9, 1, date);
     // Alcohol
-    await createEntry(10, 15, 0, date);
+    await createEntry(10, 2, 0, date);
 
     createCorrelatedEntry(date);
   }
