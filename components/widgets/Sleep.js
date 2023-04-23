@@ -76,7 +76,7 @@ export default function Sleep(props) {
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          scales: { y: { display: true} },
+          scales: { y: { display: true, min: 0} },
           legend: true,
         }
       });
