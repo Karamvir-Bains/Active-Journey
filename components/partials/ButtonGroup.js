@@ -18,7 +18,7 @@ export default function ButtonGroup(props) {
   });
 
   return (
-    <div className="inline-flex rounded-md shadow-sm border border-grey-200">
+    <div className="inline-flex rounded-md shadow-sm border dark:border-orange-900">
       {buttons}
     </div>
   )
