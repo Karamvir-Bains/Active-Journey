@@ -11,6 +11,7 @@ export default function ActivityGoal(props) {
   const { data } = useData();
   const goal = 60;
   const [progressPercentage, setProgressPercentage] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const [options, setOptions] = useState({
     chart: {
@@ -41,6 +42,8 @@ export default function ActivityGoal(props) {
     if (data && data[2] && data[2].user_metric_data) {
       const newMetricValue = data[2].user_metric_data[data[2].user_metric_data.length - 1].metric_value;
 
+      setProgress(newMetricValue);
+;
       let newProgressPercentage = Math.floor((newMetricValue / goal) * 100);
       newProgressPercentage = Math.min(newProgressPercentage, 100);
       setProgressPercentage(newProgressPercentage);
@@ -69,9 +72,13 @@ export default function ActivityGoal(props) {
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
         <div>
           <h3 class="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Activity Goal</h3>
-          {progressPercentage === 100 &&
+          {progressPercentage === 100 ?
             <p class="text-center absolute inset-x-0">
               Congrats you hit your goal!
+            </p>
+            :
+            <p class="text-center absolute inset-x-0">
+              {progress}/{goal} mins
             </p>
           }
         </div>
