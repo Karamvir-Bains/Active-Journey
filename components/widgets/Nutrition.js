@@ -38,7 +38,8 @@ export default function Nutrition(props) {
         },
         scales: {
           y: {
-            ticks: { color: colours.label, beginAtZero: true }
+            ticks: { color: colours.label, beginAtZero: true },
+            min: 0
           },
           x: {
             ticks: { color: colours.label, beginAtZero: true }

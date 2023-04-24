@@ -64,7 +64,7 @@ export const defaultLayout = {
 
 export const palette = {
   light: {
-    energy: '#bbb9ed',
+    energy: '#e4c811',
     sleep: '#71d1bd',
     water: '#3b82f6',
     mood: '#be123c',
@@ -80,7 +80,7 @@ export const palette = {
     activity: '#0ecb81'
   },
   dark: {
-    energy: '#f97316',
+    energy: '#e4c811',
     sleep: '#71d1bd',
     water: '#7971d1',
     mood: '#ef4444',

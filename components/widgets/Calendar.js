@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CalendarWidget from 'react-calendar'
 import { formatDate } from '../../helpers/data';
 import { useData } from '../../store/DataContext';
-import { useJournal, useUpdateJournal } from '../../store/JournalContext';
+import { useUpdateJournal } from '../../store/JournalContext';
 
 export default function Calendar (props) {
   const { 
@@ -17,13 +17,12 @@ export default function Calendar (props) {
     handleActiveStartDateChange,
   } = useData();
 
-  const journalOpen = useJournal();
   const toggleJournal = useUpdateJournal();
 
   return (
     <>
     <div className='overflow-scroll rounded-lg bg-blue-200 dark:bg-orange-400 shadow-sm w-full h-full p-3 lg:px-6 py-4'>
-      <div className='flex justify-evenly content-center w-full'>
+      <div className='flex justify-between content-center w-full'>
         <div className="w-[33%] md:w-[25%]">
             <button
             onClick={handleTodayClick}
@@ -32,7 +31,7 @@ export default function Calendar (props) {
             Today
           </button>
         </div>
-        <h3 className='w-[33%] sm:w-[50%] flex flex-col justify-self-center justify-center content-center text-blue-950 dark:text-slate-950 text-md md:text-lg font-bold text-center text-[1rem]'>
+        <h3 className='flex items-center justify-center font-bold text-center whitespace-nowrap'>
           {formatDate(selectedDate)}
         </h3>
         <div className="w-[33%] md:w-[25%] align-stretch">
@@ -43,16 +42,19 @@ export default function Calendar (props) {
         </div>     
       </div>
       <div className='bg-white dark:bg-slate-800 dark:text-white  rounded-lg mt-3 p-2'>
-        <CalendarWidget 
-          value={selectedDate}
-          onChange={(newDay) => updateDate(newDay)}
-          maxDate={today}
-          minDate={oldestDay}
-          activeStartDate={activeStartDate}
-          onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
-        />
+        <div className="h-[213px]">
+          <CalendarWidget 
+            value={selectedDate}
+            onChange={(newDay) => updateDate(newDay)}
+            maxDate={today}
+            minDate={oldestDay}
+            activeStartDate={activeStartDate}
+            onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
+            className="h-full"
+          />
+        </div>
       </div>
     </div>
     </>
-  )
+  );
 }

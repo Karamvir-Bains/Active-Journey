@@ -3,20 +3,14 @@ import { useData } from "../../store/DataContext";
 
 export default function DailyWater(props) {
   const { data } = useData();
-  const [milliliters, setMilliliters] = useState(0);
+  const [cups, setCups] = useState(0);
 
   useEffect(() => {
     if (data && data[0] && data[0].user_metric_data) {
       const newMetricValue = data[0].user_metric_data[data[0].user_metric_data.length - 1].metric_value;
-      setMilliliters(newMetricValue);
+      setCups(newMetricValue);
     }
   }, [data]);
-
-  const convertMlToCups = (val) => {
-    return Math.round(val / 250);
-  }
-
-  let val = convertMlToCups(milliliters);
 
   const calcGlassHeight = (val) => {
     let heightClass = 'bg-gradient-to-t from-blue-500 to-blue-700 w-full absolute z-10 bottom-0 rounded-b-lg ';
@@ -24,25 +18,25 @@ export default function DailyWater(props) {
     if (val === 0) {
       heightClass += 'h-[0%] hidden';
       bottomClass += 'hidden';
-    } else if (val === 1) {
+    } else if (val <= 1) {
       heightClass += 'h-[10%]';
-      bottomClass += 'bottom-[10%]';
-    } else if (val === 2) {
+      bottomClass += 'bottom-[9%]';
+    } else if (val <= 2) {
       heightClass += 'h-[20%]';
-      bottomClass += 'bottom-[20%]';
-    } else if (val === 3) {
+      bottomClass += 'bottom-[19%]';
+    } else if (val <= 3) {
       heightClass += 'h-[30%]';
-      bottomClass += 'bottom-[30%]';
-    } else if (val === 4) {
+      bottomClass += 'bottom-[29%]';
+    } else if (val <= 4) {
       heightClass += 'h-[40%]';
-      bottomClass += 'bottom-[40%]';
-    } else if (val === 5) {
+      bottomClass += 'bottom-[39%]';
+    } else if (val <= 5) {
       heightClass += 'h-[50%]';
-      bottomClass += 'bottom-[50%]';
-    } else if (val === 6) {
+      bottomClass += 'bottom-[49%]';
+    } else if (val <= 6) {
       heightClass += 'h-[61%]';
       bottomClass += 'bottom-[60%]';
-    } else if (val === 7) {
+    } else if (val <= 7) {
       heightClass += 'h-[71%]';
       bottomClass += 'bottom-[70%]';
     } else if (val > 7) {
@@ -55,8 +49,8 @@ export default function DailyWater(props) {
     };
   }
 
-  const getGlassClass = calcGlassHeight(val).heightClass;
-  const getBottomClass = calcGlassHeight(val).bottomClass;
+  const getGlassClass = calcGlassHeight(cups).heightClass;
+  const getBottomClass = calcGlassHeight(cups).bottomClass;
 
   return(
     <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
@@ -72,7 +66,7 @@ export default function DailyWater(props) {
         </div>
       </div>
       <div className="font-medium text-md md:text-lg text-center my-3">
-        {val} / 8 cups ({milliliters}ml)
+        {cups} / 8 cups<br />
       </div>
     </div>
   )

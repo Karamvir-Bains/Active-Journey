@@ -22,7 +22,8 @@ export default function Overview(props) {
     let waterVals = water.user_metric_data.slice(-range);
     const labelVals = waterVals.map((val) =>  val.date.substring(5, 10));
 
-    waterVals = waterVals.map(e => Math.floor((e.metric_value / 100) - 10));
+    waterVals = waterVals.map(e => e.metric_value);
+
     const sleepVals = sleep.user_metric_data
       .slice(-range)
       .map(e => e.metric_value);
@@ -32,6 +33,7 @@ export default function Overview(props) {
     const activityVals = activity.user_metric_data
       .slice(-range)
       .map(e => (e.metric_value / 60) * 10);
+
     return [
       waterVals,
       sleepVals,
@@ -51,40 +53,55 @@ export default function Overview(props) {
           type: 'line',
           label: "Energy Level",
           data: metricValueSets[2],
-          borderWidth: 0,
-          pointRadius: 0,
           borderColor: colours.energy,
-          backgroundColor: 'rgba(245, 217, 61, 0.4)',
-          fill: 'origin',
-          tension: 0.3
+          backgroundColor: "transparent",
+          tension: 0.3,
+          yAxisID: 'energy-y-axis'
         }, {
-          type: 'line',
+          type: 'bar',
           label: "Activity",
           data: metricValueSets[3],
-          borderColor: colours.activity,
-          pointRadius: 0,
-          backgroundColor: "transparent",
-          fill: true,
-          tension: 0.3
+          borderRadius: 4,
+          backgroundColor: colours.activity,
+          yAxisID: 'activity-y-axis'
         }, {
           type: 'bar',
           label: "Water Intake",
           data: metricValueSets[0],
-          borderColor: colours.water,
           borderRadius: 4,
-          backgroundColor: colours.water
+          backgroundColor: colours.water,
+          yAxisID: 'water-y-axis'
         }, {
           type: 'bar',
           label: "Sleep",
           data: metricValueSets[1],
           borderRadius: 4,
-          backgroundColor: colours.sleep
+          backgroundColor: colours.sleep,
+          yAxisID: 'sleep-y-axis'
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: { y: { display: false } },
+        scales: { 
+          "energy-y-axis": {
+            position: 'left',
+            display: false,
+            max: 11,
+          },
+          "activity-y-axis": {
+            position: 'left',
+            display: false,
+          },
+          "water-y-axis": {
+            position: 'left',
+            display: false,
+          },
+          "sleep-y-axis": {
+            position: 'left',
+            display: false,
+          },
+        },
         plugins: { legend: { align: 'end', labels:{ color: colours.label } } }}
     });
   }, []);
