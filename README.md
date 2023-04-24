@@ -52,3 +52,11 @@ npm run dev
 After initially setting up the database you will only need to delete your `dev.db` file from your `prisma` directory and then run `npx prisma migrate dev` when updating the database. 
 
 `db push` uses the same engine as Prisma Migrate to synchronize your Prisma schema with your database schema.
+
+
+## Credits
+This app was built by @Karamvir-Bains, @kgislason, @laurenashley & @GMahant1 as a Lighthouse Labs final project.
+
+Thank you to @SomeChineseGuy for your inspiration and support to stretch our skillset using Next.js and Prisma
+
+Thank you to Danila Szabo for your support and mentorship.
