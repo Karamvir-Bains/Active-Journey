@@ -24,8 +24,14 @@ export default function Alcohol(props) {
         plugins: {
           legend: { display: false },
           title: { display: false }
+        },
+        scales: {
+          y: {
+            min: 0
+          }
         }
       }
+      
 
       const chartData = {
         labels: buildLabels(selectedDate, 7),

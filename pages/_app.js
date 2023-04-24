@@ -1,11 +1,6 @@
-import { useState } from 'react'
-import '../styles/globals.css'
-import '../styles/tailwind.css'
-import { Inter } from 'next/font/google'
-import Head from 'next/head'
-import Sidebar from '../components/partials/Sidebar'
-import Journal from '../components/journal'
-import Footer from '../components/partials/Footer'
+import '../styles/globals.css';
+import '../styles/tailwind.css';
+import Head from 'next/head';
 
 export default function App ({ Component, pageProps }) {  
   return (

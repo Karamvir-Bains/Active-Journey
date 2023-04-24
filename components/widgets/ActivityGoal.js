@@ -11,6 +11,7 @@ export default function ActivityGoal(props) {
   const { data } = useData();
   const goal = 60;
   const [progressPercentage, setProgressPercentage] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const [options, setOptions] = useState({
     chart: {
@@ -41,6 +42,8 @@ export default function ActivityGoal(props) {
     if (data && data[2] && data[2].user_metric_data) {
       const newMetricValue = data[2].user_metric_data[data[2].user_metric_data.length - 1].metric_value;
 
+      setProgress(newMetricValue);
+;
       let newProgressPercentage = Math.floor((newMetricValue / goal) * 100);
       newProgressPercentage = Math.min(newProgressPercentage, 100);
       setProgressPercentage(newProgressPercentage);
@@ -53,7 +56,6 @@ export default function ActivityGoal(props) {
           plotOptions: {...prev.plotOptions, radialBar: {...prev.plotOptions.radialBar, dataLabels: {...prev.plotOptions.radialBar.dataLabels, name: {...prev.plotOptions.radialBar.dataLabels.name, color: palette.light.label }, value: {...prev.plotOptions.radialBar.dataLabels.value, color: palette.light.label } } } },
         }));
       } else if (darkMode == 'dark') {
-        console.log("darkMode");
         setOptions(prev => ({
           ...prev,
           series: [newProgressPercentage],
@@ -67,10 +69,20 @@ export default function ActivityGoal(props) {
   return (
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center">
-        <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Activity Goal</h3>
-        <p className="text-center">{progressPercentage === 100 ? "Congrats you hit your goal!" : ""}</p>
+        <div>
+          <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Activity Goal</h3>
+          {progressPercentage === 100 ?
+            <p className="text-center absolute inset-x-0">
+              Congrats you hit your goal!
+            </p>
+            :
+            <p className="text-center absolute inset-x-0">
+              {progress}/{goal} mins
+            </p>
+          }
+        </div>
         <div className="w-full h-full">
-          <ApexCharts options={options} series={options.series} colors={options.colors}type="radialBar" height={275} />
+          <ApexCharts options={options} series={options.series} colors={options.colors}type="radialBar" height={"100%"} />
         </div>
       </div>
     </>

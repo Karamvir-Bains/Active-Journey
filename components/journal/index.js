@@ -15,18 +15,22 @@ export default function Journal (props) {
     selectedDate,
     updateDate,
     today,
+    oldestDay,
     activeStartDate,
     handleTodayClick,
     handleActiveStartDateChange,
   } = useData();
   const [showCal, setShowCal] = useState(false);
 
+  // Sort data based on journal_order property
+  const sortedData = [...data].sort((a, b) => a.journal_order - b.journal_order);
+
   //Render a list of metrics
-  const metricList = data.map((metric, index) => {
-    const { id, name, property, unit, user_metric_data } = metric;
-    // user_metric_data id and value
-    const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1].id;
-    const value = user_metric_data[data[index].user_metric_data.length - 1].metric_value;
+  const metricList = sortedData.map((metric, index) => {
+    const { id, name, property, unit, journal_order, user_metric_data } = metric;
+
+    const userMetricDataId = user_metric_data[data[index].user_metric_data.length - 1]?.id;
+    const value = user_metric_data[data[index].user_metric_data.length - 1]?.metric_value;
 
     // Render InputComponent if property is 'input'
     if (property === "input") {
@@ -97,7 +101,6 @@ export default function Journal (props) {
         }
       });
       const result = await res.json();
-      console.log(result);
     } catch (error) {
       console.error(error);
     }
@@ -147,6 +150,7 @@ export default function Journal (props) {
                       value={selectedDate}
                       onChange={(newDay) => updateDate(newDay)}
                       maxDate={today}
+                      minDate={oldestDay}
                       activeStartDate={activeStartDate}
                       onActiveStartDateChange={(e) => handleActiveStartDateChange(e.activeStartDate)}
                     />
@@ -163,10 +167,7 @@ export default function Journal (props) {
               <button
                 className='shadow bg-blue-800 hover:bg-blue-700 dark:bg-orange-700 dark:hover:bg-orange-800 focus:shadow-outline focus:outline-none text-white dark:text-white font-bold py-2 px-4 rounded'
                 type='button'
-                onClick={() => {
-                  handleSave()
-                  props.onClose()
-                }}
+                onClick={() => props.onClose()}
               >
                 Save Journal
               </button>

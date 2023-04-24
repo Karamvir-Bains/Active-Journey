@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Layout from '../components/Layout';
-import { PrismaClient } from '@prisma/client';
+import prisma from '../lib/prisma';
 import { ThemeProvider } from '../store/ThemeContext';
 import { JournalProvider } from '../store/JournalContext';
 
@@ -26,8 +26,6 @@ export default function Profile(props) {
 }
 
 export async function getServerSideProps() {
-  const prisma = new PrismaClient()
-
   const user = await prisma.user.findUnique({
     where: {
       id: 1,

@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from "../../lib/prisma";
 
 export default async function handler(req, res) {
-  const prisma = new PrismaClient();
   if (req.method === "GET") {
     try {
       const date = req.query.date;
@@ -26,8 +25,6 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
-    } finally {
-      await prisma.$disconnect();
     }
   }
 
@@ -48,8 +45,6 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
-    } finally {
-      await prisma.$disconnect();
     }
   }
 }
