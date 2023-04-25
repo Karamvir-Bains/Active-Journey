@@ -88,18 +88,22 @@ export default function Overview(props) {
             position: 'left',
             display: false,
             max: 11,
+            min: 0,
           },
           "activity-y-axis": {
             position: 'left',
             display: false,
+            min: 0,
           },
           "water-y-axis": {
             position: 'left',
             display: false,
+            min: 0,
           },
           "sleep-y-axis": {
             position: 'left',
             display: false,
+            min: 0,
           },
         },
         plugins: { legend: { align: 'end', labels:{ color: colours.label } } }}
