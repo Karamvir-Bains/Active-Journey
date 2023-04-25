@@ -19,8 +19,9 @@ export default function Overview(props) {
 
   // Array for each metric sliced to range of days
   const createData = useCallback((water, sleep, energy, activity) => {
-    let waterVals = water.user_metric_data.slice(-range);
+    let waterVals = water.user_metric_data.slice(-range - 1);
     const labelVals = waterVals.map((val) =>  val.date.substring(5, 10));
+    console.log(waterVals);
 
     waterVals = waterVals.map(e => e.metric_value);
 
@@ -88,18 +89,22 @@ export default function Overview(props) {
             position: 'left',
             display: false,
             max: 11,
+            min: 0,
           },
           "activity-y-axis": {
             position: 'left',
             display: false,
+            min: 0,
           },
           "water-y-axis": {
             position: 'left',
             display: false,
+            min: 0,
           },
           "sleep-y-axis": {
             position: 'left',
             display: false,
+            min: 0,
           },
         },
         plugins: { legend: { align: 'end', labels:{ color: colours.label } } }}
