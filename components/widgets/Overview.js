@@ -19,9 +19,8 @@ export default function Overview(props) {
 
   // Array for each metric sliced to range of days
   const createData = useCallback((water, sleep, energy, activity) => {
-    let waterVals = water.user_metric_data.slice(-range - 1);
+    let waterVals = water.user_metric_data.slice(-range);
     const labelVals = waterVals.map((val) =>  val.date.substring(5, 10));
-    console.log(waterVals);
 
     waterVals = waterVals.map(e => e.metric_value);
 
