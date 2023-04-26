@@ -57,6 +57,6 @@ After initially setting up the database you will only need to delete your `dev.d
 ## Credits
 This app was built by [@Karamvir-Bains](https://github.com/Karamvir-Bains/), [@kgislason](https://github.com/kgislason), [@laurenashley](https://github.com/laurenashley) & [@GMahant1](https://github.com/GMahant1) as a Lighthouse Labs final project.
 
-Thank you to @SomeChineseGuy for your inspiration and support to stretch our skillset using Next.js and Prisma
+Thank you to [@SomeChineseGuy](https://github.com/SomeChineseGuy/) for your inspiration and support to stretch our skillset using Next.js and Prisma
 
 Thank you to Danila Szabo for your support and mentorship.
