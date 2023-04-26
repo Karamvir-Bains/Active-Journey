@@ -18,12 +18,14 @@
 button.react-calendar__tile--active,
 .react-calendar__navigation__arrow:hover {
   background-color: rgb(30 64 175);
+  border-radius: 4px;
   color: #fff;
 }
 
 button.react-calendar__tile--now {
   background-color: #348575;
   color: #fff;
+  border-radius: 4px;
 }
 
 button.react-calendar__tile:disabled,

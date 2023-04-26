@@ -22,7 +22,7 @@ async function createCorrelatedEntry(date) {
     energyValue = Math.floor(Math.random() * 2) + 5; // between 5-6
 
   } else {
-    energyValue = Math.floor(Math.random() * (sleepValue - sleep.min + 1)) + 3; // proportional to sleepValue
+    energyValue = Math.floor(Math.random() * (sleepValue - sleep.min + 1)) + 6; // proportional to sleepValue
     const randomAdjustment = Math.random() < 0.5 ? -1 : 1; // randomly add or subtract 1
     energyValue += randomAdjustment;
   }
@@ -61,7 +61,7 @@ async function seed() {
     const date = new Date(utcTimestamp.getTime() - i * 24 * 60 * 60 * 1000);
 
     // Water
-    await createEntry(1, 8, 1, date);
+    await createEntry(1, 8, 4, date);
     // Exercise
     await createEntry(3, 60, 30, date);
     // Mood

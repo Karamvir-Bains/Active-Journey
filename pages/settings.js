@@ -47,7 +47,7 @@ export default function Settings (props) {
     )
     setTimeout(() => {
       setMessage('');
-    }, 2500);
+    }, 2000);
   }
 
   return (
