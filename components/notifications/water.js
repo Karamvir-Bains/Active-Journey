@@ -1,17 +1,16 @@
 import { useState } from 'react';
 export default function WaterNotification(props) {
   const waterDays = props.metrics.user_metric_data.map((item) => {
-    item.metric_value;
+    return item.metric_value;
   });
-  const count = waterDays.filter(item => item > (8 * 250)).length
-  const [message, setMessage] = useState(`In the past 90 days, you have logged ${count} days with less than 6 cups of water`);
+  const count = waterDays.filter(item => item >= 8).length;
 
   return (
     <section className='mb-8'>
       <h3 className='font-bold text-md md:text-xl mb-2 md:mb-4'>Water</h3>      
         {count > 0 &&
           <p className="p-4 bg-blue-200 dark:bg-slate-800 bg-opacity-50 rounded-xl mb-4">
-            {message}
+            In the past 90 days, you have logged {count} days with less than 6 cups of water
           </p>
         }
         {count === 0 && 
