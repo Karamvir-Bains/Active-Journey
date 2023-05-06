@@ -84,14 +84,14 @@ export default function Social(props) {
 
   return(
     <>
-      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 text-center relative">
-        <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white">Quality of Social Interactions</h3>
+      <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-4 md:p-6 relative">
+        <h3 className="font-bold mb-1 text-lg md:text-xl text-blue-900 dark:text-white text-center">Quality of Social Interactions</h3>
         <ZoomButton
           zoom={props.zoom}
           onChange={props.onChange}
         />        
         {props.zoom &&
-          <div className="inline-block relative z-10">
+          <div className="inline-block absolute top-6 z-10">
             <RangeButtonGroup
               ranges={rangeValues} 
               rangeState={range}

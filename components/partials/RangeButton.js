@@ -2,7 +2,7 @@ import classNames from "classnames"
 
 export default function Button(props) {
   let buttonClass = classNames('', {
-    'text-blue-700 bg-gray-100 dark:bg-gray-900 dark:text-orange-500' : props.selected,
+    'text-blue-700 bg-gray-100 dark:bg-gray-950 dark:text-orange-500' : props.selected,
     'text-gray-900  dark:text-white' : !props.selected
   });
 
