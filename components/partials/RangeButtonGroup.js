@@ -1,4 +1,4 @@
-import Button from "./Button";
+import RangeButton from "./RangeButton";
 
 export default function ButtonGroup(props) {
   function setSelected(range) {
@@ -8,7 +8,7 @@ export default function ButtonGroup(props) {
   const buttons = props.ranges.map(rangeVal => {
     const selected = (rangeVal === props.rangeState);
     return (
-      <Button 
+      <RangeButton 
         key={rangeVal}
         range={rangeVal}
         selected={selected}
