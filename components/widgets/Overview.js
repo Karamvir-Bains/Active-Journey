@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
-import ButtonGroup from "../partials/ButtonGroup";
+import RangeButtonGroup from "../partials/RangeButtonGroup";
 import { useData } from "../../store/DataContext";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
@@ -13,9 +13,6 @@ export default function Overview(props) {
   // Date range navigation
   const rangeValues = [7, 15, 30];
   const [range, setRange] = useState(7);
-  function changeRange(newRange) {
-    setRange(newRange);
-  }
 
   // Array for each metric sliced to range of days
   const createData = useCallback((water, sleep, energy, activity) => {
@@ -144,10 +141,10 @@ export default function Overview(props) {
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-3 mb-10">
         <div className="inline-block relative z-10">
-          <ButtonGroup
+          <RangeButtonGroup
             ranges={rangeValues} 
             rangeState={range}
-            onClick={changeRange}
+            onClick={setRange}
           />
           <span className="text-xs">&nbsp;days</span>
         </div>
