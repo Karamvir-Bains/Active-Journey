@@ -5,6 +5,7 @@ import { palette } from "../../helpers/data";
 import { buildLabels } from "../../helpers/selectors";
 import { useData } from "../../store/DataContext";
 import ZoomButton from "../partials/ZoomButton";
+import RangeButtonGroup from "../partials/RangeButtonGroup"
 
 export default function Social(props) {
   const darkMode = useTheme();
@@ -14,9 +15,13 @@ export default function Social(props) {
     data 
   } = useData();
 
+  // Date range navigation
+  const rangeValues = [7, 15, 30];
+  const [range, setRange] = useState(7);
+
   useEffect(() => {
     if (data && data.length && data[7]) {
-      const newData = data[7].user_metric_data.slice(-30).map(item => item.metric_value);
+      const newData = data[7].user_metric_data.slice(-range).map(item => item.metric_value);
 
       const ctx = document.getElementById("social").getContext('2d');
 
@@ -24,8 +29,8 @@ export default function Social(props) {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false },
-          title: { display: false }
+          legend: { display: props.zoom ? true : false },
+          title: { display: props.zoom ? true : false }
         },
         scales: {
           y: {
@@ -39,7 +44,7 @@ export default function Social(props) {
       };
 
       const chartData = {
-        labels: buildLabels(selectedDate, 30),
+        labels: buildLabels(selectedDate, range),
         datasets: [{
           data: [...newData],
           backgroundColor: colours.social,
@@ -75,7 +80,7 @@ export default function Social(props) {
         socialChart.destroy()
       }
     }
-  }, [data, darkMode]);
+  }, [data, darkMode, range]);
 
   return(
     <>
@@ -84,7 +89,17 @@ export default function Social(props) {
         <ZoomButton
           zoom={props.zoom}
           onChange={props.onChange}
-        />
+        />        
+        {props.zoom &&
+          <div className="inline-block relative z-10">
+            <RangeButtonGroup
+              ranges={rangeValues} 
+              rangeState={range}
+              onClick={setRange}
+            />
+            <span className="text-xs">&nbsp;days</span>
+          </div>
+        }
         <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
           <canvas id='social'></canvas>
         </div>
