@@ -1,8 +1,15 @@
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { faUser }from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export default function Header(props) {
+  const {push} = useRouter();
+
+  const { isLoading, user, error } = useUser();
+
+  const handleLogin = () => push('api/auth/login');
   return(
     <header className="px-3 dark:text-white">
       <h2 className="text-lg md:text-xl font-medium">
@@ -17,7 +24,19 @@ export default function Header(props) {
           </div>
         </Link>
       </nav>
+      <button
+        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4'
+        onClick={handleLogin}
+      >
+        Login</button>
+      <button
+        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+
+      >
+        Logout</button>
     </header>
-    
+    //{user ? <p>Redirect To Dashboard</p> : <p>Load Login Site</p>}
+    // Dashboard : Logout
+    // Login : Signup
   )
 }
