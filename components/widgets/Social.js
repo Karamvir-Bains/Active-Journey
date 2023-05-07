@@ -4,7 +4,7 @@ import { palette } from "../../helpers/data";
 import { buildLabels, buildDataset } from "../../helpers/selectors";
 import { useData } from "../../store/DataContext";
 import ZoomButton from "../partials/ZoomButton";
-import { ComposedChart, Line, XAxis, YAxis, ResponsiveContainer, Bar } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Line, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import RangeButtonGroup from "../partials/RangeButtonGroup";
 
 export default function Social(props) {
@@ -32,9 +32,8 @@ export default function Social(props) {
         });
       });
       setWidgetData(chartData);
-      console.log('widgetData: ', widgetData);
     }
-  }, [data, darkMode, setWidgetData, range, selectedDate]);
+  }, [data, darkMode, range, selectedDate]);
 
   return(
     <>
@@ -62,10 +61,21 @@ export default function Social(props) {
         <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
         <ResponsiveContainer>
           <ComposedChart data={widgetData}>
-            <Bar dataKey="alcohol" barSize={20} fill={colours.alcohol} />
-            <Line type="monotone" dataKey="social" stroke={colours.social} />
+            <Bar 
+              dataKey="alcohol" 
+              barSize={20} 
+              fill={colours.alcohol} />
+            <Line 
+              type="monotone" 
+              dataKey="social" 
+              stroke={colours.social} />
             <XAxis dataKey="date" />
             <YAxis />
+            <Tooltip
+              cursor={{ stroke: '#aaa', strokeWidth: 1 }}
+              labelStyle={{ color: '#aaa' }}
+              wrapperStyle={{ backgroundColor: '#000' }} />
+            <Legend wrapperStyle={{ stroke: 'solid 1px #000' }} />
           </ComposedChart>
         </ResponsiveContainer>
         </div>
