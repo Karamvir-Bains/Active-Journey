@@ -4,7 +4,7 @@ import { palette } from "../../helpers/data";
 import { buildLabels, buildDataset } from "../../helpers/selectors";
 import { useData } from "../../store/DataContext";
 import ZoomButton from "../partials/ZoomButton";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { ComposedChart, Line, XAxis, YAxis, ResponsiveContainer, Bar } from 'recharts';
 import RangeButtonGroup from "../partials/RangeButtonGroup";
 
 export default function Social(props) {
@@ -14,29 +14,27 @@ export default function Social(props) {
 
   // Date range navigation
   const rangeValues = [7, 15, 30];
-  const [range, setRange] = useState(7);
-  const labelsThreshold = props.zoom ? rangeValues[1] : rangeValues[0];
-  const { widgetData, setWidgetData } = useState();
-
-  const socialData = [
-    {date: 'Page A', uv: 400, pv: 2400, amt: 2400},
-    {date: 'Page A', uv: 500, pv: 2400, amt: 2400},
-    {date: 'Page A', uv: 900, pv: 2400, amt: 2400},
-    {date: 'Page A', uv: 200, pv: 2400, amt: 2400},
-    {date: 'Page A', uv: 400, pv: 2400, amt: 2400}
-  ];
-
+  const [ range, setRange ] = useState(15);
+  const [ widgetData, setWidgetData ] = useState();
 
   useEffect(() => {
-    if (data && data.length && data[7]) {
-      const newData = data[7].user_metric_data.slice(-30).map(item => item.metric_value);
-      const labels = buildLabels(newData, range);
+    if (data && data.length > 0) {
+      const socialData = data[7].user_metric_data.slice(-range).map(item => item.metric_value);
+      const alcData = data[9].user_metric_data.slice(-range).map(item => item.metric_value);
+      const labels = buildLabels(selectedDate, range, 7);
       // Build and setWidgetData
-      newData.forEach(element => {
-        
+      const chartData = [];
+      socialData.forEach((value, index) => {
+        chartData.push({
+          date: labels[index],
+          social: value,
+          alcohol: alcData[index]
+        });
       });
+      setWidgetData(chartData);
+      console.log('widgetData: ', widgetData);
     }
-  }, [data, darkMode, range]);
+  }, [data, darkMode, setWidgetData, range, selectedDate]);
 
   return(
     <>
@@ -57,17 +55,18 @@ export default function Social(props) {
               <span className="text-xs">&nbsp;days</span>
             </div>
             <div className="">
-              <MetricDropdown placeHolder="Add more metrics..." />
+              {/* <MetricDropdown placeHolder="Add more metrics..." /> */}
             </div>
           </div>
         }
         <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
         <ResponsiveContainer>
-          <LineChart data={socialData}>
-            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+          <ComposedChart data={widgetData}>
+            <Bar dataKey="alcohol" barSize={20} fill={colours.alcohol} />
+            <Line type="monotone" dataKey="social" stroke={colours.social} />
             <XAxis dataKey="date" />
             <YAxis />
-          </LineChart>
+          </ComposedChart>
         </ResponsiveContainer>
         </div>
       </div>
