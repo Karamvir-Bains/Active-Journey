@@ -74,9 +74,9 @@ export const createMetricsObject = (id, days,entries) => {
  * @kgislason
  */
 
-export const buildLabels = (date, days) => {
+export const buildLabels = (date, days, threshold) => {
   let array = [];
-  const numName = days > 7 ? 'M/d' : 'MMM d';
+  const numName = days > threshold ? 'M/d' : 'MMM d';
   for (let i = days - 1; i > 0; i--) {
     array.push(format(subDays(date, i), numName))
   }

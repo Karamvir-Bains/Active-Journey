@@ -18,6 +18,7 @@ export default function Social(props) {
   // Date range navigation
   const rangeValues = [7, 15, 30];
   const [range, setRange] = useState(7);
+  const labelsThreshold = props.zoom ? rangeValues[1] : rangeValues[0];
 
   useEffect(() => {
     if (data && data.length && data[7]) {
@@ -44,7 +45,7 @@ export default function Social(props) {
       };
 
       const chartData = {
-        labels: buildLabels(selectedDate, range),
+        labels: buildLabels(selectedDate, range, labelsThreshold),
         datasets: [{
           data: [...newData],
           backgroundColor: colours.social,

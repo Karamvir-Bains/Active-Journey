@@ -34,7 +34,7 @@ export default function Alcohol(props) {
       
 
       const chartData = {
-        labels: buildLabels(selectedDate, 7),
+        labels: buildLabels(selectedDate, 7, 7),
         datasets: [{
           data: [...newData],
           backgroundColor: colours.alcohol,

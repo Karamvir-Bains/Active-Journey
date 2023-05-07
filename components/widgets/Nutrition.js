@@ -19,7 +19,7 @@ export default function Nutrition(props) {
       const ctx = document.getElementById('nutritionChart').getContext('2d');
     
       const chartData = {
-        labels: buildLabels(selectedDate, 10),
+        labels: buildLabels(selectedDate, 10, 10),
         datasets: [
           {
             data: [...newData],
