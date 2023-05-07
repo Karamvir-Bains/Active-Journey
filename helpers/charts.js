@@ -5,26 +5,27 @@ import { buildLabels, getMetricValues } from "./selectors";
  * @laurenashley
  */
 export const buildChartData = (metrics, selectedDate, range) => {
-  const metricValsObj = {};
+  const metricValues = {};
   const dates = buildLabels(selectedDate, range, 7);
 
-  // Build metric object with name and array of metric values
+  // Reformat metric values objects
   metrics.forEach((metric, index) => {
-    metricValsObj[index] = {
-      name: metric.name.split(' ')[0].toLowerCase(),
+    metricValues[index] = {
+      name: metric.name,
       values: getMetricValues(metric, range)
     }
   });
 
+  // Package data for charts use
   let array = [];
-  dates.forEach((label, index) => {
-    const obj = { date: label };
+  dates.forEach((date, index) => {
+    const dateObj = { date };
 
-    // Add all metrics and their value to the date (label)
-    Object.keys(metricValsObj).forEach(key => {
-      obj[metricValsObj[key].name] = metricValsObj[key].values[index];
+    // Add all metrics and their value to the date (label) object
+    Object.keys(metricValues).forEach(key => {
+      dateObj[metricValues[key].name] = metricValues[key].values[index];
     });
-    array.push(obj);
+    array.push(dateObj);
   });
 
   return array;
