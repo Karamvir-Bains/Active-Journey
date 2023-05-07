@@ -22,6 +22,7 @@ model User {
 model Metric {
   id               Int                @id @default(autoincrement())
   name             String
+  title            String
   property         String
   unit             String
   journal_order    Int                @unique

@@ -5,48 +5,56 @@ const prisma = new PrismaClient();
 async function seed() {
   const metrics = [
     {
-      name: "Cups of water",
+      name: "water-cups",
+      title: "Cups of water",
       property: "input",
       unit: "cups",
       journal_order: 4,
     },{
-      name: "Sleep",
+      name: "sleep-hours",
+      title: "Sleep",
       property: "input",
       unit: "hours",
       journal_order: 2,
     },{
-      name: "Exercise",
+      name: "activity",
+      title: "Exercise",
       property: "input",
       unit: "mins",
       journal_order: 1,
     },{
-      name: "Energy",
+      name: "energy",
+      title: "Energy",
       property: "scale",
       journal_order: 7,
     },{
-      name: "Mood",
+      name: "mood",
+      title: "Mood",
       property: "scale",
       journal_order: 6,
     },{
-      name: "Stress",
+      name: "stress",
+      title: "Stress",
       property: "scale",
       journal_order: 5,
     },{
-      name: "Sleep Quality",
+      name: "sleep-quality",
+      title: "Sleep Quality",
       property: "scale",
       journal_order: 3,
-    },
-    {
-      name: "Social Interactions",
+    },{
+      name: "social",
+      title: "Social Interactions",
       property: "scale",
       journal_order: 10,
-    }, {
-      name: "Quality of Nutrition",
+    },{
+      name: "nutrition",
+      title: "Quality of Nutrition",
       property: "scale",
       journal_order: 8,
-    },
-    {
-      name: "Alcohol Consumption",
+    },{
+      name: "alcohol-drinks",
+      title: "Alcohol Consumption",
       property: "input",
       unit: "drinks",
       journal_order: 9,
@@ -57,6 +65,7 @@ async function seed() {
     await prisma.Metric.create({
       data: {
         name: metric.name,
+        title: metric.title,
         property: metric.property,
         unit: metric.unit || "",
         journal_order: metric.journal_order,
