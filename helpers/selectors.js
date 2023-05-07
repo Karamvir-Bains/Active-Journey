@@ -74,12 +74,23 @@ export const createMetricsObject = (id, days,entries) => {
  * @kgislason
  */
 
-export const buildLabels = (date, days) => {
+export const buildLabels = (date, days, threshold) => {
   let array = [];
+  const numName = days > threshold ? 'M/d' : 'MMM d';
   for (let i = days - 1; i > 0; i--) {
-    array.push(format(subDays(date, i), 'MMM d'))
+    array.push(format(subDays(date, i), numName))
   }
 
-  array.push(format(date, 'MMM d'));
+  array.push(format(date, numName));
   return array;
 }
+
+/**
+ * Build Datasets Object for combination charts
+ * @laurenashley
+ */
+export const buildDataset = () => {
+  let array = [];
+
+  return array;
+} 

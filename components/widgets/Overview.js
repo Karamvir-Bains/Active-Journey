@@ -1,21 +1,19 @@
 import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
-import ButtonGroup from "../partials/ButtonGroup";
+import RangeButtonGroup from "../partials/RangeButtonGroup";
 import { useData } from "../../store/DataContext";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
+import { buildLabels } from "../../helpers/selectors";
 
 export default function Overview(props) {
   const darkMode = useTheme();
   const colours = darkMode === 'light' ? palette.light : palette.dark;
-  const { data } = useData();
+  const { selectedDate, data } = useData();
 
   // Date range navigation
   const rangeValues = [7, 15, 30];
   const [range, setRange] = useState(7);
-  function changeRange(newRange) {
-    setRange(newRange);
-  }
 
   // Array for each metric sliced to range of days
   const createData = useCallback((water, sleep, energy, activity) => {
@@ -48,7 +46,8 @@ export default function Overview(props) {
     return new Chart(ctx, {
       type: 'line',
       data: {
-        labels: metricValueSets[4],
+        // labels: metricValueSets[4],
+        labels: buildLabels(selectedDate, range),
         datasets: [{
           type: 'line',
           label: "Energy Level",
@@ -133,6 +132,8 @@ export default function Overview(props) {
         overviewChart.update();  
       }
 
+  console.log('labels K L: ', buildLabels(selectedDate, range), metricValueSets[4]);
+
       return () => {
         overviewChart.destroy()
       }
@@ -144,10 +145,10 @@ export default function Overview(props) {
     <>
       <div className="rounded-lg bg-white dark:bg-slate-800 dark:text-white  shadow-sm w-full h-full p-3 mb-10">
         <div className="inline-block relative z-10">
-          <ButtonGroup
+          <RangeButtonGroup
             ranges={rangeValues} 
             rangeState={range}
-            onClick={changeRange}
+            onClick={setRange}
           />
           <span className="text-xs">&nbsp;days</span>
         </div>

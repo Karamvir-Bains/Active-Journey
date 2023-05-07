@@ -30,7 +30,7 @@ export default function Sleep(props) {
       const sleepChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: buildLabels(selectedDate, 7),
+          labels: buildLabels(selectedDate, 7, 7),
           datasets: [{
             type: 'line',
             label: "Sleep Duration",
