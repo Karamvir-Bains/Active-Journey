@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
-import { buildLabels, buildDataset } from "../../helpers/selectors";
+import { buildLabels, getMetricValues, buildChartData } from "../../helpers/selectors";
 import { useData } from "../../store/DataContext";
 import ZoomButton from "../partials/ZoomButton";
 import { ResponsiveContainer, ComposedChart, Line, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
-import RangeButtonGroup from "../partials/RangeButtonGroup";
+import RangeButtonGroup from "../RangeButtonGroup";
 
 export default function Social(props) {
   const darkMode = useTheme();
@@ -15,22 +15,13 @@ export default function Social(props) {
   // Date range navigation
   const rangeValues = [7, 15, 30];
   const [ range, setRange ] = useState(15);
+  const [ metrics, setMetrics ] = useState([data[7], data[9]]);
   const [ widgetData, setWidgetData ] = useState();
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const socialData = data[7].user_metric_data.slice(-range).map(item => item.metric_value);
-      const alcData = data[9].user_metric_data.slice(-range).map(item => item.metric_value);
-      const labels = buildLabels(selectedDate, range, 7);
-      // Build and setWidgetData
-      const chartData = [];
-      socialData.forEach((value, index) => {
-        chartData.push({
-          date: labels[index],
-          social: value,
-          alcohol: alcData[index]
-        });
-      });
+      const chartData = buildChartData([data[7], data[9]], selectedDate, range);
+
       setWidgetData(chartData);
     }
   }, [data, darkMode, range, selectedDate]);

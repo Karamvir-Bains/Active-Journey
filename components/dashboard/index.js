@@ -20,12 +20,10 @@ export default function Dashboard (props) {
   const [zoomSocial, setZoomSocial] = useState(false);
 
   const handleZoomSleep = () => {
-    console.log("Clicked");
     setZoomSleep(prev => !prev);
   }
 
   const handleZoomSocial = () => {
-    console.log("Clicked");
     setZoomSocial(prev => !prev);
   }
 
@@ -43,6 +41,9 @@ export default function Dashboard (props) {
     {zoomSocial && 
       <div className='mx-3'>
         <Social
+          social={props.social}
+          title='Quality of Social Interactions'
+          desc='Past 30 days'
           zoom={zoomSocial}
           onChange={handleZoomSocial}
         />

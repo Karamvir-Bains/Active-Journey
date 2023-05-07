@@ -1,4 +1,4 @@
-import RangeButton from "./RangeButton";
+import RangeButton from "./partials/RangeButton";
 
 export default function ButtonGroup(props) {
   function setSelected(range) {

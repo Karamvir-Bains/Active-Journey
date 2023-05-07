@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { Chart } from "chart.js/auto";
-import RangeButtonGroup from "../partials/RangeButtonGroup";
+import RangeButtonGroup from "../RangeButtonGroup";
 import { useData } from "../../store/DataContext";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";

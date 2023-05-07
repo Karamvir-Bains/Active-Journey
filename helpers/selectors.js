@@ -1,3 +1,4 @@
+import { matchesMiddleware } from 'next/dist/shared/lib/router/router';
 import { defaultLayout } from './data';
 import { format, subDays } from 'date-fns';
 
@@ -84,13 +85,41 @@ export const buildLabels = (date, days, threshold) => {
   array.push(format(date, numName));
   return array;
 }
+/** 
+ * Return array or metric values
+ */
+export const getMetricValues = (data, range) => {
+  return data.user_metric_data
+             .slice(-range)
+             .map(e => e.metric_value);
+}
 
 /**
  * Build Datasets Object for combination charts
  * @laurenashley
  */
-export const buildDataset = () => {
+export const buildChartData = (metrics, selectedDate, range) => {
+  const metricValsObj = {};
+  const dates = buildLabels(selectedDate, range, 7);
+
+  // Build metric object with name and array of metric values
+  metrics.forEach((metric, index) => {
+    metricValsObj[index] = {
+      name: metric.name.split(' ')[0].toLowerCase(),
+      values: getMetricValues(metric, range)
+    }
+  });
+
   let array = [];
+  dates.forEach((label, index) => {
+    const obj = { date: label };
+
+    // Add all metrics and their value to the date (label)
+    Object.keys(metricValsObj).forEach(key => {
+      obj[metricValsObj[key].name] = metricValsObj[key].values[index];
+    });
+    array.push(obj);
+  });
 
   return array;
 } 
