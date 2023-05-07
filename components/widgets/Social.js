@@ -2,10 +2,17 @@ import { useState, useEffect } from "react";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
 import { useData } from "../../store/DataContext";
-import { buildChartData } from "../../helpers/selectors";
+import { buildChartData } from "../../helpers/charts";
 import ZoomButton from "../partials/ZoomButton";
 import RangeButtonGroup from "../RangeButtonGroup";
-import { ResponsiveContainer, ComposedChart, Line, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
+import {  ResponsiveContainer, 
+          ComposedChart, 
+          Line, 
+          Bar, 
+          XAxis, 
+          YAxis, 
+          Legend, 
+          Tooltip } from 'recharts';
 
 export default function Social(props) {
   const darkMode = useTheme();
@@ -15,16 +22,21 @@ export default function Social(props) {
   // Date range navigation
   const rangeValues = [7, 15, 30];
   const [ range, setRange ] = useState(15);
-  const [ widgetData, setWidgetData ] = useState();
-  const [ metrics, setMetrics ] = useState([data[7], data[9]]);
-  // When user selects new metric from dropdown, add metric data to state
+  const [ chartData, setChartData ] = useState();
+  const [ metrics, setMetrics ] = useState();
+  // When user selects new metric from dropdown, add metric data[n] to state
+
+  // Map each metric: type, props
+  // send to buildChartChild helper in /helpers/charts.js
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const chartData = buildChartData(metrics, selectedDate, range);
-      setWidgetData(chartData);
+      setMetrics([data[7], data[9]]); 
+      // console.log('metrics: ', metrics);
+      // account for async setMetrics, use metrics below
+      setChartData(buildChartData([data[7], data[9]], selectedDate, range));
     }
-  }, [data, darkMode, range, selectedDate, metrics]);
+  }, [data, darkMode, range, selectedDate]);
 
   return(
     <>
@@ -51,7 +63,8 @@ export default function Social(props) {
         }
         <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
         <ResponsiveContainer>
-          <ComposedChart data={widgetData}>
+          <ComposedChart data={chartData}>
+            {/* Bar and Line, etc will be {chartChildren} returned from helper */}
             <Bar 
               dataKey="alcohol" 
               barSize={20} 
