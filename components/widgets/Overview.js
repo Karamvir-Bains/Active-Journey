@@ -132,8 +132,6 @@ export default function Overview(props) {
         overviewChart.update();  
       }
 
-  console.log('labels K L: ', buildLabels(selectedDate, range), metricValueSets[4]);
-
       return () => {
         overviewChart.destroy()
       }

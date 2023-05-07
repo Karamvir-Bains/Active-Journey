@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
-import { buildLabels, getMetricValues, buildChartData } from "../../helpers/selectors";
 import { useData } from "../../store/DataContext";
+import { buildChartData } from "../../helpers/selectors";
 import ZoomButton from "../partials/ZoomButton";
-import { ResponsiveContainer, ComposedChart, Line, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import RangeButtonGroup from "../RangeButtonGroup";
+import { ResponsiveContainer, ComposedChart, Line, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 
 export default function Social(props) {
   const darkMode = useTheme();
@@ -15,16 +15,16 @@ export default function Social(props) {
   // Date range navigation
   const rangeValues = [7, 15, 30];
   const [ range, setRange ] = useState(15);
-  const [ metrics, setMetrics ] = useState([data[7], data[9]]);
   const [ widgetData, setWidgetData ] = useState();
+  const [ metrics, setMetrics ] = useState([data[7], data[9]]);
+  // When user selects new metric from dropdown, add metric data to state
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const chartData = buildChartData([data[7], data[9]], selectedDate, range);
-
+      const chartData = buildChartData(metrics, selectedDate, range);
       setWidgetData(chartData);
     }
-  }, [data, darkMode, range, selectedDate]);
+  }, [data, darkMode, range, selectedDate, metrics]);
 
   return(
     <>
