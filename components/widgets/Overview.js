@@ -4,11 +4,12 @@ import RangeButtonGroup from "../partials/RangeButtonGroup";
 import { useData } from "../../store/DataContext";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
+import { buildLabels } from "../../helpers/selectors";
 
 export default function Overview(props) {
   const darkMode = useTheme();
   const colours = darkMode === 'light' ? palette.light : palette.dark;
-  const { data } = useData();
+  const { selectedDate, data } = useData();
 
   // Date range navigation
   const rangeValues = [7, 15, 30];
@@ -45,7 +46,8 @@ export default function Overview(props) {
     return new Chart(ctx, {
       type: 'line',
       data: {
-        labels: metricValueSets[4],
+        // labels: metricValueSets[4],
+        labels: buildLabels(selectedDate, range),
         datasets: [{
           type: 'line',
           label: "Energy Level",
@@ -129,6 +131,8 @@ export default function Overview(props) {
         overviewChart.options.plugins.legend.labels.color = palette.dark.label;
         overviewChart.update();  
       }
+
+  console.log('labels K L: ', buildLabels(selectedDate, range), metricValueSets[4]);
 
       return () => {
         overviewChart.destroy()

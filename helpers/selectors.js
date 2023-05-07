@@ -84,3 +84,13 @@ export const buildLabels = (date, days, threshold) => {
   array.push(format(date, numName));
   return array;
 }
+
+/**
+ * Build Datasets Object for combination charts
+ * @laurenashley
+ */
+export const buildDataset = () => {
+  let array = [];
+
+  return array;
+} 

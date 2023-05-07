@@ -2,10 +2,11 @@ import { useState, useEffect } from "react"
 import { Chart } from "chart.js/auto";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
-import { buildLabels } from "../../helpers/selectors";
+import { buildLabels, buildDataset } from "../../helpers/selectors";
 import { useData } from "../../store/DataContext";
 import ZoomButton from "../partials/ZoomButton";
 import RangeButtonGroup from "../partials/RangeButtonGroup"
+import MetricDropdown from "../partials/metricDropdown";
 
 export default function Social(props) {
   const darkMode = useTheme();
@@ -22,9 +23,12 @@ export default function Social(props) {
 
   useEffect(() => {
     if (data && data.length && data[7]) {
-      const newData = data[7].user_metric_data.slice(-range).map(item => item.metric_value);
+      const singleMetricData = data[7].user_metric_data.slice(-range).map(item => item.metric_value);
 
       const ctx = document.getElementById("social").getContext('2d');
+
+      // Create datasets for chartData
+      // const datasetsObj = buildDataset(type, label, metricData, bgColor, yAxisID);
 
       const options = {
         responsive: true,
@@ -43,11 +47,12 @@ export default function Social(props) {
           }
         }
       };
+      console.log('data spread: ', [singleMetricData]);
 
       const chartData = {
         labels: buildLabels(selectedDate, range, labelsThreshold),
         datasets: [{
-          data: [...newData],
+          data: [...singleMetricData],
           backgroundColor: colours.social,
           fill: true,
           tension: 0.378
@@ -61,7 +66,7 @@ export default function Social(props) {
       });
 
       /** Update chart data anytime we change the selectedDate */
-      socialChart.data.datasets[0].data = [...newData];
+      socialChart.data.datasets[0].data = [...singleMetricData];
       socialChart.update();
 
       /** Change chart colours on darkMode change */
@@ -92,13 +97,18 @@ export default function Social(props) {
           onChange={props.onChange}
         />        
         {props.zoom &&
-          <div className="inline-block absolute top-6 z-10">
-            <RangeButtonGroup
-              ranges={rangeValues} 
-              rangeState={range}
-              onClick={setRange}
-            />
-            <span className="text-xs">&nbsp;days</span>
+          <div>
+            <div className="inline-block absolute top-6 z-10">
+              <RangeButtonGroup
+                ranges={rangeValues} 
+                rangeState={range}
+                onClick={setRange}
+              />
+              <span className="text-xs">&nbsp;days</span>
+            </div>
+            <div className="">
+              <MetricDropdown placeHolder="Add more metrics..." />
+            </div>
           </div>
         }
         <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
