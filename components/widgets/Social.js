@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { useTheme } from '../../store/ThemeContext';
 import { palette } from "../../helpers/data";
 import { useData } from "../../store/DataContext";
+import { getMetricValues } from "../../helpers/selectors";
 import { buildChartData } from "../../helpers/charts";
 import ZoomButton from "../partials/ZoomButton";
 import RangeButtonGroup from "../RangeButtonGroup";
 import {  ResponsiveContainer, 
           ComposedChart, 
           Line, 
-          Bar, 
+          Bar,
+          Area,
           XAxis, 
           YAxis, 
           Legend, 
@@ -25,18 +27,46 @@ export default function Social(props) {
   const [ chartData, setChartData ] = useState();
   const [ metrics, setMetrics ] = useState();
   // When user selects new metric from dropdown, add metric data[n] to state
+  // click: pass props name, id
+  console.log('chartData: ', chartData);
+  console.log('metrics: ', metrics);
 
-  // Map each metric: type, props
-  // send to buildChartChild helper in /helpers/charts.js
+  const [charts, setCharts] = useState();
+  console.log('charts: ', charts);
+
+  const chartChildren = charts && charts.map((chart, index) => {
+    switch (chart.type) {
+      case 'line':
+        return <Line key={index} dataKey={chart.dataKey} stroke={chart.stroke} type="monotone" />;
+      case 'area':
+        return <Area key={index} dataKey={chart.dataKey} fill={chart.fill} />;
+      case 'bar':
+        return <Bar key={index} dataKey={chart.dataKey} fill={chart.fill} />;
+      default:
+        return null;
+    }
+  });
+
+  // const handleAddChart = () => {
+  //   setCharts([...charts, {
+  //     type: ,
+  //     dataKey: ,
+  //     fill: ,
+  //   }]);
+  // }
 
   useEffect(() => {
     if (data && data.length > 0) {
-      setMetrics([data[7], data[9]]); 
+      setCharts([
+        { type: 'bar', dataKey: data[9].name, fill: colours.social },
+        { type: 'line', dataKey: data[7].name, stroke: colours.alcohol }
+      ]);
+      // setMetrics(metricsDataObj); 
       // console.log('metrics: ', metrics);
       // account for async setMetrics, use metrics below
       setChartData(buildChartData([data[7], data[9]], selectedDate, range));
     }
-  }, [data, darkMode, range, selectedDate]);
+  }, [data, darkMode, range, selectedDate, colours.alcohol, colours.social]);
 
   return(
     <>
@@ -64,15 +94,6 @@ export default function Social(props) {
         <div className="text-center w-full h-full py-4 mx-auto flex flex-col items-center">
         <ResponsiveContainer>
           <ComposedChart data={chartData}>
-            {/* Bar and Line, etc will be {chartChildren} returned from helper */}
-            <Bar 
-              dataKey="alcohol" 
-              barSize={20} 
-              fill={colours.alcohol} />
-            <Line 
-              type="monotone" 
-              dataKey="social" 
-              stroke={colours.social} />
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip
@@ -80,6 +101,7 @@ export default function Social(props) {
               labelStyle={{ color: '#aaa' }}
               wrapperStyle={{ backgroundColor: '#000' }} />
             <Legend wrapperStyle={{ stroke: 'solid 1px #000' }} />
+            {chartChildren}
           </ComposedChart>
         </ResponsiveContainer>
         </div>
